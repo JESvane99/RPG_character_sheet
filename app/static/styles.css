@@ -1,0 +1,499 @@
+div.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgb(85, 35, 88);
+    padding: 5mm;
+    justify-content: center;
+}
+div.buttons button {
+    padding: 2mm;
+    margin: 0;
+    width: 25mm;
+}
+/* print setup */
+@page {
+    size: 21cm 29.7cm;
+    margin: 0;
+}
+body {
+    background-image: url(background.jpg);
+    background-size: auto 100%;
+}
+div.sheet {
+    page-break-after: always;
+    padding: 0;
+    margin: 0;
+    border: 3px solid rgb(26, 38, 78);
+    border-radius: 5px;
+}
+/* General design */
+form {
+    margin:0;
+    padding:0;
+}
+section.container{
+    border: 2px solid rgb(26, 38, 78);
+    /* height: 3cm; */
+    width: auto;
+    margin: 0;
+    padding: 0;
+}
+header input {
+    width: 60%;
+}
+input {
+    width: 90%;
+    border: 0;
+    background-color: transparent;
+    text-align: center;
+}
+input[type="text"] {
+    text-align: left;
+}
+
+input::-webkit-inner-spin-button{
+    display: none;
+}
+
+section.flex {
+    display:flex;
+    position: relative;
+}
+section.flex div {
+    border: 2px solid rgb(26, 38, 78);
+}
+
+section.page-butt {
+    height: auto;
+}
+
+/* character description table and logo*/
+header {
+    border: 2px solid rgb(26, 38, 78);
+    display: flex;
+    position: relative;
+}
+header table input {
+text-align: left;
+}
+header table td[colspan="2"] input {
+    width: 70%;
+}
+header table td[colspan="3"] input {
+    width: 80%;
+}
+header table td input {
+    width: 60%;
+}
+div.logo {
+    width: 30%;
+    margin: 0;
+    padding: 0;
+}
+div.logo img {
+    width: 100%;
+    position: relative;
+    top: 0;
+}
+div.description {
+    width: 80%;
+    margin: 0;
+    padding: 0;
+}
+table.description {
+    width: 100%;
+    height: auto;
+    margin: 3px;
+    border-collapse: collapse;
+    border-style: hidden;
+} 
+table.description td {
+    border: 2px solid rgb(40, 47, 71);
+}
+
+/* Mechanics: Fate, Resilience, and Experience */
+/* setup: */
+section.mechanics div table input {
+    text-align: center;
+    width:80%;
+}
+div.movement {
+    width: 10%;
+}
+div.fate {
+    width: 13%;
+}
+div.resilience {
+    width: 32%;
+}
+div.experience {
+    width: 32%;
+    flex:1;
+}
+/* tables: */
+table.mechs {
+    margin: 3px;
+    border-collapse: collapse;
+    border-style: hidden;
+}
+table.small-tbl {
+    margin:3px;
+}
+.small-tbl th, .small-tbl td {
+    border: 2px solid rgb(26, 38, 78);
+}
+.small-tbl th {
+    padding-right: 3px;
+}
+.large-tbl {
+    width: 97%;
+    margin: 3px;
+}
+.large-tbl th, .large-tbl td {
+    text-align: center;
+    border: 2px solid rgb(26, 38, 78)
+}
+
+/* characteristics table */
+section.characteristics {
+    padding: auto;
+}
+table.characteristics {
+    width: 99%;
+    margin: 3px;
+    border-collapse: collapse;
+    border-style: hidden;
+    text-align: center;
+}
+table.characteristics td, th {
+    border: 2px solid rgb(26, 38, 78)
+}
+table.characteristics input {
+    width:80%;
+    text-align: center;
+}
+
+/* acquired skills table */
+div.base-skills {
+    width:40%
+}
+.bskill-name {
+    width: 40%;
+}
+.bskill-trait {
+    width: 20%;
+}
+.bskill-adv {
+    width: 15%;
+}
+form#base-skills-form table tr td.trait-1 {
+    width: 15%;
+}
+
+div.aquired-skills {
+    width: 60%;
+}
+table.aquired-skills {
+    height: 99%;
+}
+
+table.aquired-skills th.trait-dbl {
+    width: 25%;
+}
+table.aquired-skills th.aq-skill-name {
+    width: 55%
+}
+
+/* talents table */
+table.talents tr td input {
+    width: 100%;
+}
+table.talents {
+    height: 22%;
+    width: 99%;
+}
+.tana {
+    width: 30%;
+}
+.tita {
+    width: 5%;
+}
+.tade {
+    width: 50%;
+}
+.tabo {
+    width: 5%  ;
+}
+.tatr {
+    width: 10%;
+}
+
+/* battle sheet setup */
+div.sub-battle-and-misc {
+    width: 50%;
+    margin: 0;
+    padding: 0;
+}
+.amour-visual img {
+    width: 100%;
+}
+h1.ap {
+    font-size: large;
+}
+div.we-container {
+    width: 50%;
+    border-right: 4px solid rgb(26, 38, 78);
+    border-left: 4px solid rgb(26, 38, 78);
+}
+.enc-tbl {
+    margin: 3px;
+}
+div.corruption {
+    width: 70%;
+}
+div.combat-notes {
+    border-bottom: 0px solid black;
+}
+
+/* weapons table */
+.weapons-table {
+    width: 99%;
+    text-align: center;
+}
+.weapons-table input[type="text"] {
+    width:90%;
+}
+td.wpn-cell {
+    width:10%;
+}
+/* amour table */
+.amour-table {
+    width: 99%;
+}
+.amour-table td.am-txt {
+    width: 35%;
+}
+.amour-table td.loc-txt {
+    width: 15%;
+}
+.amour-table input[type="number"] {
+    width: 95%;
+    padding: none;
+    margin: none;
+}
+table.spells-and-prayers {
+    width: 99%;
+}
+.spell-name {
+    width: 20%;
+}
+.spell-cn {
+    width: 10%;
+}
+.spell-range {
+    width: 10%;
+}
+.spell-target {
+    width: 10%;
+}
+th.spell-dur {
+    width: 10%;
+}
+th.spell-effect {
+    width: 40%;
+}
+
+
+/* party and wealth */
+section.party-and-wealth div.party {
+    width: 90%;
+
+}
+section.party-and-wealth div.party table tr:first-child {
+    height: 10px;
+    margin: 0;
+}
+.party table tr td input {
+    width: 100%;
+    height: 8mm;
+}
+section.party-and-wealth div.party table tr td {
+    width: 100%;
+}
+
+section.party-and-wealth {
+    height: 10%;
+}
+
+section.trappings-and-notes {
+    height: 80%
+}
+div.trappings,div.psych-and-notes {
+    width: 50%;
+    text-align: center;
+}
+section.psychology {
+    height: 20%;
+}
+section.notes {
+    height: 79.5%;
+}
+section.doom {
+    height: 5%;
+}
+
+div.doom {
+    font-weight: bold;
+    top: 0;
+}
+textarea.doom {
+    background: none;
+    border: none;
+    width: 90%;
+    position: relative;
+    vertical-align: top;
+    resize: vertical;
+}
+.note-area {
+    background: none;
+    width: 99%;
+    border: none;
+    resize: vertical;
+
+}
+
+
+hr {
+    border: 3px solid rgb(26, 38, 78);
+}
+
+td {
+    font-size: 12px;
+}
+th {
+    font-size: 16px;
+}
+h1 {
+    font-size: 16px;
+    margin: 3px;
+    position: relative;
+    text-align: center;
+    width: 98%;
+    border-bottom: 2px solid black
+
+}
+
+div.vl {
+    border-left: 5px solid rgb(26, 38, 78);
+    height: relative;
+    padding: 0;
+}
+
+.logo {
+    text-align: center;
+}
+
+
+    
+.mechanics-container {
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-top: 5px solid rgb(26, 38, 78);
+    border-bottom: 5px solid rgb(26, 38, 78);
+}
+
+.mechanics {
+    width: 15%;
+    margin: 1mm;
+}
+
+
+.mechanics:nth-child(5) {
+    width: 30%;
+}
+.mechanics:nth-child(7) {
+    width: 40%;
+}
+
+
+.mechanics-vert-tbl {
+    width: 100%;
+    border-collapse: collapse;
+    border-style: hidden;
+}
+
+
+.mechanics-horz-tbl {
+    width: 100%;
+    border-collapse: collapse;
+    border-style: hidden;
+}
+
+.mechanics-horz-tbl td {
+    padding: 0.5mm;
+    border: 2px solid rgb(40, 47, 71);
+}
+
+.mechanics-horz-tbl th {
+    padding: 0.5mm;
+    border: 2px solid rgb(40, 47, 71);
+}
+
+.hard-characteristics {
+    width: 100%;
+    margin: 1mm;
+    border-collapse: collapse;
+    border-style: hidden;
+}
+
+.hard-characteristics th {
+    padding: 0.5mm;
+    border: 2px solid rgb(40, 47, 71);
+}
+
+.hard-characteristics td {
+    padding: 0.5mm;
+    border: 2px solid rgb(40, 47, 71);
+}
+
+.hard-characteristics-scnd-row td {
+    font-weight: bold;
+    padding: 0.5mm;
+    border: 2px solid rgb(40, 47, 71);
+}
+
+.s-t-container {
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-top: 5px solid rgb(26, 38, 78);
+    border-bottom: 5px solid rgb(26, 38, 78);
+}
+
+.skills-container {
+    width:35%;
+    margin: 1mm;
+}
+
+.skills-tbl {
+    width: 100%;
+    border-collapse: collapse;
+    border-style: hidden;
+}
+
+.skills-tbl th {
+    padding: 0.5mm;
+    border: 2px solid rgb(40, 47, 71);
+}
+
+.skills-tbl td {
+    text-align: center;
+    padding: 0.5mm;
+    border: 2px solid rgb(40, 47, 71);
+}
+
+
+

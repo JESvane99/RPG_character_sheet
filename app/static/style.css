@@ -1,0 +1,177 @@
+/* base design setup */
+body {
+    font-family: Copperplate, Papyrus, fantasy;
+    margin: 0;
+    padding: 0;
+    background-color: #b8bcf7;
+}
+#nav-container {
+    color: #700909;
+    padding: 10px;
+    width: 10%;
+    position: sticky;
+}
+#sheet-container {
+    margin: 10px;
+    padding: 15px;
+    position: relative;
+    justify-content: center;
+    background-color: rgb(136, 114, 100);
+    width: 89%;
+    border-radius: 10px;
+}
+.page-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(173, 160, 151);
+}
+img {
+    width: 100%;
+}
+h4 {
+    text-align: center;
+    border-bottom: 2px solid #000000;
+    padding: 5px;
+    margin: 5px;
+}
+label {
+    font-weight: bold;
+}
+
+/* general classes */
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+.part-container {
+    border-bottom: 5px solid #0a1033;
+    width: 100%;
+}
+
+/* character description and logo */
+.description-container {
+    border-right: 4px solid #0a1033;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    width: 70%;
+}
+.description-container ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-evenly;
+    border-right: 2px solid #000;
+}
+.description-container ul li {
+    padding: 5px;
+    text-align: left;
+    display: flex;
+    border-bottom: 2px solid #000;
+}
+.description-container ul li:last-child {
+    border-bottom: none;
+}
+.description-container ul:last-child {
+    border-right: none;
+}
+.description-container input {
+    flex: 2;
+    margin-left: 5px;
+    background: none;
+    border: none;
+}
+.description-container label {
+    text-wrap: nowrap;
+}
+.logo-container {
+    width: 30%;
+    text-align: center;
+}
+
+/* fluff design */
+.fluff-container {
+    justify-content: center;
+    padding: 5px;
+    width: 100%;
+    text-align: left;
+    border-right: 3px solid #000;
+}
+.fluff-container input {
+    background: none;
+    border: none;
+}
+.fluff-container ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.fluff-container li {
+    list-style-type: none;
+    padding: 5px;
+    text-align: left;
+    border-bottom: 2px solid #000;
+}
+.fluff-container textarea {
+    width: 99%;
+    resize: vertical;
+    border: none;
+    background: none;
+}
+.fluff-container:last-child {
+    border-right: none;
+}
+.fluff-container li:last-child {
+    border-bottom: none;
+}
+div.wealth {
+    width: 10% !important;
+}
+ul.wealth {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+ul.wealth li {
+    padding: 5px;
+    text-align: left;
+    display: flex;
+    border-bottom: 2px solid #000;
+}
+ul.wealth label {
+    flex: 1;
+    text-align: left;
+    padding: 5px;
+    margin: 5px;
+}
+ul.wealth li:last-child {
+    border-bottom: none;
+}
+ul.wealth li input {
+    background: none;
+    border: none;
+    width: 40px;
+}
+
+/* doom design */
+#doom {
+    flex:1;
+    text-align: left;
+    background: none;
+    border: none;
+}
+.doom-design {
+    padding: 5px;
+}
+
+
+/* stats design */
+

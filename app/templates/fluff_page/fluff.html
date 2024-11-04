@@ -1,0 +1,60 @@
+<div class="flex part-container">
+  <div class="fluff-container">  
+    <h4>Psychology</h4>
+    <textarea name="psychology" id="psychology">{{ text_fields.psychology }}</textarea>
+  </div>
+  <div class="fluff-container">
+    <h4>Ambitions</h4>
+    <ul>
+      <li>
+        <label for="short_term_ambition">Short term: </label>
+      </li>
+      <li>
+        <textarea id="short_term_ambition" name="short_term_ambition">{{ text_fields.short_term_ambition }}</textarea>
+      </li>
+      <li>
+        <label for="long-term-ambition">Long term: </label>u
+      </li>
+      <li>
+        <textarea id="long_term_ambition" name="long_term_ambition">{{ text_fields.long_term_ambition }}</textarea>
+      </li>
+    </ul>
+  </div>
+  <div class="fluff-container">
+    {% if party.name %}
+    <h4>Party: <input type="text" name="party_name" id="party_name" value="{{ party.name }}"></h4>
+    {% else %}
+    <h4>Party: <input type="text" name="party_name" id="party_name" value=""></h4>
+    {% endif %}
+    <ul>
+      <li>
+        <label for="party-members">Members: </label>
+      </li>
+      <li>
+        <textarea name="party_members" id="party_members">{{ party.members }}</textarea>
+      </li>
+      <li>
+        <label for="party-ambitions">Ambitions: </label>
+      </li>
+      <li>
+        <textarea name="party_ambitions" id="party_ambitions">{{ party.ambitions }}</textarea>
+      </li>
+    </ul>
+  </div>
+  <div class="fluff-container wealth">
+    <h4>Wealth</h4>
+    <ul class="wealth">
+      <li>
+        <label for="gold">Gold: </label>
+        <input type="number" name="gold" id="gold" value="{{ character.gold }}">
+      </li>
+      <li>
+        <label for="silver">Silver: </label>
+        <input type="number" name="silver" id="silver" value="{{ character.silver }}">
+      </li>
+      <li>
+        <label for="brass">Brass: </label>
+        <input type="number" name="brass" id="brass" value="{{ character.brass }}">
+      </li>
+  </div>
+</div>

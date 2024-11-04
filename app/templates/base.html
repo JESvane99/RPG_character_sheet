@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  
+  <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+  <div class="flex">
+    <div id="nav-container">
+      {% block navbar %}
+      {% endblock navbar %}
+    </div>
+    <div id="sheet-container">
+      {% block content %}
+      {% endblock content %}
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+  <ul>
+    <li><a href="/{{ character.id }}/sheet-p1">Description</a></li>
+    <li><a href="/{{ character.id }}/sheet-p2">Trappings</a></li>
+    <li><a href="/{{ character.id }}/sheet-p3">Action</a></li>
+    <li><button form="page">Save Page</button></li>
+  </ul>
+{% endblock navbar %}
+
+{% block content %}
+<form action="/{{ character.id }}/sheet-p1" method="post" class="page-form" id="page">
+  <div class="page-container">
+        {% include 'fluff_page/description_table.html' %}
+        {% include 'fluff_page/fluff.html' %}
+        {% include 'fluff_page/doom.html' %}
+  </div>
+</form>
+  
+{% endblock content %}

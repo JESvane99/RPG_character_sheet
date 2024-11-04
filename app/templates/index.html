@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Characters{% endblock title %}
+{% block navbar %}
+  <ul>
+    <li><a href="/">Home</a></li>
+    {% for char in characters %}
+      <li><a href="/{{ char.id }}/sheet-p1">{{ char.name }}</a></li>
+    {% endfor %}
+    <form action="/" method="post">
+      <li><input type="text" name="new-name"></li>
+      <li><button type="submit">New Character</button></li>
+    </form>
+  </ul>
+{% endblock navbar %}
+
+{% block content %}
+  <h1>Character sheet</h1>
+  Use this when creating a new character.
+{% endblock content %}

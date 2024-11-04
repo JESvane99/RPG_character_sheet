@@ -1,0 +1,58 @@
+<div class="flex part-container">
+  <div class="description-container">
+    <ul>
+      <li>
+        <label for="name">Name: </label>
+        <input type="text" value="{{ character.name }}" name="name" id="name" />
+      </li>
+
+      <li>
+        <label for="height">Height: </label>
+        <input type="text" value="{{ character.height }}" name="height" id="height" />
+      </li>
+
+      <li>
+        <label for="status">Status: </label>
+        <input type="text" value="{{ character.status }}" name="status" id="status" />
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <label for="species">Species: </label>
+        <input type="text" value="{{ character.species }}" id="species" name="species" />
+      </li>
+
+      <li>
+        <label for="hair">Hair: </label>
+        <input type="text" value="{{ character.hair }}" name="hair" id="hair" />
+      </li>
+
+      <li>
+        <label for="career">Career: </label>
+        <input type="text" value="{{ character.career }}" name="career" id="career" />
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <label for="age">Age: </label>
+        <input type="text" value="{{ character.age }}" name="age" id="age" />
+      </li>
+
+      <li>
+        <label for="eyes">Eyes: </label>
+        <input type="text" value="{{ character.eyes }}" name="eyes" id="eyes" />
+      </li>
+
+      <li>
+        <label for="careerpath">Career Path: </label>
+        <input type="text" value="{{ character.careerpath }}" name="careerpath" id="careerpath" />
+      </li>
+    </ul>
+  </div>
+  <div class="logo-container">
+    <img
+      src="{{ url_for('static', filename='figs/logo.png') }}"
+      alt="Warhammer Fantasy Roleplay LOGO"
+    />
+  </div>
+</div>
