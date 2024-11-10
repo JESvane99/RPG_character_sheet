@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+
 
 class Base(DeclarativeBase):
     pass
@@ -9,133 +10,218 @@ db = SQLAlchemy(model_class=Base)
 
 
 class Character(db.Model):
-    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    name = db.Column(db.String(100), nullable=False)
-    species = db.Column(db.String(50))
-    career = db.Column(db.String(50))
-    status = db.Column(db.Integer)
-    careerpath = db.Column(db.String(50))
-    age = db.Column(db.Integer)
-    height = db.Column(db.Integer)
-    hair = db.Column(db.String(50))
-    eyes = db.Column(db.String(50))
-    
-    text_fields = db.relationship('TextFields', backref='Character.character_id')
-    base_mechanics = db.relationship('BaseMechanics', backref='Character.character_id')    
+    """Character model
+    contains a full character sheet
+    """
 
-    party = db.relationship('Party', backref='Character.character_id')
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(nullable=False)
+    species: Mapped[str]
+    career: Mapped[str]
+    status: Mapped[int]
+    careerpath: Mapped[str]
+    age: Mapped[int]
+    height: Mapped[int]
+    hair: Mapped[str]
+    eyes: Mapped[str]
 
-    gold = db.Column(db.Integer)
-    silver = db.Column(db.Integer)
-    brass = db.Column(db.Integer)
-    
+    gold: Mapped[int]
+    silver: Mapped[int]
+    brass: Mapped[int]
+
+    base_mechanics: Mapped["BaseMechanics"] = db.relationship(
+        back_populates="character", uselist=False
+    )
+    text_fields: Mapped["TextFields"] = db.relationship(
+        back_populates="character", uselist=False
+    )
+    party: Mapped["Party"] = db.relationship(back_populates="character", uselist=False)
+    attributes: Mapped["Attributes"] = db.relationship(
+        back_populates="character", uselist=False
+    )
+    basic_skills: Mapped[list["BasicSkill"]] = db.relationship(
+        back_populates="character"
+    )
+    skills: Mapped[list["Skill"]] = db.relationship(back_populates="character")
+    talents: Mapped[list["Talent"]] = db.relationship(back_populates="character")
+    armours: Mapped[list["Armour"]] = db.relationship(back_populates="character")
+    weapons: Mapped[list["Weapon"]] = db.relationship(back_populates="character")
+    magics: Mapped[list["Magic"]] = db.relationship(back_populates="character")
+    trappings: Mapped[list["Trapping"]] = db.relationship(back_populates="character")
+
+    def get_attribute_total(self, attribute_name):
+        attribute = getattr(self.attributes, f"{attribute_name.lower()}_base", 0)
+        modifier = getattr(self.attributes, f"{attribute_name.lower()}_modifier", 0)
+        bonus = getattr(self.attributes, f"{attribute_name.lower()}_bonus", 0)
+        return attribute + modifier + bonus
+
+
 class BaseMechanics(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    character_id = db.Column(db.Integer, db.ForeignKey('character.id'))
-    experience = db.Column(db.Integer)
-    experience_spent = db.Column(db.Integer)
-    movement = db.Column(db.Integer)
-    fate_points = db.Column(db.Integer)
-    fortune_points = db.Column(db.Integer)
-    resilience = db.Column(db.Integer)
-    resolve = db.Column(db.Integer)
-    motivation = db.Column(db.Integer)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    character_id: Mapped[int] = mapped_column(
+        db.ForeignKey("character.id"), nullable=False, unique=True
+    )
+    character: Mapped["Character"] = db.relationship(back_populates="base_mechanics")
+    experience: Mapped[int]
+    experience_spent: Mapped[int]
+    movement: Mapped[int]
+    fate_points: Mapped[int]
+    fortune_points: Mapped[int]
+    resilience: Mapped[int]
+    resolve: Mapped[int]
+    motivation: Mapped[int]
+
 
 class TextFields(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    character_id = db.Column(db.Integer, db.ForeignKey('character.id'))
-    psychology = db.Column(db.String(500))
-    health_notes = db.Column(db.String(200))
-    short_term_ambition = db.Column(db.String(200))
-    long_term_ambition = db.Column(db.String(200))
-    doom = db.Column(db.String(500))
+    id: Mapped[int] = mapped_column(primary_key=True)
+    character_id: Mapped[int] = mapped_column(
+        db.ForeignKey("character.id"), nullable=False, unique=True
+    )
+    character: Mapped["Character"] = db.relationship(back_populates="text_fields")
+    psychology: Mapped[str]
+    health_notes: Mapped[str]
+    short_term_ambition: Mapped[str]
+    long_term_ambition: Mapped[str]
+    doom: Mapped[str]
+    campaign_notes: Mapped[str]
+
 
 class Party(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    character_id = db.Column(db.Integer, db.ForeignKey('character.id'))
-    name = db.Column(db.String(100))
-    members = db.Column(db.String(500))
-    ambitions = db.Column(db.String(200))
+    id: Mapped[int] = mapped_column(primary_key=True)
+    character_id: Mapped[int] = mapped_column(
+        db.ForeignKey("character.id"), nullable=False, unique=True
+    )
+    character: Mapped["Character"] = db.relationship(back_populates="party")
+    name: Mapped[str]
+    members: Mapped[str]
+    ambitions: Mapped[str]
 
-class Attribute(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    # character_id = db.Column(db.Integer, db.ForeignKey('character.id'))
-    name = db.Column(db.String(50))
-    base_value = db.Column(db.Integer)
-    advances = db.Column(db.Integer)
-    bonus = db.Column(db.Integer)
+
+class Attributes(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    character_id: Mapped[int] = mapped_column(
+        db.ForeignKey("character.id"), nullable=False, unique=True
+    )
+    character: Mapped["Character"] = db.relationship(back_populates="attributes")
+
+    ws_base: Mapped[int] = mapped_column(default=0)
+    ws_modifier: Mapped[int] = mapped_column(default=0)
+    ws_bonus: Mapped[int] = mapped_column(default=0)
+
+    bs_base: Mapped[int] = mapped_column(default=0)
+    bs_modifier: Mapped[int] = mapped_column(default=0)
+    bs_bonus: Mapped[int] = mapped_column(default=0)
+
+    s_base: Mapped[int] = mapped_column(default=0)
+    s_modifier: Mapped[int] = mapped_column(default=0)
+    s_bonus: Mapped[int] = mapped_column(default=0)
+
+    t_base: Mapped[int] = mapped_column(default=0)
+    t_modifier: Mapped[int] = mapped_column(default=0)
+    t_bonus: Mapped[int] = mapped_column(default=0)
+
+    i_base: Mapped[int] = mapped_column(default=0)
+    i_modifier: Mapped[int] = mapped_column(default=0)
+    i_bonus: Mapped[int] = mapped_column(default=0)
+
+    ag_base: Mapped[int] = mapped_column(default=0)
+    ag_modifier: Mapped[int] = mapped_column(default=0)
+    ag_bonus: Mapped[int] = mapped_column(default=0)
+
+    dex_base: Mapped[int] = mapped_column(default=0)
+    dex_modifier: Mapped[int] = mapped_column(default=0)
+    dex_bonus: Mapped[int] = mapped_column(default=0)
+
+    int_base: Mapped[int] = mapped_column(default=0)
+    int_modifier: Mapped[int] = mapped_column(default=0)
+    int_bonus: Mapped[int] = mapped_column(default=0)
+
+    wp_base: Mapped[int] = mapped_column(default=0)
+    wp_modifier: Mapped[int] = mapped_column(default=0)
+    wp_bonus: Mapped[int] = mapped_column(default=0)
+
+    fel_base: Mapped[int] = mapped_column(default=0)
+    fel_modifier: Mapped[int] = mapped_column(default=0)
+    fel_bonus: Mapped[int] = mapped_column(default=0)
 
 
 class BasicSkill(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    # character_id = db.Column(db.Integer, db.ForeignKey('character.id'))
-    name = db.Column(db.String(100))
-    base_value = db.Column(db.Integer)
-    advances = db.Column(db.Integer)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    character_id: Mapped[int] = mapped_column(db.ForeignKey("character.id"))
+    character: Mapped["Character"] = db.relationship(back_populates="basic_skills")
+    name: Mapped[str]
+    attribute: Mapped[str]
+    advances: Mapped[int]
+
+    @property
+    def base_value(self):
+        return self.character.get_attribute_total(self.attribute)
 
 
 class Skill(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    # character_id = db.Column(db.Integer, db.ForeignKey('character.id'))
-    name = db.Column(db.String(100))
-    base_value = db.Column(db.Integer)
-    advances = db.Column(db.Integer)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    character_id: Mapped[int] = mapped_column(db.ForeignKey("character.id"))
+    character: Mapped["Character"] = db.relationship(back_populates="skills")
+    name: Mapped[str]
+    attribute: Mapped[str]
+    advances: Mapped[int]
+
+    @property
+    def base_value(self):
+        return self.character.get_attribute_total(self.attribute)
 
 
 class Talent(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    # character_id = db.Column(db.Integer, db.ForeignKey('character.id'))
-    name = db.Column(db.String(100))
-    description = db.Column(db.String(500))
-    given_bonus = db.Column(db.Integer)
-    bonus_attribute = db.Column(db.String(50))
+    id: Mapped[int] = mapped_column(primary_key=True)
+    character_id: Mapped[int] = mapped_column(db.ForeignKey("character.id"))
+    character: Mapped["Character"] = db.relationship(back_populates="talents")
+    name: Mapped[str]
+    description: Mapped[str]
+    given_bonus: Mapped[int]
+    bonus_attribute: Mapped[str]
 
 
 class Armour(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    # character_id = db.Column(db.Integer, db.ForeignKey('character.id'))
-    name = db.Column(db.String(100))
-    encumbrance = db.Column(db.Integer)
-    armour_points = db.Column(db.Integer)
-    location = db.Column(db.String(50))
-    qualities = db.Column(db.String(200))
+    id: Mapped[int] = mapped_column(primary_key=True)
+    character_id: Mapped[int] = mapped_column(db.ForeignKey("character.id"))
+    character: Mapped["Character"] = db.relationship(back_populates="armours")
+    name: Mapped[str]
+    encumbrance: Mapped[int]
+    armour_points: Mapped[int]
+    location: Mapped[str]
+    qualities: Mapped[str]
 
 
 class Weapon(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    # character_id = db.Column(db.Integer, db.ForeignKey('character.id'))
-    name = db.Column(db.String(100))
-    encumbrance = db.Column(db.Integer)
-    range = db.Column(db.Integer)
-    damage = db.Column(db.String(50))
-    qualities = db.Column(db.String(200))
+    id: Mapped[int] = mapped_column(primary_key=True)
+    character_id: Mapped[int] = mapped_column(db.ForeignKey("character.id"))
+    character: Mapped["Character"] = db.relationship(back_populates="weapons")
+    name: Mapped[str]
+    encumbrance: Mapped[int]
+    range: Mapped[int]
+    damage: Mapped[str]
+    qualities: Mapped[str]
 
 
 class Magic(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    # character_id = db.Column(db.Integer, db.ForeignKey('character.id'))
-    name = db.Column(db.String(100))
-    casting_number = db.Column(db.Integer)
-    range = db.Column(db.String(50))
-    target = db.Column(db.String(50))
-    duration = db.Column(db.String(50))
-    effect = db.Column(db.String(50))
+    id: Mapped[int] = mapped_column(primary_key=True)
+    character_id: Mapped[int] = mapped_column(db.ForeignKey("character.id"))
+    character: Mapped["Character"] = db.relationship(back_populates="magics")
+    name: Mapped[str]
+    casting_number: Mapped[int]
+    range: Mapped[str]
+    target: Mapped[str]
+    duration: Mapped[str]
+    effect: Mapped[str]
 
 
 class Trapping(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    # character_id = db.Column(db.Integer, db.ForeignKey('character.id'))
-    name = db.Column(db.String(100))
-    encumbrance = db.Column(db.Integer)
-    quantity = db.Column(db.Integer)
-    description = db.Column(db.String(500))
+    id: Mapped[int] = mapped_column(primary_key=True)
+    character_id: Mapped[int] = mapped_column(db.ForeignKey("character.id"))
+    character: Mapped["Character"] = db.relationship(back_populates="trappings")
+    name: Mapped[str]
+    encumbrance: Mapped[int]
+    quantity: Mapped[int]
+    description: Mapped[str]
 
 
-class Note(db.Model):
-    id = db.Column(db.Integer)
-    # character_id = db.Column(db.Integer, db.ForeignKey('character.id'))
-    name = db.Column(db.String(100), primary_key=True)
-    note = db.Column(db.String(500))
-
-
-# Similar structures can be created for Skill, Weapon, Armor, Talent, and Trapping
