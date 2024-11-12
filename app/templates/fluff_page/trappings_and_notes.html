@@ -1,0 +1,27 @@
+<div class="flex part-container">
+  <div class="trappings-container">
+    <h4>Trappings</h4>
+    <table>
+      <th>Name</th><th>Enc</th><th>Quantity</th><th>Description</th>
+      {% for item in character.trappings %}
+      <tr>
+        <td><input type="text" name="trappings_name_{{ item.id}}" value="{{ item.name }}"></td>
+        <td><input type="number" name="trappings_enc_{{ item.id}}" value="{{ item.encumbrance }}"></td>
+        <td><input type="number" name="trappings_quantity_{{ item.id}}" value="{{ item.quantity }}"></td>
+        <td><textarea name="trappings_description_{{ item.id}}">{{ item.description }}</textarea></td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <td><input type="text" name="trappings_name_new"></td>
+        <td><input type="number" name="trappings_enc_new"></td>
+        <td><input type="number" name="trappings_quantity_new"></td>
+        <td><textarea name="trappings_description_new"></textarea></td>
+      </tr>
+    </table>
+  </div>
+  <div class="notes-container">
+    <h4>Notes</h4>
+    <textarea name="notes">{{ character.text_fields.notes }}</textarea>
+  </div>
+
+</div>

@@ -179,3 +179,76 @@ def check_character_connections(character_id):
         if connection is None:
             return False
     return True
+
+def save_static_data(form, character, app):
+    app.logger.info(f"saving static data for {character.name}")
+    character.name = form["name"]
+    character.species = form["species"]
+    character.career = form["career"]
+    character.status = form["status"]
+    character.careerpath = form["careerpath"]
+    character.age = form["age"]
+    character.height = form["height"]
+    character.hair = form["hair"]
+    character.eyes = form["eyes"]
+    character.gold = form["gold"]
+    character.silver = form["silver"]
+    character.brass = form["brass"]
+    character.text_fields.psychology = form["psychology"]
+    character.text_fields.short_term_ambition = form["short_term_ambition"]
+    character.text_fields.long_term_ambition = form["long_term_ambition"]
+    character.text_fields.doom = form["doom"]
+    character.party.name = form["party_name"]
+    character.party.members = form["party_members"]
+    character.party.ambitions = form["party_ambitions"]
+    
+        
+    
+
+def save_listed_data(table_to_write, form, character, database, app):
+    table_mapping = {
+        "basic_skills": BasicSkill,
+        "skills": Skill,
+        "talents": Talent,
+        "armours": Armour,
+        "weapons": Weapon,
+        "magics": Magic,
+        "trappings": Trapping,   
+    }
+    table_to_write = table_to_write.lower()
+    if table_to_write not in table_mapping:
+        app.logger.error(f"Invalid table name: {table_to_write}")
+        return
+    
+    app.logger.info(f"saving listed data for {character.name}")
+    new_row = {}
+    for key, value in form.items():
+        if key != table_to_write:
+            continue
+        row_id = key.split("_")[-1]
+        row_key = key.split("_")[1]
+        if row_id == "new":
+            new_row[row_key] = value
+        else:
+            row = db.session.scalars(
+                db.select(table_mapping[table_to_write])\
+                .where(table_mapping[table_to_write].id == row_id)\
+                .where(table_mapping[table_to_write].character_id == character.id)
+            ).one_or_none()
+            if row:
+                current_value = getattr(row, row_key)
+                if value != current_value:
+                    app.logger.info(f"changing {row_key} from {current_value} to {value}")
+                setattr(row, row_key, value)
+            else:
+                app.logger.error(f"Could not find row {row_id} in {table_to_write}")
+    if new_row:
+        new_row = table_mapping[table_to_write](character_id=character.id, **new_row)
+        database.session.add(new_row)
+        app.logger.info(f"Adding new row to {table_to_write}")
+        try:
+            database.session.commit()
+        except Exception as e:
+            database.session.rollback()
+            app.logger.error(e)
+    

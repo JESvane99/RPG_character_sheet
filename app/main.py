@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from models import db, Character, TextFields, Party
-from utils import check_character_connections, create_character_with_connections
+from utils import check_character_connections, create_character_with_connections, save_listed_data, save_static_data
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///CharSheet.db"
@@ -47,25 +47,10 @@ def character_page(id):
     if request.method == "POST":
         app.logger.info("POST request received")
         app.logger.info(request.form)
-        character.name = request.form["name"]
-        character.species = request.form["species"]
-        character.career = request.form["career"]
-        character.status = request.form["status"]
-        character.careerpath = request.form["careerpath"]
-        character.age = request.form["age"]
-        character.height = request.form["height"]
-        character.hair = request.form["hair"]
-        character.eyes = request.form["eyes"]
-        character.gold = request.form["gold"]
-        character.silver = request.form["silver"]
-        character.brass = request.form["brass"]
-        character.text_fields.psychology = request.form["psychology"]
-        character.text_fields.short_term_ambition = request.form["short_term_ambition"]
-        character.text_fields.long_term_ambition = request.form["long_term_ambition"]
-        character.text_fields.doom = request.form["doom"]
-        character.party.name = request.form["party_name"]
-        character.party.members = request.form["party_members"]
-        character.party.ambitions = request.form["party_ambitions"]
+        save_static_data(request.form, character, app)
+        save_listed_data("trappings", request.form, character, db, app)
+
+        
         try:
             db.session.commit()
         except Exception as e:
@@ -73,7 +58,7 @@ def character_page(id):
             app.logger.error(e)
         return redirect(f"/{id}/sheet-p1")
     else:
-        app.logger.info("Character found: " + str(character))
+        app.logger.info(f"{character.trappings}")
         return render_template("character_fluff_page.html", character=character)
 
 
