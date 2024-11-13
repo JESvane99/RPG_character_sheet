@@ -12,7 +12,8 @@
 {% block content %}
 <form action="/{{ character.id }}/sheet-p2" method="post" class="page-form" id="page">
   <div class="page-container">
-    hello
+    {% include 'skills_and_talents/characteristics.html' %}
+    
   </div>
 </form>
   
