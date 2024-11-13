@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+  <ul>
+    <li><a href="/{{ character.id }}/sheet-p1">Description & Trappings</a></li>
+    <li><a href="/{{ character.id }}/sheet-p2">Skills & Talents</a></li>
+    <li><a href="/{{ character.id }}/sheet-p3">Action</a></li>
+    <li><button form="page">Save Page</button></li>
+  </ul>
+{% endblock navbar %}
+
+{% block content %}
+<form action="/{{ character.id }}/sheet-p2" method="post" class="page-form" id="page">
+  <div class="page-container">
+    hello
+  </div>
+</form>
+  
+{% endblock content %}
