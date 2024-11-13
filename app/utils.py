@@ -180,6 +180,7 @@ def check_character_connections(character_id):
             return False
     return True
 
+
 def save_static_data(form, character, app):
     app.logger.info(f"saving static data for {character.name}")
     character.name = form["name"]
@@ -201,9 +202,41 @@ def save_static_data(form, character, app):
     character.party.name = form["party_name"]
     character.party.members = form["party_members"]
     character.party.ambitions = form["party_ambitions"]
-    
-        
-    
+
+
+def save_basic_skills(form, character):
+    pass
+
+
+def save_attributes(form, character):
+    pass
+
+
+def save_trappings(form, character, db):
+    for trap in character.trappings:
+        trap.name = form.get(f"trappings_name_{trap.id}")
+        trap.encumbrance = form.get(f"trappings_enc_{trap.id}")
+        trap.quantity = form.get(f"trappings_quantity_{trap.id}")
+        trap.description = form.get(f"trappings_description_{trap.id}")
+        if not trap.name:
+            db.session.delete(trap)
+
+    new_name = form.get("trappings_name_new")
+    if new_name:
+        new_encumbrance = form.get("trappings_enc_new")
+        new_quantity = form.get("trappings_quantity_new")
+        new_description = form.get("trappings_description_new")
+        new_trapping = Trapping(
+            character_id=character.id,
+            name=new_name,
+            encumbrance=new_encumbrance,
+            quantity=new_quantity,
+            description=new_description,
+        )
+        db.session.add(new_trapping)
+
+    db.session.commit()
+
 
 def save_listed_data(table_to_write, form, character, database, app):
     table_mapping = {
@@ -213,13 +246,13 @@ def save_listed_data(table_to_write, form, character, database, app):
         "armours": Armour,
         "weapons": Weapon,
         "magics": Magic,
-        "trappings": Trapping,   
+        "trappings": Trapping,
     }
     table_to_write = table_to_write.lower()
     if table_to_write not in table_mapping:
         app.logger.error(f"Invalid table name: {table_to_write}")
         return
-    
+
     app.logger.info(f"saving listed data for {character.name}")
     new_row = {}
     for key, value in form.items():
@@ -231,14 +264,16 @@ def save_listed_data(table_to_write, form, character, database, app):
             new_row[row_key] = value
         else:
             row = db.session.scalars(
-                db.select(table_mapping[table_to_write])\
-                .where(table_mapping[table_to_write].id == row_id)\
+                db.select(table_mapping[table_to_write])
+                .where(table_mapping[table_to_write].id == row_id)
                 .where(table_mapping[table_to_write].character_id == character.id)
             ).one_or_none()
             if row:
                 current_value = getattr(row, row_key)
                 if value != current_value:
-                    app.logger.info(f"changing {row_key} from {current_value} to {value}")
+                    app.logger.info(
+                        f"changing {row_key} from {current_value} to {value}"
+                    )
                 setattr(row, row_key, value)
             else:
                 app.logger.error(f"Could not find row {row_id} in {table_to_write}")
@@ -251,4 +286,3 @@ def save_listed_data(table_to_write, form, character, database, app):
         except Exception as e:
             database.session.rollback()
             app.logger.error(e)
-    

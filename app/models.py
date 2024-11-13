@@ -223,5 +223,3 @@ class Trapping(db.Model):
     encumbrance: Mapped[int]
     quantity: Mapped[int]
     description: Mapped[str]
-
-

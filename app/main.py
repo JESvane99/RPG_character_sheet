@@ -1,6 +1,14 @@
 from flask import Flask, render_template, request, redirect
 from models import db, Character, TextFields, Party
-from utils import check_character_connections, create_character_with_connections, save_listed_data, save_static_data
+from utils import (
+    check_character_connections,
+    create_character_with_connections,
+    save_attributes,
+    save_basic_skills,
+    save_listed_data,
+    save_static_data,
+    save_trappings,
+)
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///CharSheet.db"
@@ -48,9 +56,7 @@ def character_page(id):
         app.logger.info("POST request received")
         app.logger.info(request.form)
         save_static_data(request.form, character, app)
-        save_listed_data("trappings", request.form, character, db, app)
-
-        
+        save_trappings(request.form, character, db)
         try:
             db.session.commit()
         except Exception as e:
@@ -60,6 +66,47 @@ def character_page(id):
     else:
         app.logger.info(f"{character.trappings}")
         return render_template("character_fluff_page.html", character=character)
+
+
+@app.route("/<int:id>/sheet-p2", methods=["GET", "POST"])
+def skills_and_talents(id):
+    character = db.session.scalars(
+        db.select(Character).where(Character.id == id)
+    ).one_or_none()
+
+    if character is None:
+        app.logger.error("Character not found")
+        return redirect("/")
+
+    app.logger.info("Character found: " + character.name)
+
+    if not check_character_connections(id):
+        app.logger.error("Character connections not found")
+        return redirect("/")
+
+    if request.method == "POST":
+        app.logger.info("POST request received")
+        app.logger.info(request.form)
+        save_basic_skills(request.form, character)
+        save_attributes(request.form, character)
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            app.logger.error(e)
+        return redirect(f"/{id}/sheet-p2")
+    else:
+        return render_template(
+            "character_skills_talents_page.html", character=character
+        )
+
+
+@app.route("/<int:id>/sheet-p3", methods=["GET", "POST"])
+def action_and_equipment(id):
+    character = db.session.scalars(
+        db.select(Character).where(Character.id == id)
+    ).one_or_none()
+    return render_template("character_battle_page.html", character=character)
 
 
 if __name__ == "__main__":

@@ -164,7 +164,7 @@ ul.wealth li input {
 /* trappings and campaign notes design */
 .trappings-container {
     padding: 5px;
-    width: 100%;
+    width: 50%;
     text-align: left;
     border-right: 3px solid #000;
 }
@@ -180,6 +180,36 @@ ul.wealth li input {
 .trappings-container table td {
     border-right: 2px solid #000;
     text-align: center;
+}
+.trappings-container table td:last-child {
+    border-right: none;
+    width: 40%;
+}
+.trappings-container table td:first-child {
+    width: 40%;
+}
+.trappings-container input {
+    background: none;
+    border: none;
+    width: 100%;
+}
+.trappings-container textarea {
+    width: 100%;
+    resize: vertical;
+    border: none;
+    background: none;
+}
+
+.notes-container {
+    padding: 5px;
+    width: 50%;
+    text-align: center;
+}
+.notes-container textarea {
+    width: 100%;
+    resize: vertical;
+    border: none;
+    background: none;
 }
 
 /* doom design */
