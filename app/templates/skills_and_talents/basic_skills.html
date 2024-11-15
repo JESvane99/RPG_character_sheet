@@ -1,0 +1,23 @@
+<div class="basic-skills-container">
+<h4 class="basic-skills-header">Basic Skills</h4>
+<table class="basic-skills-table">
+  <tr>
+    <th class="name-column">Name</th>
+    <th class="trait-column">Trait</th>
+    <th class="adv-column">Adv</th>
+    <th class="skill-column">Skill</th>
+  </tr>
+  {% for item in character.basic_skills|sort(attribute="name") %}
+    <tr>
+      <td class="name-column">{{ item.name }}</td>
+      {% if item.attribute in ("ag","dex","int","fel") %}
+      <td class="trait-column">{{ item.attribute|title }}</td>
+      {% else %}
+      <td class="trait-column">{{ item.attribute|upper }}</td>
+      {% endif %}
+      <td class="adv-column"><input type="number" name="{{ item.name|lower }}-adv" value="{{ item.advances }}"></td>
+      <td class="skill-column">{{ item.total }}</td>
+    </tr>
+  {% endfor %}
+</table>
+</div>

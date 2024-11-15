@@ -50,9 +50,9 @@ class Character(db.Model):
     trappings: Mapped[list["Trapping"]] = db.relationship(back_populates="character")
 
     def get_attribute_total(self, attribute_name):
-        attribute = getattr(self.attributes, f"{attribute_name.lower()}_base", 0)
-        modifier = getattr(self.attributes, f"{attribute_name.lower()}_modifier", 0)
-        bonus = getattr(self.attributes, f"{attribute_name.lower()}_bonus", 0)
+        attribute = int(getattr(self.attributes, f"{attribute_name.lower()}_base", 0))
+        modifier = int(getattr(self.attributes, f"{attribute_name.lower()}_modifier", 0))
+        bonus = int(getattr(self.attributes, f"{attribute_name.lower()}_bonus", 0))
         return attribute + modifier + bonus
 
 
@@ -151,11 +151,15 @@ class BasicSkill(db.Model):
     character: Mapped["Character"] = db.relationship(back_populates="basic_skills")
     name: Mapped[str]
     attribute: Mapped[str]
-    advances: Mapped[int]
+    advances: Mapped[int] = mapped_column(default=0)
 
     @property
     def base_value(self):
-        return self.character.get_attribute_total(self.attribute)
+        return int(self.character.get_attribute_total(self.attribute))
+    
+    @property
+    def total(self):
+        return self.base_value + self.advances
 
 
 class Skill(db.Model):
@@ -164,11 +168,15 @@ class Skill(db.Model):
     character: Mapped["Character"] = db.relationship(back_populates="skills")
     name: Mapped[str]
     attribute: Mapped[str]
-    advances: Mapped[int]
+    advances: Mapped[int] = mapped_column(default=0)
 
     @property
     def base_value(self):
         return self.character.get_attribute_total(self.attribute)
+    
+    @property
+    def total(self):
+        return self.base_value + self.advances
 
 
 class Talent(db.Model):

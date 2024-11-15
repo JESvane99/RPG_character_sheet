@@ -223,6 +223,66 @@ ul.wealth li input {
     padding: 5px;
 }
 
+/* Characteristics table design */
+.characteristics-container {
+    width: 100%;
+    border-bottom: 3px solid #000;
+}
+h4.characteristics_header {
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+    border-bottom: 2px solid #000000;
+}
 
-/* stats design */
+.characteristics-table {
+    padding: 5px;
+    margin: 5px;
+    border-collapse: collapse;
+    border-style: hidden;
+}
+.characteristics-table th, .characteristics-table td {
+    border: 1px solid #000;
+}
+.characteristics-table th {
+    text-align: center;
+}
+.characteristics-table td {
+    text-align: left;
+}
 
+.characteristics-table input,
+.basic-skills-table input {
+    border: none;
+    background: none;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.basic-skills-table {
+    border-collapse: collapse;
+    border-style: hidden;
+}
+
+.basic-skills-table .name-column {
+    width: 40%;
+}
+
+.basic-skills-table .trait-column {
+    text-align: center;
+    width: 20%;
+}
+
+.basic-skills-table .adv-column {
+    width: 20%;
+}
+
+.basic-skills-table .skill-column {
+    text-align: center;
+    width: 20%;
+}
+
+.basic-skills-table td {
+    border: 1px solid #000;
+}

@@ -119,10 +119,10 @@ def create_character_with_connections(session, name):
         {"name": "Art", "attribute": "dex", "advances": 0},
         {"name": "Athletics", "attribute": "ag", "advances": 0},
         {"name": "Bribery", "attribute": "fel", "advances": 0},
-        {"name": "Charm", "attribute": "fel", "advances": 5},
-        {"name": "Charm Animal", "attribute": "wp", "advances": 10},
+        {"name": "Charm", "attribute": "fel", "advances": 0},
+        {"name": "Charm Animal", "attribute": "wp", "advances": 0},
         {"name": "Climb", "attribute": "s", "advances": 0},
-        {"name": "Cool", "attribute": "wp", "advances": 5},
+        {"name": "Cool", "attribute": "wp", "advances": 0},
         {"name": "Consume Alcohol", "attribute": "t", "advances": 0},
         {"name": "Dodge", "attribute": "ag", "advances": 0},
         {"name": "Drive", "attribute": "ag", "advances": 0},
@@ -133,11 +133,11 @@ def create_character_with_connections(session, name):
         {"name": "Haggle", "attribute": "fel", "advances": 0},
         {"name": "Intimidate", "attribute": "s", "advances": 0},
         {"name": "Intuition", "attribute": "i", "advances": 0},
-        {"name": "Leadership", "attribute": "fel", "advances": 3},
-        {"name": "Melee (Basic)", "attribute": "ws", "advances": 15},
+        {"name": "Leadership", "attribute": "fel", "advances": 0},
+        {"name": "Melee (Basic)", "attribute": "ws", "advances": 0},
         {"name": "Navigation", "attribute": "int", "advances": 0},
         {"name": "Outdoor Survival", "attribute": "int", "advances": 0},
-        {"name": "Perception", "attribute": "i", "advances": 2},
+        {"name": "Perception", "attribute": "i", "advances": 0},
         {"name": "Ride", "attribute": "ag", "advances": 0},
         {"name": "Row", "attribute": "s", "advances": 0},
         {"name": "Stealth", "attribute": "ag", "advances": 0},
@@ -205,11 +205,56 @@ def save_static_data(form, character, app):
 
 
 def save_basic_skills(form, character):
-    pass
+    for skill in character.basic_skills:
+        skill_advances = form.get(f"{skill.name.lower()}-adv")
+        if skill_advances is not None:
+            skill.advances = int(skill_advances)
+    db.session.commit()
 
 
 def save_attributes(form, character):
-    pass
+    attributes = character.attributes
+    attributes.ws_base = int(form.get("ws-init", attributes.ws_base))
+    attributes.ws_modifier = int(form.get("ws-adv", attributes.ws_modifier))
+    attributes.ws_bonus = int(form.get("ws-bonus", attributes.ws_bonus))
+
+    attributes.bs_base = int(form.get("bs-init", attributes.bs_base))
+    attributes.bs_modifier = int(form.get("bs-adv", attributes.bs_modifier))
+    attributes.bs_bonus = int(form.get("bs-bonus", attributes.bs_bonus))
+
+    attributes.s_base = int(form.get("s-init", attributes.s_base))
+    attributes.s_modifier = int(form.get("s-adv", attributes.s_modifier))
+    attributes.s_bonus = int(form.get("s-bonus", attributes.s_bonus))
+
+    attributes.t_base = int(form.get("t-init", attributes.t_base))
+    attributes.t_modifier = int(form.get("t-adv", attributes.t_modifier))
+    attributes.t_bonus = int(form.get("t-bonus", attributes.t_bonus))
+
+    attributes.i_base = int(form.get("i-init", attributes.i_base))
+    attributes.i_modifier = int(form.get("i-adv", attributes.i_modifier))
+    attributes.i_bonus = int(form.get("i-bonus", attributes.i_bonus))
+
+    attributes.ag_base = int(form.get("ag-init", attributes.ag_base))
+    attributes.ag_modifier = int(form.get("ag-adv", attributes.ag_modifier))
+    attributes.ag_bonus = int(form.get("ag-bonus", attributes.ag_bonus))
+
+    attributes.dex_base = int(form.get("dex-init", attributes.dex_base))
+    attributes.dex_modifier = int(form.get("dex-adv", attributes.dex_modifier))
+    attributes.dex_bonus = int(form.get("dex-bonus", attributes.dex_bonus))
+
+    attributes.int_base = int(form.get("int-init", attributes.int_base))
+    attributes.int_modifier = int(form.get("int-adv", attributes.int_modifier))
+    attributes.int_bonus = int(form.get("int-bonus", attributes.int_bonus))
+
+    attributes.wp_base = int(form.get("wp-init", attributes.wp_base))
+    attributes.wp_modifier = int(form.get("wp-adv", attributes.wp_modifier))
+    attributes.wp_bonus = int(form.get("wp-bonus", attributes.wp_bonus))
+
+    attributes.fel_base = int(form.get("fel-init", attributes.fel_base))
+    attributes.fel_modifier = int(form.get("fel-adv", attributes.fel_modifier))
+    attributes.fel_bonus = int(form.get("fel-bonus", attributes.fel_bonus))
+
+    db.session.commit()
 
 
 def save_trappings(form, character, db):
@@ -238,51 +283,25 @@ def save_trappings(form, character, db):
     db.session.commit()
 
 
-def save_listed_data(table_to_write, form, character, database, app):
-    table_mapping = {
-        "basic_skills": BasicSkill,
-        "skills": Skill,
-        "talents": Talent,
-        "armours": Armour,
-        "weapons": Weapon,
-        "magics": Magic,
-        "trappings": Trapping,
-    }
-    table_to_write = table_to_write.lower()
-    if table_to_write not in table_mapping:
-        app.logger.error(f"Invalid table name: {table_to_write}")
-        return
+def save_skills(form, character, db):
+    for skill in character.skills:
+        skill.name = form.get(f"skills_name_{skill.id}")
+        skill.attribute = form.get(f"skills_attribute_{skill.id}")
+        skill.advances = form.get(f"skills_advances_{skill.id}")
+        if not skill.name:
+            db.session.delete(skill)
 
-    app.logger.info(f"saving listed data for {character.name}")
-    new_row = {}
-    for key, value in form.items():
-        if key != table_to_write:
-            continue
-        row_id = key.split("_")[-1]
-        row_key = key.split("_")[1]
-        if row_id == "new":
-            new_row[row_key] = value
-        else:
-            row = db.session.scalars(
-                db.select(table_mapping[table_to_write])
-                .where(table_mapping[table_to_write].id == row_id)
-                .where(table_mapping[table_to_write].character_id == character.id)
-            ).one_or_none()
-            if row:
-                current_value = getattr(row, row_key)
-                if value != current_value:
-                    app.logger.info(
-                        f"changing {row_key} from {current_value} to {value}"
-                    )
-                setattr(row, row_key, value)
-            else:
-                app.logger.error(f"Could not find row {row_id} in {table_to_write}")
-    if new_row:
-        new_row = table_mapping[table_to_write](character_id=character.id, **new_row)
-        database.session.add(new_row)
-        app.logger.info(f"Adding new row to {table_to_write}")
-        try:
-            database.session.commit()
-        except Exception as e:
-            database.session.rollback()
-            app.logger.error(e)
+    new_name = form.get("skills_name_new")
+    if new_name:
+        new_attribute = form.get("skills_attribute_new").lower()
+        new_advances = form.get("skills_advances_new") or 0
+        new_skill = Skill(
+            character_id=character.id,
+            name=new_name,
+            attribute=new_attribute,
+            advances=new_advances,
+        )
+        db.session.add(new_skill)
+
+    db.session.commit()
+    

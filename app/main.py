@@ -5,7 +5,7 @@ from utils import (
     create_character_with_connections,
     save_attributes,
     save_basic_skills,
-    save_listed_data,
+    save_skills,
     save_static_data,
     save_trappings,
 )
@@ -89,6 +89,7 @@ def skills_and_talents(id):
         app.logger.info(request.form)
         save_basic_skills(request.form, character)
         save_attributes(request.form, character)
+        save_skills(request.form, character, db)
         try:
             db.session.commit()
         except Exception as e:
