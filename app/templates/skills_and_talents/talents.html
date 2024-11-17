@@ -1,0 +1,25 @@
+<div class="skills-container">
+  <h4 class="talents-header">Talents</h4>
+  <table class="talents-table">
+    <tr>
+      <th class="name-column">Name</th>
+      <th class="trait-column">Description</th>
+      <th class="adv-column">Attribute</th>
+      <th class="skill-column">Bonus</th>
+    </tr>
+    {% for item in character.talents|sort(attribute="name") %}
+    <tr>
+      <td><input type="text" name="talents_name_{{ item.id }}" value="{{ item.name }}"></td>
+      <td><input type="text" name="talents_description_{{ item.id }}" value="{{ item.description }}"></td>
+      <td><input type="text" name="talents_attribute_{{ item.id }}" value="{{ item.bonus_attribute }}"></td>
+      <td><input type="number" name="talents_bonus_value_{{ item.id}}" value="{{ item.given_bonus }}"></td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td><input type="text" name="talents_name_new"></td>
+      <td><input type="text" name="talents_description_new"></td>
+      <td><input type="text" name="talents_attribute_new"></td>
+      <td><input type="number" name="talents_bonus_value_new"></td>
+    </tr>
+  </table>
+</div>
