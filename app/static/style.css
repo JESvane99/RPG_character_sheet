@@ -256,7 +256,8 @@ h4.skills-and-talents-header {
     text-align: center;
 }
 .skills-and-talents-table input,
-.talents-table input {
+.talents-table input,
+.battle-table input {
     border: none;
     background: none;
     width: 100%;
@@ -265,7 +266,8 @@ h4.skills-and-talents-header {
 }
 
 .skills-and-talents-table,
-.talents-table {
+.talents-table,
+.battle-table {
     width: 100%;
     border-collapse: collapse;
     border-style: hidden;
@@ -290,7 +292,8 @@ h4.skills-and-talents-header {
 }
 
 .skills-and-talents-table td,
-.talents-table td {
+.talents-table td,
+.battle-table td {
     border: 1px solid #000;
 }
 
@@ -308,3 +311,53 @@ h4.skills-and-talents-header {
     border-right: none;
 }
 
+.battle-table .armor-name {
+    width: 30%;
+}
+.battle-table .armor-encumbrance {
+    width: 10%;
+}
+.battle-table .armor-points {
+    width: 10%;
+}
+.battle-table .armor-location {
+    width: 10%;
+}
+.battle-table .armor-qualities {
+    width: 40%;
+}
+
+.battle-table .weapon-name {
+    width: 30%;
+}
+.battle-table .weapon-encumbrance {
+    width: 10%;
+}
+.battle-table .weapon-range {
+    width: 10%;
+}
+.battle-table .weapon-damage {
+    width: 10%;
+}
+.battle-table .weapon-qualities {
+    width: 40%;
+}
+
+.battle-table .spell-name {
+    width: 30%;
+}
+.battle-table .spell-cn {
+    width: 10%;
+}
+.battle-table .spell-range {
+    width: 10%;
+}
+.battle-table .spell-target {
+    width: 10%;
+}
+.battle-table .spell-duration {
+    width: 10%;
+}
+.battle-table .spell-effect {
+    width: 30%;
+}

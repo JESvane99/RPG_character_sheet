@@ -1,0 +1,31 @@
+<div class="battle-container">
+  <h4>SPELLS AND PRAYERS</h4>
+  <table class="battle-table">
+    <tr>
+      <th class="spell-name">Spell/Prayer</th>
+      <th class="spell-cn">CN</th>
+      <th class="spell-range">Range</th>
+      <th class="spell-target">Target</th>
+      <th class="spell-dur">Duration</th>
+      <th class="spell-effect">Effect</th>
+    </tr>
+    {% for item in character.spells_and_prayers|sort(attribute="name") %}
+    <tr>
+      <td><input type="text" name="spell_name_{{ item.id }}" value="{{ item.name }}"></td>
+      <td><input type="number" name="spell_cn_{{ item.id }}" value="{{ item.casting_number }}"></td>
+      <td><input type="text" name="spell_range_{{ item.id }}" value="{{ item.range }}"></td>
+      <td><input type="text" name="spell_target_{{ item.id }}" value="{{ item.target }}"></td>
+      <td><input type="text" name="spell_duration_{{ item.id }}" value="{{ item.duration }}"></td>
+      <td><input type="text" name="spell_effect_{{ item.id }}" value="{{ item.effect }}"></td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td><input type="text" name="spell_name_new"></td>
+      <td><input type="number" name="spell_cn_new"></td>
+      <td><input type="text" name="spell_range_new"></td>
+      <td><input type="text" name="spell_target_new"></td>
+      <td><input type="text" name="spell_duration_new"></td>
+      <td><input type="text" name="spell_effect_new"></td>
+    </tr>
+  </table>
+</div>

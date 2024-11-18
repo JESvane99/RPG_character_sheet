@@ -1,0 +1,28 @@
+<div class="battle-container">
+<h4>WEAPONS</h4>
+<table class="battle-table">
+<tr>
+<th class="weapon-name">Weapon</th>
+<th class="weapon-encumbrance">Enc</th>
+<th class="weapon-range">Range</th>
+<th class="weapon-damage">Damage</th>
+<th class="weapon-qual">Qualities</th>
+</tr>
+{% for item in character.weapons|sort(attribute="name") %}
+<tr>
+<td><input type="text" name="weapon_name_{{ item.id }}" value="{{ item.name }}"></td>
+<td><input type="number" name="weapon_encumbrance_{{ item.id }}" value="{{ item.encumbrance }}"></td>
+<td><input type="text" name="weapon_range_{{ item.id }}" value="{{ item.range }}"></td>
+<td><input type="text" name="weapon_damage_{{ item.id }}" value="{{ item.damage }}"></td>
+<td><input type="text" name="weapon_qualities_{{ item.id }}" value="{{ item.qualities }}"></td>
+</tr>
+{% endfor %}
+<tr>
+<td><input type="text" name="weapon_name_new"></td>
+<td><input type="number" name="weapon_encumbrance_new"></td>
+<td><input type="text" name="weapon_range_new"></td>
+<td><input type="text" name="weapon_damage_new"></td>
+<td><input type="text" name="weapon_qualities_new"></td>
+</tr>
+</table>
+</div>
