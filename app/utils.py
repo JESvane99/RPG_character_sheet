@@ -153,6 +153,10 @@ def create_character_with_connections(session, name):
         raise e
     return new_character
 
+def attribute_case_adjustment(attribute):
+    if attribute.lower() in ("ws", "bs", "wp"):
+        return attribute.upper()
+    return attribute.capitalize()
 
 def check_character_connections(character_id):
     character = db.session.scalars(
@@ -286,14 +290,18 @@ def save_trappings(form, character, db):
 def save_skills(form, character, db):
     for skill in character.skills:
         skill.name = form.get(f"skills_name_{skill.id}")
-        skill.attribute = form.get(f"skills_attribute_{skill.id}")
+        skill.attribute = attribute_case_adjustment(
+            form.get(f"skills_attribute_{skill.id}")
+        )
         skill.advances = form.get(f"skills_advances_{skill.id}")
         if not skill.name:
             db.session.delete(skill)
 
     new_name = form.get("skills_name_new")
     if new_name:
-        new_attribute = form.get("skills_attribute_new").lower()
+        new_attribute = attribute_case_adjustment(
+            form.get("skills_attribute_new").lower()
+        )
         new_advances = form.get("skills_advances_new") or 0
         new_skill = Skill(
             character_id=character.id,
@@ -309,7 +317,9 @@ def save_talents(form, character, db):
     for talent in character.talents:
         talent.name = form.get(f"talents_name_{talent.id}")
         talent.description = form.get(f"talents_description_{talent.id}")
-        talent.bonus_attribute = form.get(f"talents_attribute_{talent.id}")
+        talent.bonus_attribute = attribute_case_adjustment(
+            form.get(f"talents_attribute_{talent.id}")
+        )
         talent.given_bonus = form.get(f"talents_bonus_value_{talent.id}")
         if not talent.name:
             db.session.delete(talent)
@@ -317,8 +327,10 @@ def save_talents(form, character, db):
     new_name = form.get("talents_name_new")
     if new_name:
         new_description = form.get("talents_description_new")
+        new_bonus_attribute = attribute_case_adjustment(
+            form.get("talents_attribute_new")
+        )
         new_bonus = form.get("talents_bonus_value_new")
-        new_bonus_attribute = form.get("talents_attribute_new")
         new_talent = Talent(
             character_id=character.id,
             name=new_name,
