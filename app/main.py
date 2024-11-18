@@ -7,6 +7,7 @@ from utils import (
     save_basic_skills,
     save_skills,
     save_static_data,
+    save_talents,
     save_trappings,
 )
 
@@ -90,6 +91,7 @@ def skills_and_talents(id):
         save_basic_skills(request.form, character)
         save_attributes(request.form, character)
         save_skills(request.form, character, db)
+        save_talents(request.form, character, db)
         try:
             db.session.commit()
         except Exception as e:

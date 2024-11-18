@@ -305,3 +305,27 @@ def save_skills(form, character, db):
 
     db.session.commit()
     
+def save_talents(form, character, db):
+    for talent in character.talents:
+        talent.name = form.get(f"talents_name_{talent.id}")
+        talent.description = form.get(f"talents_description_{talent.id}")
+        talent.bonus_attribute = form.get(f"talents_attribute_{talent.id}")
+        talent.given_bonus = form.get(f"talents_bonus_value_{talent.id}")
+        if not talent.name:
+            db.session.delete(talent)
+
+    new_name = form.get("talents_name_new")
+    if new_name:
+        new_description = form.get("talents_description_new")
+        new_bonus = form.get("talents_bonus_value_new")
+        new_bonus_attribute = form.get("talents_attribute_new")
+        new_talent = Talent(
+            character_id=character.id,
+            name=new_name,
+            description=new_description,
+            given_bonus=new_bonus,
+            bonus_attribute=new_bonus_attribute,
+        )
+        db.session.add(new_talent)
+
+    db.session.commit()
