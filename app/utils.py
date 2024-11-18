@@ -1,4 +1,5 @@
 from models import (
+    Ammunition,
     db,
     Character,
     BaseMechanics,
