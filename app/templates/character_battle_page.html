@@ -12,7 +12,9 @@
 {% block content %}
 <form action="/{{ character.id }}/sheet-p3" method="post" class="page-form" id="page">
   <div class="page-container">
-    hello
+    {% include 'battle_page/weapons.html' %}
+    {% include 'battle_page/armor.html' %}  <!-- Changed from armour.html to armor.html -->
+    {% include 'battle_page/spells_and_prayers.html' %}
   </div>
 </form>
   

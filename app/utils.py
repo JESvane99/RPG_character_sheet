@@ -8,7 +8,7 @@ from models import (
     BasicSkill,
     Skill,
     Talent,
-    Armour,
+    Armor,  # Changed from Armour to Armor
     Weapon,
     Magic,
     Trapping,
@@ -146,6 +146,8 @@ def create_character_with_connections(session, name):
     for skill_data in basic_skills_data:
         skill = BasicSkill(character_id=new_character.id, **skill_data)
         session.add(skill)
+        
+    spells_and_prayers = Magic(character_id=new_character.id)
     try:
         session.commit()
     except Exception as e:
@@ -173,9 +175,9 @@ def check_character_connections(character_id):
         character.basic_skills,
         character.skills,
         character.talents,
-        character.armours,
+        character.armor,  # Changed from armours to armor
         character.weapons,
-        character.magics,
+        character.spells_and_prayers,
         character.trappings,
     ]
 
@@ -339,5 +341,92 @@ def save_talents(form, character, db):
             bonus_attribute=new_bonus_attribute,
         )
         db.session.add(new_talent)
+
+    db.session.commit()
+
+def save_armor(form, character, db):
+    for armor in character.armor:
+        armor.name = form.get(f"armor_name_{armor.id}")
+        armor.encumbrance = form.get(f"armor_encumbrance_{armor.id}")
+        armor.armor_points = form.get(f"armor_points_{armor.id}")
+        armor.location = form.get(f"armor_location_{armor.id}")
+        armor.qualities = form.get(f"armor_qualities_{armor.id}")
+        if not armor.name:
+            db.session.delete(armor)
+
+    new_name = form.get("armor_name_new")
+    if new_name:
+        new_encumbrance = form.get("armor_encumbrance_new")
+        new_armor_points = form.get("armor_points_new")
+        new_location = form.get("armor_location_new")
+        new_qualities = form.get("armor_qualities_new")
+        new_armor = Armor(
+            character_id=character.id,
+            name=new_name,
+            encumbrance=new_encumbrance,
+            armor_points=new_armor_points,
+            location=new_location,
+            qualities=new_qualities,
+        )
+        db.session.add(new_armor)
+
+    db.session.commit()
+
+def save_weapons(form, character, db):
+    for weapon in character.weapons:
+        weapon.name = form.get(f"weapon_name_{weapon.id}")
+        weapon.encumbrance = form.get(f"weapon_encumbrance_{weapon.id}")
+        weapon.range = form.get(f"weapon_range_{weapon.id}")
+        weapon.damage = form.get(f"weapon_damage_{weapon.id}")
+        weapon.qualities = form.get(f"weapon_qualities_{weapon.id}")
+        if not weapon.name:
+            db.session.delete(weapon)
+
+    new_name = form.get("weapon_name_new")
+    if new_name:
+        new_encumbrance = form.get("weapon_encumbrance_new")
+        new_range = form.get("weapon_range_new")
+        new_damage = form.get("weapon_damage_new")
+        new_qualities = form.get("weapon_qualities_new")
+        new_weapon = Weapon(
+            character_id=character.id,
+            name=new_name,
+            encumbrance=new_encumbrance,
+            range=new_range,
+            damage=new_damage,
+            qualities=new_qualities,
+        )
+        db.session.add(new_weapon)
+
+    db.session.commit()
+
+def save_spells_and_prayers(form, character, db):
+    for spell in character.spells_and_prayers:
+        spell.name = form.get(f"spell_name_{spell.id}")
+        spell.casting_number = form.get(f"spell_cn_{spell.id}")
+        spell.range = form.get(f"spell_range_{spell.id}")
+        spell.target = form.get(f"spell_target_{spell.id}")
+        spell.duration = form.get(f"spell_duration_{spell.id}")
+        spell.effect = form.get(f"spell_effect_{spell.id}")
+        if not spell.name:
+            db.session.delete(spell)
+
+    new_name = form.get("spell_name_new")
+    if new_name:
+        new_casting_number = form.get("spell_cn_new")
+        new_range = form.get("spell_range_new")
+        new_target = form.get("spell_target_new")
+        new_duration = form.get("spell_duration_new")
+        new_effect = form.get("spell_effect_new")
+        new_spell = Magic(
+            character_id=character.id,
+            name=new_name,
+            casting_number=new_casting_number,
+            range=new_range,
+            target=new_target,
+            duration=new_duration,
+            effect=new_effect,
+        )
+        db.session.add(new_spell)
 
     db.session.commit()

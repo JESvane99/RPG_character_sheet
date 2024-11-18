@@ -44,9 +44,9 @@ class Character(db.Model):
     )
     skills: Mapped[list["Skill"]] = db.relationship(back_populates="character")
     talents: Mapped[list["Talent"]] = db.relationship(back_populates="character")
-    armours: Mapped[list["Armour"]] = db.relationship(back_populates="character")
+    armor: Mapped[list["Armor"]] = db.relationship(back_populates="character")  # Changed from Armour to Armor
     weapons: Mapped[list["Weapon"]] = db.relationship(back_populates="character")
-    magics: Mapped[list["Magic"]] = db.relationship(back_populates="character")
+    spells_and_prayers: Mapped[list["Magic"]] = db.relationship(back_populates="character")
     trappings: Mapped[list["Trapping"]] = db.relationship(back_populates="character")
 
     def get_attribute_total(self, attribute_name):
@@ -189,13 +189,13 @@ class Talent(db.Model):
     bonus_attribute: Mapped[str]
 
 
-class Armour(db.Model):
+class Armor(db.Model):  # Changed from Armour to Armor
     id: Mapped[int] = mapped_column(primary_key=True)
     character_id: Mapped[int] = mapped_column(db.ForeignKey("character.id"))
-    character: Mapped["Character"] = db.relationship(back_populates="armours")
+    character: Mapped["Character"] = db.relationship(back_populates="armor")  # Changed from armours to armor
     name: Mapped[str]
     encumbrance: Mapped[int]
-    armour_points: Mapped[int]
+    armor_points: Mapped[int]  # Changed from armour_points to armor_points
     location: Mapped[str]
     qualities: Mapped[str]
 
@@ -214,7 +214,7 @@ class Weapon(db.Model):
 class Magic(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     character_id: Mapped[int] = mapped_column(db.ForeignKey("character.id"))
-    character: Mapped["Character"] = db.relationship(back_populates="magics")
+    character: Mapped["Character"] = db.relationship(back_populates="spells_and_prayers")
     name: Mapped[str]
     casting_number: Mapped[int]
     range: Mapped[str]

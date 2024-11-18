@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-from models import db, Character, TextFields, Party
+from models import db, Character, TextFields, Party, Armor  # Changed from Armour to Armor
 from utils import (
     check_character_connections,
     create_character_with_connections,
@@ -9,6 +9,9 @@ from utils import (
     save_static_data,
     save_talents,
     save_trappings,
+    save_armor,
+    save_weapons,
+    save_spells_and_prayers,
 )
 
 app = Flask(__name__)
@@ -109,7 +112,31 @@ def action_and_equipment(id):
     character = db.session.scalars(
         db.select(Character).where(Character.id == id)
     ).one_or_none()
-    return render_template("character_battle_page.html", character=character)
+
+    if character is None:
+        app.logger.error("Character not found")
+        return redirect("/")
+
+    app.logger.info("Character found: " + character.name)
+
+    if not check_character_connections(id):
+        app.logger.error("Character connections not found")
+        return redirect("/")
+
+    if request.method == "POST":
+        app.logger.info("POST request received")
+        app.logger.info(request.form)
+        save_armor(request.form, character, db)
+        save_weapons(request.form, character, db)
+        save_spells_and_prayers(request.form, character, db)
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            app.logger.error(e)
+        return redirect(f"/{id}/sheet-p3")
+    else:
+        return render_template("character_battle_page.html", character=character)
 
 
 if __name__ == "__main__":
