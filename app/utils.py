@@ -430,3 +430,25 @@ def save_spells_and_prayers(form, character, db):
         db.session.add(new_spell)
 
     db.session.commit()
+
+def save_ammunition(form, character, db):
+    for ammo in character.ammunition:
+        ammo.name = form.get(f"ammo_name_{ammo.id}")
+        ammo.quantity = form.get(f"ammo_quantity_{ammo.id}")
+        ammo.qualities = form.get(f"ammo_qualities_{ammo.id}")
+        if not ammo.name:
+            db.session.delete(ammo)
+
+    new_name = form.get("ammo_name_new")
+    if new_name:
+        new_quantity = form.get("ammo_quantity_new")
+        new_qualities = form.get("ammo_qualities_new")
+        new_ammo = Ammunition(
+            character_id=character.id,
+            name=new_name,
+            quantity=new_quantity,
+            qualities=new_qualities,
+        )
+        db.session.add(new_ammo)
+
+    db.session.commit()

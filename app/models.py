@@ -48,6 +48,7 @@ class Character(db.Model):
     weapons: Mapped[list["Weapon"]] = db.relationship(back_populates="character")
     spells_and_prayers: Mapped[list["Magic"]] = db.relationship(back_populates="character")
     trappings: Mapped[list["Trapping"]] = db.relationship(back_populates="character")
+    ammunition: Mapped[list["Ammunition"]] = db.relationship(back_populates="character")
 
     def get_attribute_total(self, attribute_name):
         attribute = int(getattr(self.attributes, f"{attribute_name.lower()}_base", 0))
@@ -231,3 +232,12 @@ class Trapping(db.Model):
     encumbrance: Mapped[int]
     quantity: Mapped[int]
     description: Mapped[str]
+
+
+class Ammunition(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    character_id: Mapped[int] = mapped_column(db.ForeignKey("character.id"))
+    character: Mapped["Character"] = db.relationship(back_populates="ammunition")
+    name: Mapped[str]
+    quantity: Mapped[int]
+    qualities: Mapped[str]

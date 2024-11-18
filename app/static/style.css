@@ -34,6 +34,9 @@ body {
     padding-right: 5px;
     border-bottom: 5px solid #0a1033;
 }
+.page-container > div:last-child {
+    border-bottom: none;
+}
 
 img {
     width: 100%;
@@ -257,7 +260,8 @@ h4.skills-and-talents-header {
 }
 .skills-and-talents-table input,
 .talents-table input,
-.battle-table input {
+.battle-table input,
+.mechanics-table input {
     border: none;
     background: none;
     width: 100%;
@@ -303,13 +307,17 @@ h4.skills-and-talents-header {
     justify-content: space-evenly;
 }
 
-.flex-section div {
+.flex-section > div {
     padding: 5px;
     border-right: 5px solid #0a1033;
 }
-.flex-section div:last-child {
+.flex-section > div:last-child {
     border-right: none;
 }
+.two-block {
+    width: 50%;
+}
+
 
 .battle-table .armor-name {
     width: 30%;
@@ -361,3 +369,40 @@ h4.skills-and-talents-header {
 .battle-table .spell-effect {
     width: 30%;
 }
+
+.mechanics-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-style: hidden;
+}
+
+.mechanics-table td,
+.mechanics-table th {
+    border: 1px solid #000;
+}
+
+.health-notes > textarea {
+    width: 100%;
+    resize: vertical;
+    border: none;
+    background: none;
+}
+.health-notes {
+    padding: 5px;
+    width: 100%;
+    text-align: center;
+}
+
+.battle-container {
+    padding: 5px;
+    width: 100%;
+}
+
+.ap-container {
+    padding: 5px;
+    text-align: center;
+}
+.ap-container img {
+    width: 100%;
+}
+

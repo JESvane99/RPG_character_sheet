@@ -1,0 +1,22 @@
+<div class="battle-container">
+  <h4>AMMUNITION</h4>
+  <table class="battle-table">
+    <tr>
+      <th class="ammo-name">Name</th>
+      <th class="ammo-quantity">Quantity</th>
+      <th class="ammo-qualities">Qualities</th>
+    </tr>
+    {% for item in character.ammunition|sort(attribute="name") %}
+    <tr>
+      <td><input type="text" name="ammo_name_{{ item.id }}" value="{{ item.name }}"></td>
+      <td><input type="number" name="ammo_quantity_{{ item.id }}" value="{{ item.quantity }}"></td>
+      <td><input type="text" name="ammo_qualities_{{ item.id }}" value="{{ item.qualities }}"></td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td><input type="text" name="ammo_name_new"></td>
+      <td><input type="number" name="ammo_quantity_new"></td>
+      <td><input type="text" name="ammo_qualities_new"></td>
+    </tr>
+  </table>
+</div>

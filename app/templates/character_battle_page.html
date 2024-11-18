@@ -12,6 +12,20 @@
 {% block content %}
 <form action="/{{ character.id }}/sheet-p3" method="post" class="page-form" id="page">
   <div class="page-container">
+    <div class="flex-section">
+      <div class="two-block ap-container">
+        <h4>ARMOR POINTS</h4>
+        <img src="../static/figs/armorpoints.png" alt="armor points figure">
+      </div>
+      <div class="two-block page-container">
+        {% include 'battle_page/enc_wounds.html' %}
+        {% include 'battle_page/ammunition.html' %}
+        <div class="health-notes">
+          <h4>COMBAT & HEALTH NOTES</h4>
+          <textarea name="combat_health_notes" id="combat_health_notes">{{ character.text_fields.health_notes }}</textarea>
+        </div>
+      </div>
+    </div>
     {% include 'battle_page/weapons.html' %}
     {% include 'battle_page/armor.html' %}  <!-- Changed from armour.html to armor.html -->
     {% include 'battle_page/spells_and_prayers.html' %}
