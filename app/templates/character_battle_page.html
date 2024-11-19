@@ -10,14 +10,16 @@
 {% endblock navbar %}
 
 {% block content %}
+<div class="page-container">
 <form action="/{{ character.id }}/sheet-p3" method="post" class="page-form" id="page">
-  <div class="page-container">
     <div class="flex-section">
-      <div class="two-block ap-container">
-        <h4>ARMOR POINTS</h4>
-        <img src="../static/figs/armorpoints.png" alt="armor points figure">
+      <div class="two-block">
+        <div class="ap-container">
+          <h4>ARMOR POINTS</h4>
+          <img src="../static/figs/armorpoints.png" alt="armor points figure">
+        </div>
       </div>
-      <div class="two-block page-container">
+      <div class="two-block column">
         {% include 'battle_page/enc_wounds.html' %}
         {% include 'battle_page/ammunition.html' %}
         <div class="health-notes">
@@ -26,10 +28,16 @@
         </div>
       </div>
     </div>
-    {% include 'battle_page/weapons.html' %}
-    {% include 'battle_page/armor.html' %}  <!-- Changed from armour.html to armor.html -->
-    {% include 'battle_page/spells_and_prayers.html' %}
-  </div>
-</form>
+    <div>
+      {% include 'battle_page/weapons.html' %}
+    </div>
+    <div>
+      {% include 'battle_page/armor.html' %}  <!-- Changed from armour.html to armor.html -->
+    </div>
+    <div>
+      {% include 'battle_page/spells_and_prayers.html' %}
+    </div>
+  </form>
+</div>
   
 {% endblock content %}

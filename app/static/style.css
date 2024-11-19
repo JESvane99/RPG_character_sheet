@@ -5,36 +5,44 @@ body {
     padding: 0;
     background-color: #b8bcf7;
 }
-#nav-container {
+.nav-container {
     color: #700909;
     padding: 10px;
-    width: 10%;
+    width: 20%;
     position: sticky;
 }
-#sheet-container {
-    margin: 10px;
-    padding: 15px;
-    position: relative;
-    justify-content: center;
+.sheet-container {
+    width: 80%;
+    padding: 10px;
+    overflow: scroll;
     background-color: rgb(136, 114, 100);
-    width: 89%;
     border-radius: 10px;
 }
 .page-container {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(173, 160, 151);
+}
+.page-container form > div {
     width: 100%;
-    padding: 5px;
+    border-bottom: 5px solid #0a1033;
+}
+.page-container form > div:last-child {
+    border-bottom: none;
+}
+.column {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgb(173, 160, 151);
 }
-.page-container > div {
+.column > div {
     width: 100%;
-    padding-left: 5px;
-    padding-right: 5px;
     border-bottom: 5px solid #0a1033;
 }
-.page-container > div:last-child {
+.column > div:last-child {
     border-bottom: none;
 }
 
@@ -44,8 +52,8 @@ img {
 h4 {
     text-align: center;
     border-bottom: 2px solid #000000;
-    padding: 5px;
-    margin: 5px;
+    padding: 0px;
+    margin: 2px;
 }
 label {
     font-weight: bold;
@@ -63,9 +71,8 @@ label {
 
 /* character description and logo */
 .description-container {
-    border-right: 4px solid #0a1033;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     padding: 5px;
     width: 70%;
 }
@@ -73,7 +80,7 @@ label {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    width: 95%;
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content:space-evenly;
@@ -102,7 +109,6 @@ label {
 }
 .logo-container {
     width: 30%;
-    text-align: center;
 }
 
 /* fluff design */
@@ -314,8 +320,14 @@ h4.skills-and-talents-header {
 .flex-section > div:last-child {
     border-right: none;
 }
-.two-block {
-    width: 50%;
+.three-block {
+    width: 36%;
+}
+.three-block:nth-child(2) {
+    width: 26%;
+}
+.three-block:nth-child(1) {
+    width: 40%;
 }
 
 
@@ -375,6 +387,9 @@ h4.skills-and-talents-header {
     border-collapse: collapse;
     border-style: hidden;
 }
+.mechanics-table th {
+    width: 60%;
+}
 
 .mechanics-table td,
 .mechanics-table th {
@@ -395,14 +410,9 @@ h4.skills-and-talents-header {
 
 .battle-container {
     padding: 5px;
-    width: 100%;
 }
 
 .ap-container {
-    padding: 5px;
+    width: 100%;
     text-align: center;
 }
-.ap-container img {
-    width: 100%;
-}
-
