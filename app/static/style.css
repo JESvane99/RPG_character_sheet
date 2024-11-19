@@ -21,6 +21,7 @@ body {
 .page-container {
     width: 210mm;
     height: 297mm;
+    font-size: x-small;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -58,6 +59,7 @@ h4 {
 label {
     font-weight: bold;
 }
+
 
 /* general classes */
 .flex {
@@ -241,29 +243,7 @@ ul.wealth li input {
 }
 
 /* Characteristics table design */
-.characteristics-container {
-    width: 100%;
-    padding: 5px;
-    text-align: center;
-}
 
-h4.characteristics_header {
-    padding: 5px;
-    margin: 5px;
-    text-align: center;
-    border-bottom: 2px solid #000000;
-}
-
-h4.skills-and-talents-header {
-    padding: 5px;
-    margin: 5px;
-    text-align: center;
-    border-bottom: 2px solid #000000;
-}
-.skills-container {
-    width: 50%;
-    text-align: center;
-}
 .skills-and-talents-table input,
 .talents-table input,
 .battle-table input,
@@ -320,6 +300,10 @@ h4.skills-and-talents-header {
 .flex-section > div:last-child {
     border-right: none;
 }
+.two-block {
+    width: 50%;
+    text-align: center;
+}
 .three-block {
     width: 36%;
 }
@@ -328,6 +312,11 @@ h4.skills-and-talents-header {
 }
 .three-block:nth-child(1) {
     width: 40%;
+}
+
+.container {
+    padding: 5px;
+    text-align: center;
 }
 
 
@@ -416,3 +405,5 @@ h4.skills-and-talents-header {
     width: 100%;
     text-align: center;
 }
+
+

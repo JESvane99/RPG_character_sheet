@@ -10,14 +10,18 @@
 {% endblock navbar %}
 
 {% block content %}
+<div class="page-container">
 <form action="/{{ character.id }}/sheet-p2" method="post" class="page-form" id="page">
-  <div class="page-container">
+  <div>
     {% include 'skills_and_talents/characteristics.html' %}
-    <div class="flex-section">
-      {% include 'skills_and_talents/basic_skills.html' %}
-      {% include 'skills_and_talents/special_skills.html' %}
-    </div>
+  </div>  
+  <div class="flex-section">
+    {% include 'skills_and_talents/basic_skills.html' %}
+    {% include 'skills_and_talents/special_skills.html' %}
+  </div>
+  <div>
     {% include 'skills_and_talents/talents.html' %}
   </div>
-</form>
+  </form>
+</div>
 {% endblock content %}
