@@ -55,6 +55,18 @@ class Character(db.Model):
         modifier = int(getattr(self.attributes, f"{attribute_name.lower()}_modifier", 0))
         bonus = int(getattr(self.attributes, f"{attribute_name.lower()}_bonus", 0))
         return attribute + modifier + bonus
+    
+    def get_encumbrance(self, belonging: str):
+        if belonging not in ["armor", "weapons", "trappings"]:
+            raise ValueError(f"Invalid belonging: {belonging}")
+        total = 0
+        for item in getattr(self, belonging):
+            total += item.encumbrance
+        return total
+    
+    def get_attribute_bonus(self, attribute_name):
+        total = self.get_attribute_total(attribute_name)
+        return total // 10
 
 
 class BaseMechanics(db.Model):

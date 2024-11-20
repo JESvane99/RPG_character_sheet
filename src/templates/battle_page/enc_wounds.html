@@ -4,23 +4,22 @@
     <table class="mechanics-table">
       <tr>
         <th>Weapons</th>
-        <td><input type="number"></td>
+        <td>{{ character.get_encumbrance("weapons") }}</td>
       </tr>
-      <tr>
         <th>Armor</th>
-        <td><input type="number"></td>
+        <td>{{ character.get_encumbrance("armor") }}</td>
       </tr>
       <tr>
         <th>Trappings</th>
-        <td><input type="number"></td>
+        <td>{{ character.get_encumbrance("trappings") }}</td>
       </tr>
       <tr>
         <th>Max Enc</th>
-        <td><input type="number"></td>
+        <td>{{ character.get_attribute_bonus("s") + character.get_attribute_bonus("t") }}</td>
       </tr>
       <tr>
         <th>Total</th>
-        <td><input type="number"></td>
+        <td>{{ (character.get_attribute_bonus("s") + character.get_attribute_bonus("t")) - (character.get_encumbrance("weapons") + character.get_encumbrance("armor") + character.get_encumbrance("trappings")) }}</td>
       </tr>
     </table>
   </div>
@@ -29,15 +28,15 @@
     <table class="mechanics-table">
       <tr>
         <th>SB</th>
-        <td><input type="number"></td>
+        <td>{{ character.get_attribute_bonus("s") }}</td>
       </tr>
       <tr>
         <th>TB</th>
-        <td><input type="number"></td>
+        <td>{{ character.get_attribute_bonus("t") }}</td>
       </tr>
       <tr>
         <th>WPB</th>
-        <td><input type="number"></td>
+        <td>{{ character.get_attribute_bonus("wp") }}</td>
       </tr>
       <tr>
         <th>Hardy</th>
@@ -45,7 +44,9 @@
       </tr>
       <tr>
         <th>Total</th>
-        <td><input type="number"></td>
+        <td>
+          {{ character.get_attribute_bonus("s") + character.get_attribute_bonus("t") + character.get_attribute_bonus("wp") }}
+        </td>
       </tr>
     </table>
   </div>
