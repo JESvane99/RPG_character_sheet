@@ -5,3 +5,4 @@
 instance/
 *.pdf
 *.pptx
+*.egg-info/
