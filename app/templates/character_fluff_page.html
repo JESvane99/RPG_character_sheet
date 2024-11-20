@@ -10,13 +10,13 @@
 {% endblock navbar %}
 
 {% block content %}
-<form action="/{{ character.id }}/sheet-p1" method="post" class="page-form" id="page">
-  <div class="page-container">
-        {% include 'fluff_page/description_table.html' %}
-        {% include 'fluff_page/fluff.html' %}
-        {% include 'fluff_page/trappings_and_notes.html' %}
-        {% include 'fluff_page/doom.html' %}
-  </div>
-</form>
+<div class="page-container">
+  <form action="/{{ character.id }}/sheet-p1" method="post" class="page-form" id="page">
+    {% include 'fluff_page/description_table.html' %}
+    {% include 'fluff_page/fluff.html' %}
+    {% include 'fluff_page/trappings_and_notes.html' %}
+    {% include 'fluff_page/doom.html' %}
+  </form>
+</div>
   
 {% endblock content %}

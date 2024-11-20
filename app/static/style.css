@@ -73,51 +73,41 @@ label {
 
 /* character description and logo */
 .description-container {
-    display: flex;
-    justify-content: space-evenly;
-    padding: 5px;
-    width: 70%;
+    width: 80%;
+    text-align: center;
+    border-right: 3px solid #000;
 }
-.description-container ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content:space-evenly;
-    border-right: 2px solid #000;
+.description-table {
+    border-collapse: collapse;
+    border-style: hidden;
+    height: 100%;
 }
-.description-container ul li {
-    padding: 5px;
+.description-table td {
+    border: 1px solid #000;
     text-align: left;
-    display: flex;
-    border-bottom: 2px solid #000;
 }
-.description-container ul li:last-child {
-    border-bottom: none;
+.description-table td > div {
+    width: 100%;
 }
-.description-container ul:last-child {
-    border-right: none;
-}
-.description-container input {
-    flex: 2;
-    margin-left: 5px;
+.description-table input {
     background: none;
     border: none;
+    width: 100%;
 }
-.description-container label {
+.description-table label {
+    font-size: small;
+    font-weight: bold;
     text-wrap: nowrap;
 }
 .logo-container {
-    width: 30%;
+    width: 20%;
 }
 
 /* fluff design */
 .fluff-container {
     justify-content: center;
     padding: 5px;
-    width: 100%;
+    width: 30%;
     text-align: left;
     border-right: 3px solid #000;
 }
@@ -149,7 +139,7 @@ label {
     border-bottom: none;
 }
 div.wealth {
-    width: 10% !important;
+    width: 10%;
 }
 ul.wealth {
     display: flex;
@@ -160,16 +150,14 @@ ul.wealth {
     margin: 0;
 }
 ul.wealth li {
-    padding: 5px;
     text-align: left;
-    display: flex;
-    border-bottom: 2px solid #000;
 }
 ul.wealth label {
     flex: 1;
     text-align: left;
     padding: 5px;
     margin: 5px;
+    font-weight: bold;
 }
 ul.wealth li:last-child {
     border-bottom: none;
@@ -177,13 +165,23 @@ ul.wealth li:last-child {
 ul.wealth li input {
     background: none;
     border: none;
-    width: 40px;
+    width: 100%;
+}
+.party-name {
+    display: flex;
+    border-bottom: 2px solid #000;
 }
 
+#party_name {
+    width: 100%;
+    font-family: Copperplate, Papyrus, fantasy;
+    font-weight: bold;
+}
 /* trappings and campaign notes design */
 .trappings-container {
     padding: 5px;
     width: 50%;
+    min-height: 100mm;
     text-align: left;
     border-right: 3px solid #000;
 }
@@ -404,6 +402,15 @@ ul.wealth li input {
 .ap-container {
     width: 100%;
     text-align: center;
+}
+
+.inline {
+    display: inline-flex;
+    align-items: center;
+}
+
+.inline label {
+    margin-right: auto;
 }
 
 
