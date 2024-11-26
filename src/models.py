@@ -200,6 +200,7 @@ class Talent(db.Model):
     description: Mapped[str]
     given_bonus: Mapped[int]
     bonus_attribute: Mapped[str]
+    times_taken: Mapped[int] = mapped_column(default=1)
 
 
 class Armor(db.Model):  # Changed from Armour to Armor

@@ -1,3 +1,18 @@
+/* printing */
+@media print {
+    body {
+        visibility: hidden;
+    }
+    .page-container {
+        visibility: visible;
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin: 0;
+        padding: 0;
+    }
+}
+
 /* base design setup */
 body {
     font-family: Copperplate, Papyrus, fantasy;
@@ -283,6 +298,26 @@ ul.wealth li input {
 .talents-table td,
 .battle-table td {
     border: 1px solid #000;
+}
+
+.talents-table .name-column {
+    width: 30%;
+}
+
+.talents-table .trait-column {
+    width: 50%;
+}
+
+.talents-table .adv-column {
+    width: 8%;
+}
+
+.talents-table .skill-column {
+    width: 7%;
+}
+
+.talents-table .times-taken-column {
+    width: 5%;
 }
 
 .flex-section {

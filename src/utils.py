@@ -206,6 +206,7 @@ def save_static_data(form, character, app):
     character.text_fields.short_term_ambition = form["short_term_ambition"]
     character.text_fields.long_term_ambition = form["long_term_ambition"]
     character.text_fields.doom = form["doom"]
+    character.text_fields.campaign_notes = form["notes"]
     character.party.name = form["party_name"]
     character.party.members = form["party_members"]
     character.party.ambitions = form["party_ambitions"]
@@ -324,6 +325,7 @@ def save_talents(form, character, db):
             form.get(f"talents_attribute_{talent.id}")
         )
         talent.given_bonus = form.get(f"talents_bonus_value_{talent.id}")
+        talent.times_taken = form.get(f"talents_times_taken_{talent.id}")
         if not talent.name:
             db.session.delete(talent)
 
@@ -334,12 +336,14 @@ def save_talents(form, character, db):
             form.get("talents_attribute_new")
         )
         new_bonus = form.get("talents_bonus_value_new")
+        new_times_taken = form.get("talents_times_taken_new")
         new_talent = Talent(
             character_id=character.id,
             name=new_name,
             description=new_description,
             given_bonus=new_bonus,
             bonus_attribute=new_bonus_attribute,
+            times_taken=new_times_taken,
         )
         db.session.add(new_talent)
 

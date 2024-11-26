@@ -6,6 +6,7 @@
       <th class="trait-column">Description</th>
       <th class="adv-column">Attribute</th>
       <th class="skill-column">Bonus</th>
+      <th class="times-taken-column">Taken</th>
     </tr>
     {% for item in character.talents|sort(attribute="name") %}
     <tr>
@@ -13,6 +14,7 @@
       <td><input type="text" name="talents_description_{{ item.id }}" value="{{ item.description }}"></td>
       <td><input type="text" name="talents_attribute_{{ item.id }}" value="{{ item.bonus_attribute }}"></td>
       <td><input type="number" name="talents_bonus_value_{{ item.id}}" value="{{ item.given_bonus }}"></td>
+      <td><input type="number" name="talents_times_taken_{{ item.id }}" value="{{ item.times_taken }}"></td>
     </tr>
     {% endfor %}
     <tr>
@@ -20,6 +22,7 @@
       <td><input type="text" name="talents_description_new"></td>
       <td><input type="text" name="talents_attribute_new"></td>
       <td><input type="number" name="talents_bonus_value_new"></td>
+      <td><input type="number" name="talents_times_taken_new"></td>
     </tr>
   </table>
 </div>
