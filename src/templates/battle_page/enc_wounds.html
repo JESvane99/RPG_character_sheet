@@ -32,7 +32,7 @@
       </tr>
       <tr>
         <th>TB</th>
-        <td>{{ character.get_attribute_bonus("t") }}</td>
+        <td>{{ character.get_attribute_bonus("t") * 2 }}</td>
       </tr>
       <tr>
         <th>WPB</th>
@@ -45,7 +45,7 @@
       <tr>
         <th>Total</th>
         <td>
-          {{ character.get_attribute_bonus("s") + character.get_attribute_bonus("t") + character.get_attribute_bonus("wp") }}
+          {{ character.get_attribute_bonus("s") + character.get_attribute_bonus("t") * 2 + character.get_attribute_bonus("wp") }}
         </td>
       </tr>
     </table>

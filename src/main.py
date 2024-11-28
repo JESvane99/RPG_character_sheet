@@ -144,6 +144,4 @@ if __name__ == "__main__":
     app.run(debug=True)
 
     print("----- stop app -----")
-    with app.app_context():
-        db.drop_all()  # Uncomment this line to drop all tables
-        print("tables dropped")
+
