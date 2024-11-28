@@ -1,4 +1,4 @@
-# WHFRP Character Sheet Web App
+# Character Sheet Web App
 
 This web application allows users to create and manage character sheets for any RPG.
 
