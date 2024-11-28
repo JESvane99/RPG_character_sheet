@@ -487,8 +487,8 @@ def save_party_ledger(form, character, db):
             silver=new_silver,
             brass=new_brass,
         )
-        character.party.gold -= int(new_gold)
-        character.party.silver -= int(new_silver)
-        character.party.brass -= int(new_brass)
+        character.party.gold += int(new_gold)
+        character.party.silver += int(new_silver)
+        character.party.brass += int(new_brass)
         db.session.add(new_entry)
     db.session.commit()
