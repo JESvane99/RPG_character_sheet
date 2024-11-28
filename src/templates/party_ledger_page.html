@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/{{ character.id }}/sheet-p1">Description & Trappings</a></li>
+    <li><a href="/{{ character.id }}/sheet-p2">Skills & Talents</a></li>
+    <li><a href="/{{ character.id }}/sheet-p3">Action</a></li>
+    <li><a href="/{{ character.id }}/party-ledger">Party Ledger</a></li>
+    <li><button form="page">Save Page</button></li>
+  </ul>
+{% endblock navbar %}
+
+{% block content %}
+<div class="page-container">
+  <form action="/{{ character.id }}/party-ledger" method="post" class="page-form" id="page">
+    <div class="ledger-header flex">
+      <div>
+        <h1>Ledger</h1>
+        {% if character.party.name %}
+        <h2>{{ character.party.name }}</h2>
+        {% endif %} 
+      </div>
+      <div>
+        <h4>Total</h4>
+        <h3>{{ character.party.gold }} Gold {{ character.party.silver }} Silver {{ character.party.brass }} Brass</h3>
+      </div>
+    </div>
+    <div class="ledger-details">
+      <table>
+        <thead>
+          <tr>
+            <th>Who</th>
+            <th>What</th>
+            <th>Gold</th>
+            <th>Silver</th>
+            <th>Brass</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entry in character.ledger %}
+          <tr>
+            <td><input type="text" name="who_{{ entry.id }}" value="{{ entry.who }}" class="ledger-input"></td>
+            <td><input type="text" name="what_{{ entry.id }}" value="{{ entry.what }}" class="ledger-input"></td>
+            <td><input type="number" name="gold_{{ entry.id }}" value="{{ entry.gold }}" class="ledger-input"></td>
+            <td><input type="number" name="silver_{{ entry.id }}" value="{{ entry.silver }}" class="ledger-input"></td>
+            <td><input type="number" name="brass_{{ entry.id }}" value="{{ entry.brass }}" class="ledger-input"></td>
+          </tr>
+          {% endfor %}
+          <tr>
+            <td><input type="text" name="who_new" class="ledger-input"></td>
+            <td><input type="text" name="what_new" class="ledger-input"></td>
+            <td><input type="number" name="gold_new" class="ledger-input"></td>
+            <td><input type="number" name="silver_new" class="ledger-input"></td>
+            <td><input type="number" name="brass_new" class="ledger-input"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </form>
+</div>
+{% endblock content %}

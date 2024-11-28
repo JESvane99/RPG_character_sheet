@@ -13,6 +13,7 @@ from models import (
     Weapon,
     Magic,
     Trapping,
+    Ledger,
 )
 
 
@@ -75,6 +76,9 @@ def create_character_with_connections(session, name):
         name="",
         members="",
         ambitions="",
+        gold=0,
+        silver=0,
+        brass=0,
     )
     new_attributes = Attributes(
         character_id=new_character.id,
@@ -456,4 +460,35 @@ def save_ammunition(form, character, db):
         )
         db.session.add(new_ammo)
 
+    db.session.commit()
+    
+    
+def save_party_ledger(form, character, db):
+    for entry in character.ledger:
+        entry.who = form.get(f"who_{entry.id}")
+        entry.what = form.get(f"what_{entry.id}")
+        entry.gold = form.get(f"gold_{entry.id}")
+        entry.silver = form.get(f"silver_{entry.id}")
+        entry.brass = form.get(f"brass_{entry.id}")
+        if not entry.who or not entry.what:
+            db.session.delete(entry)
+
+    new_who = form.get("who_new")
+    new_what = form.get("what_new")
+    new_gold = form.get("gold_new") or 0
+    new_silver = form.get("silver_new") or 0
+    new_brass = form.get("brass_new") or 0
+    if new_who and new_what:
+        new_entry = Ledger(
+            character_id=character.id,
+            who=new_who,
+            what=new_what,
+            gold=new_gold,
+            silver=new_silver,
+            brass=new_brass,
+        )
+        character.party.gold -= int(new_gold)
+        character.party.silver -= int(new_silver)
+        character.party.brass -= int(new_brass)
+        db.session.add(new_entry)
     db.session.commit()
