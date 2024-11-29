@@ -2,26 +2,31 @@
   <div class="trappings-container">
     <h4>TRAPPINGS</h4>
     <table>
-      <th>Name</th><th>Enc</th><th>Quantity</th><th>Description</th>
-      {% for item in character.trappings %}
-      <tr>
-        <td><input type="text" name="trappings_name_{{ item.id }}" value="{{ item.name }}"></td>
-        <td><input type="number" name="trappings_enc_{{ item.id }}" value="{{ item.encumbrance }}"></td>
-        <td><input type="number" name="trappings_quantity_{{ item.id }}" value="{{ item.quantity }}"></td>
-        <td><textarea name="trappings_description_{{ item.id }}">{{ item.description }}</textarea></td>
-      </tr>
-      {% endfor %}
-      <tr>
-        <td><input type="text" name="trappings_name_new"></td>
-        <td><input type="number" name="trappings_enc_new"></td>
-        <td><input type="number" name="trappings_quantity_new"></td>
-        <td><textarea name="trappings_description_new"></textarea></td>
-      </tr>
+      <thead>
+        <tr>
+          <th>Name</th><th>Enc</th><th>Quantity</th><th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in character.trappings %}
+        <tr>
+          <td><input type="text" name="trappings_name_{{ item.id }}" value="{{ item.name }}" class="input-text"></td>
+          <td><input type="number" name="trappings_enc_{{ item.id }}" value="{{ item.encumbrance }}" class="input-number"></td>
+          <td><input type="number" name="trappings_quantity_{{ item.id }}" value="{{ item.quantity }}" class="input-number"></td>
+          <td><textarea name="trappings_description_{{ item.id }}" class="textarea">{{ item.description }}</textarea></td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td><input type="text" name="trappings_name_new" class="input-text"></td>
+          <td><input type="number" name="trappings_enc_new" class="input-number"></td>
+          <td><input type="number" name="trappings_quantity_new" class="input-number"></td>
+          <td><textarea name="trappings_description_new" class="textarea"></textarea></td>
+        </tr>
+      </tbody>
     </table>
   </div>
   <div class="notes-container">
     <h4>NOTES</h4>
-    <textarea name="notes" id="notes">{{ character.text_fields.campaign_notes }}</textarea>
+    <textarea name="notes" id="notes" class="textarea">{{ character.text_fields.campaign_notes }}</textarea>
   </div>
-
 </div>

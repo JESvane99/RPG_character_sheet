@@ -42,13 +42,63 @@ body {
     flex-direction: column;
     background-color: rgb(173, 160, 151);
 }
-.page-container form > div {
+
+
+/* general elements */
+img {
     width: 100%;
-    border-bottom: 5px solid #0a1033;
+    vertical-align: middle;
 }
-.page-container form > div:last-child {
+h4 {
+    text-align: center;
+    border-bottom: 2px solid #000000;
+    padding: 0px;
+    margin: 2px;
+}
+label {
+    font-weight: bold;
+}
+/* table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-style: hidden;
+}
+table td {
+    border: 2px solid #000;
+    text-align: center;
+}
+table th {
+    border-bottom: 2px solid #000;
+    text-align: center;
+}
+
+table td:last-child,
+table th:last-child {
+    border-right: none;
+}
+/* general classes */
+.part-container {
+    border-bottom: 5px solid #0a1033;
+    width: 100%;
+}
+.part-container:last-child {
     border-bottom: none;
 }
+/* flex-section is used when a part has more than one element spanning the width*/
+.flex-section {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.flex-section > div {
+    padding: 5px;
+    border-right: 5px solid #0a1033;
+}
+.flex-section > div:last-child {
+    border-right: none;
+}
+/* column is used when an element in a flex-section has more than one element vertically*/
 .column {
     display: flex;
     flex-direction: column;
@@ -61,54 +111,53 @@ body {
 .column > div:last-child {
     border-bottom: none;
 }
-
-img {
-    width: 100%;
-}
-h4 {
-    text-align: center;
-    border-bottom: 2px solid #000000;
-    padding: 0px;
-    margin: 2px;
-}
-label {
-    font-weight: bold;
-}
-
-
-/* general classes */
+/* legacy flex class, may be redundant */
 .flex {
     display: flex;
-    justify-content: space-between;
-}
-.part-container {
-    border-bottom: 5px solid #0a1033;
-    width: 100%;
 }
 
-/* character description and logo */
+/* inline used to put label and input on the same line in a table */
+.inline {
+    display: inline-flex;
+    align-items: center;
+}
+.inline label {
+    margin-right: auto;
+}
+
+/* input and textarea styling */
+.input-text,
+.input-number,
+.textarea {
+    background: none;
+    border: none;
+    width: 100%;
+}
+.textarea {
+    resize: vertical;
+}
+
+
+
+/* description and logo */
 .description-container {
     width: 80%;
     text-align: center;
     border-right: 3px solid #000;
 }
 .description-table {
-    border-collapse: collapse;
-    border-style: hidden;
     height: 100%;
+    width: 100%;
 }
 .description-table td {
-    border: 1px solid #000;
-    text-align: left;
+    width: 20%;
+    padding: 5px;
 }
 .description-table td > div {
+    text-align: left;
     width: 100%;
 }
-.description-table input {
-    background: none;
-    border: none;
-    width: 100%;
-}
+
 .description-table label {
     font-size: small;
     font-weight: bold;
@@ -126,26 +175,15 @@ label {
     text-align: left;
     border-right: 3px solid #000;
 }
-.fluff-container input {
-    background: none;
-    border: none;
-}
 .fluff-container ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 .fluff-container li {
-    list-style-type: none;
     padding: 5px;
     text-align: left;
     border-bottom: 2px solid #000;
-}
-.fluff-container textarea {
-    width: 99%;
-    resize: vertical;
-    border: none;
-    background: none;
 }
 .fluff-container:last-child {
     border-right: none;
@@ -169,29 +207,24 @@ ul.wealth li {
 }
 ul.wealth label {
     flex: 1;
-    text-align: left;
     padding: 5px;
     margin: 5px;
-    font-weight: bold;
 }
 ul.wealth li:last-child {
     border-bottom: none;
 }
-ul.wealth li input {
-    background: none;
-    border: none;
-    width: 100%;
-}
+
+/* party name */
 .party-name {
     display: flex;
     border-bottom: 2px solid #000;
 }
-
 #party_name {
     width: 100%;
     font-family: Copperplate, Papyrus, fantasy;
     font-weight: bold;
 }
+
 /* trappings and campaign notes design */
 .trappings-container {
     padding: 5px;
@@ -200,139 +233,57 @@ ul.wealth li input {
     text-align: left;
     border-right: 3px solid #000;
 }
-.trappings-container table {
-    padding: 5px;
-    width: 100%;
-    border-collapse: collapse;
-}
-.trappings-container table th {
-    border-bottom: 2px solid #000;
-    text-align: center;
-}
-.trappings-container table td {
-    border-right: 2px solid #000;
-    text-align: center;
-}
-.trappings-container table td:last-child {
-    border-right: none;
-    width: 40%;
-}
-.trappings-container table td:first-child {
-    width: 40%;
-}
-.trappings-container input {
-    background: none;
-    border: none;
-    width: 100%;
-}
-.trappings-container textarea {
-    width: 100%;
-    resize: vertical;
-    border: none;
-    background: none;
-}
-
 .notes-container {
     padding: 5px;
     width: 50%;
     text-align: center;
 }
-.notes-container textarea {
-    width: 100%;
-    resize: vertical;
-    border: none;
-    background: none;
-}
 
 /* doom design */
 #doom {
-    flex:1;
+    flex: 1;
     text-align: left;
-    background: none;
-    border: none;
 }
 .doom-design {
     padding: 5px;
 }
 
 /* Characteristics table design */
-
-.skills-and-talents-table input,
-.talents-table input,
-.battle-table input,
-.mechanics-table input {
-    border: none;
-    background: none;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: center;
+.skills-and-talents-table .name-column,
+.talents-table .name-column,
+.battle-table .armor-name,
+.battle-table .weapon-name,
+.battle-table .spell-name {
+    width: 30%;
 }
-
-.skills-and-talents-table,
-.talents-table,
-.battle-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-style: hidden;
+.skills-and-talents-table .trait-column,
+.talents-table .trait-column,
+.battle-table .armor-encumbrance,
+.battle-table .weapon-encumbrance,
+.battle-table .spell-cn {
+    width: 10%;
 }
-
-.skills-and-talents-table .name-column {
+.skills-and-talents-table .adv-column,
+.talents-table .adv-column,
+.battle-table .armor-points,
+.battle-table .weapon-range,
+.battle-table .spell-range {
+    width: 10%;
+}
+.skills-and-talents-table .skill-column,
+.talents-table .skill-column,
+.battle-table .armor-location,
+.battle-table .weapon-damage,
+.battle-table .spell-target {
+    width: 10%;
+}
+.talents-table .times-taken-column,
+.battle-table .armor-qualities,
+.battle-table .weapon-qualities,
+.battle-table .spell-effect {
     width: 40%;
 }
 
-.skills-and-talents-table .trait-column {
-    text-align: center;
-    width: 20%;
-}
-
-.skills-and-talents-table .adv-column {
-    width: 20%;
-}
-
-.skills-and-talents-table .skill-column {
-    text-align: center;
-    width: 20%;
-}
-
-.skills-and-talents-table td,
-.talents-table td,
-.battle-table td {
-    border: 1px solid #000;
-}
-
-.talents-table .name-column {
-    width: 30%;
-}
-
-.talents-table .trait-column {
-    width: 50%;
-}
-
-.talents-table .adv-column {
-    width: 8%;
-}
-
-.talents-table .skill-column {
-    width: 7%;
-}
-
-.talents-table .times-taken-column {
-    width: 5%;
-}
-
-.flex-section {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-}
-
-.flex-section > div {
-    padding: 5px;
-    border-right: 5px solid #0a1033;
-}
-.flex-section > div:last-child {
-    border-right: none;
-}
 .two-block {
     width: 50%;
     text-align: center;
@@ -347,62 +298,6 @@ ul.wealth li input {
     width: 40%;
 }
 
-.container {
-    padding: 5px;
-    text-align: center;
-}
-
-
-.battle-table .armor-name {
-    width: 30%;
-}
-.battle-table .armor-encumbrance {
-    width: 10%;
-}
-.battle-table .armor-points {
-    width: 10%;
-}
-.battle-table .armor-location {
-    width: 10%;
-}
-.battle-table .armor-qualities {
-    width: 40%;
-}
-
-.battle-table .weapon-name {
-    width: 30%;
-}
-.battle-table .weapon-encumbrance {
-    width: 10%;
-}
-.battle-table .weapon-range {
-    width: 10%;
-}
-.battle-table .weapon-damage {
-    width: 10%;
-}
-.battle-table .weapon-qualities {
-    width: 40%;
-}
-
-.battle-table .spell-name {
-    width: 30%;
-}
-.battle-table .spell-cn {
-    width: 10%;
-}
-.battle-table .spell-range {
-    width: 10%;
-}
-.battle-table .spell-target {
-    width: 10%;
-}
-.battle-table .spell-duration {
-    width: 10%;
-}
-.battle-table .spell-effect {
-    width: 30%;
-}
 
 .mechanics-table {
     width: 100%;
@@ -412,7 +307,6 @@ ul.wealth li input {
 .mechanics-table th {
     width: 60%;
 }
-
 .mechanics-table td,
 .mechanics-table th {
     border: 1px solid #000;
@@ -420,9 +314,6 @@ ul.wealth li input {
 
 .health-notes > textarea {
     width: 100%;
-    resize: vertical;
-    border: none;
-    background: none;
 }
 .health-notes {
     padding: 5px;
@@ -439,50 +330,34 @@ ul.wealth li input {
     text-align: center;
 }
 
-.inline {
-    display: inline-flex;
-    align-items: center;
-}
-
-.inline label {
-    margin-right: auto;
-}
-
-/* ...existing code... */
-
+/* ledger details */
 .ledger-details table {
     border-collapse: collapse;
 }
-
 .ledger-details table th {
-    border-bottom: 1px solid #000;  
+    border-bottom: 1px solid #000;
 }
 .ledger-details table th,
 .ledger-details table td {
     border-left: 1px solid #000;
     border-right: 1px solid #000;
 }
-
 .ledger-details table th:first-child,
 .ledger-details table td:first-child {
     border-left: none;
 }
-
 .ledger-details table th:last-child,
 .ledger-details table td:last-child {
     border-right: none;
 }
-
 .ledger-details table th:nth-child(1),
 .ledger-details table td:nth-child(1) {
     width: 20%;
 }
-
 .ledger-details table th:nth-child(2),
 .ledger-details table td:nth-child(2) {
     width: 30%;
 }
-
 .ledger-details table th:nth-child(3),
 .ledger-details table td:nth-child(3),
 .ledger-details table th:nth-child(4),
@@ -491,7 +366,6 @@ ul.wealth li input {
 .ledger-details table td:nth-child(5) {
     width: 10%;
 }
-
 .ledger-input {
     background: none;
     border: none;
@@ -499,13 +373,11 @@ ul.wealth li input {
     box-sizing: border-box;
     text-align: center;
 }
-
 .ledger-header > div:first-child {
     width: 80%;
     text-align: center;
     border-right: 3px solid #0a1033;
 }
-
 .ledger-header > div:last-child {
     width: 20%;
     text-align: center;
