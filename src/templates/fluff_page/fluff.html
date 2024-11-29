@@ -1,4 +1,4 @@
-<div class="flex part-container">
+<div class="flex-section part-container">
   <div class="fluff-container">  
     <h4>PSYCHOLOGY</h4>
     <textarea name="psychology" id="psychology" class="textarea">{{ character.text_fields.psychology }}</textarea>
@@ -17,11 +17,7 @@
     </ul>
   </div>
   <div class="fluff-container">
-    {% if character.party.name %}
-    <h4><input type="text" name="party_name" id="party_name" value="{{ character.party.name }}" class="input-text"></h4>
-    {% else %}
-    <div class="party-name"><h4>PARTY NAME: </h4><input type="text" name="party_name" id="party_name" value="" class="input-text"></div>
-    {% endif %}
+    <h4><label for="party_name">PARTY:</label><input type="text" name="party_name" id="party_name" value="{{ character.party.name }}" class="input-text"></h4>
     <ul>
       <li>
         <label for="party_members">Members: </label>
@@ -33,21 +29,10 @@
       </li>
     </ul>
   </div>
-  <div class="fluff-container wealth">
+  <div class="fluff-container column">
     <h4>WEALTH</h4>
-    <ul class="wealth">
-      <li>
-        <label for="gold">Gold: </label>
-        <input type="number" name="gold" id="gold" value="{{ character.gold }}" class="input-number">
-      </li>
-      <li>
-        <label for="silver">Silver: </label>
-        <input type="number" name="silver" id="silver" value="{{ character.silver }}" class="input-number">
-      </li>
-      <li>
-        <label for="brass">Brass: </label>
-        <input type="number" name="brass" id="brass" value="{{ character.brass }}" class="input-number">
-      </li>
-    </ul>
+    <div>Gold: <input type="number" name="gold" id="gold" value="{{ character.gold }}" class="input-number"></div>
+    <div>Silver: <input type="number" name="silver" id="silver" value="{{ character.silver }}" class="input-number"> </div>
+    <div>Brass: <input type="number" name="brass" id="brass" value="{{ character.brass }}" class="input-number"></div>
   </div>
 </div>
