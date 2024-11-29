@@ -14,9 +14,9 @@
 {% block content %}
 <div class="page-container">
   <form action="/{{ character.id }}/party-ledger" method="post" class="page-form" id="page">
-    <div class="ledger-header flex">
-      <div>
-        <h1>Ledger</h1>
+    <div class="flex-section part-container">
+      <div class="width-80">
+        <h1>Ledger:</h1>
         {% if character.party.name %}
         <h2>{{ character.party.name }}</h2>
         {% endif %} 
@@ -26,33 +26,33 @@
         <h3>{{ character.party.gold }} Gold {{ character.party.silver }} Silver {{ character.party.brass }} Brass</h3>
       </div>
     </div>
-    <div class="ledger-details">
+    <div class="padding">
       <table>
         <thead>
           <tr>
-            <th>Who</th>
-            <th>What</th>
-            <th>Gold</th>
-            <th>Silver</th>
-            <th>Brass</th>
+            <th class="width-30">Who</th>
+            <th class="width-40">What</th>
+            <th class="width-10">Gold</th>
+            <th class="width-10">Silver</th>
+            <th class="width-10">Brass</th>
           </tr>
         </thead>
         <tbody>
           {% for entry in character.ledger %}
           <tr>
-            <td><input class="input-text" type="text" name="who_{{ entry.id }}" value="{{ entry.who }}"></td>
-            <td><input class="input-text" type="text" name="what_{{ entry.id }}" value="{{ entry.what }}"></td>
-            <td><input class="input-number" type="number" name="gold_{{ entry.id }}" value="{{ entry.gold }}"></td>
-            <td><input class="input-number" type="number" name="silver_{{ entry.id }}" value="{{ entry.silver }}"></td>
-            <td><input class="input-number" type="number" name="brass_{{ entry.id }}" value="{{ entry.brass }}"></td>
+            <td class="width-30"><input class="input-text" type="text" name="who_{{ entry.id }}" value="{{ entry.who }}"></td>
+            <td class="width-40"><input class="input-text" type="text" name="what_{{ entry.id }}" value="{{ entry.what }}"></td>
+            <td class="width-10"><input class="input-number" type="number" name="gold_{{ entry.id }}" value="{{ entry.gold }}"></td>
+            <td class="width-10"><input class="input-number" type="number" name="silver_{{ entry.id }}" value="{{ entry.silver }}"></td>
+            <td class="width-10"><input class="input-number" type="number" name="brass_{{ entry.id }}" value="{{ entry.brass }}"></td>
           </tr>
           {% endfor %}
           <tr>
-            <td><input class="input-text" type="text" name="who_new"></td>
-            <td><input class="input-text" type="text" name="what_new"></td>
-            <td><input class="input-number" type="number" name="gold_new"></td>
-            <td><input class="input-number" type="number" name="silver_new"></td>
-            <td><input class="input-number" type="number" name="brass_new"></td>
+            <td class="width-30"><input class="input-text" type="text" name="who_new"></td>
+            <td class="width-40"><input class="input-text" type="text" name="what_new"></td>
+            <td class="width-10"><input class="input-number" type="number" name="gold_new"></td>
+            <td class="width-10"><input class="input-number" type="number" name="silver_new"></td>
+            <td class="width-10"><input class="input-number" type="number" name="brass_new"></td>
           </tr>
         </tbody>
       </table>
