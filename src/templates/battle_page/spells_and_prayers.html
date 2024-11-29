@@ -1,13 +1,13 @@
-<div class="battle-container">
+<div>
   <h4>SPELLS AND PRAYERS</h4>
-  <table class="battle-table">
+  <table>
     <tr>
-      <th class="spell-name">Spell/Prayer</th>
-      <th class="spell-cn">CN</th>
-      <th class="spell-range">Range</th>
-      <th class="spell-target">Target</th>
-      <th class="spell-dur">Duration</th>
-      <th class="spell-effect">Effect</th>
+      <th class="width-30">Spell/Prayer</th>
+      <th class="width-10">CN</th>
+      <th class="width-10">Range</th>
+      <th class="width-10">Target</th>
+      <th class="width-10">Duration</th>
+      <th class="width-30">Effect</th>
     </tr>
     {% for item in character.spells_and_prayers|sort(attribute="name") %}
     <tr>

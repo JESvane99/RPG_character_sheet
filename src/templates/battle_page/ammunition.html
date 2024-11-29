@@ -1,10 +1,10 @@
-<div class="battle-container">
+<div class="padding">
   <h4>AMMUNITION</h4>
-  <table class="battle-table">
+  <table>
     <tr>
-      <th class="ammo-name">Name</th>
-      <th class="ammo-quantity">Quantity</th>
-      <th class="ammo-qualities">Qualities</th>
+      <th class="width-35">Name</th>
+      <th class="width-15">Quantity</th>
+      <th class="width-50">Qualities</th>
     </tr>
     {% for item in character.ammunition|sort(attribute="name") %}
     <tr>

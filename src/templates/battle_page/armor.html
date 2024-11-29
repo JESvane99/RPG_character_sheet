@@ -2,27 +2,27 @@
   <h4>ARMOR</h4>
   <table class="battle-table">
   <tr>
-    <th class="armor-name">Name</th>
-    <th class="armor-encumbrance">Enc</th>
-    <th class="armor-points">Armor Points</th>
-    <th class="armor-location">Location</th>
-    <th class="armor-qual">Qualities</th>
+    <th class="width-30">Piece</th>
+    <th class="width-10">Enc</th>
+    <th class="width-10">Armor Points</th>
+    <th class="width-15">Location</th>
+    <th class="width-35">Qualities</th>
   </tr>
   {% for item in character.armor|sort(attribute="name") %}
   <tr>
-    <td><input class="input-text" type="text" name="armor_name_{{ item.id }}" value="{{ item.name }}"></td>
-    <td><input class="input-number" type="number" name="armor_encumbrance_{{ item.id }}" value="{{ item.encumbrance }}"></td>
-    <td><input class="input-number" type="number" name="armor_points_{{ item.id }}" value="{{ item.armor_points }}"></td>
-    <td><input class="input-text" type="text" name="armor_location_{{ item.id }}" value="{{ item.location }}"></td>
-    <td><input class="input-text" type="text" name="armor_qualities_{{ item.id }}" value="{{ item.qualities }}"></td>
+    <td class="width-30"><input class="input-text" type="text" name="armor_name_{{ item.id }}" value="{{ item.name }}"></td>
+    <td class="width-10"><input class="input-number" type="number" name="armor_encumbrance_{{ item.id }}" value="{{ item.encumbrance }}"></td>
+    <td class="width-10"><input class="input-number" type="number" name="armor_points_{{ item.id }}" value="{{ item.armor_points }}"></td>
+    <td class="width-15"><input class="input-text" type="text" name="armor_location_{{ item.id }}" value="{{ item.location }}"></td>
+    <td class="width-35"><input class="input-text" type="text" name="armor_qualities_{{ item.id }}" value="{{ item.qualities }}"></td>
   </tr>
   {% endfor %}
   <tr>
-    <td><input class="input-text" type="text" name="armor_name_new"></td>
-    <td><input class="input-number" type="number" name="armor_encumbrance_new"></td>
-    <td><input class="input-number" type="number" name="armor_points_new"></td>
-    <td><input class="input-text" type="text" name="armor_location_new"></td>
-    <td><input class="input-text" type="text" name="armor_qualities_new"></td>
+    <td class="width-30"><input class="input-text" type="text" name="armor_name_new"></td>
+    <td class="width-10"><input class="input-number" type="number" name="armor_encumbrance_new"></td>
+    <td class="width-10"><input class="input-number" type="number" name="armor_points_new"></td>
+    <td class="width-15"><input class="input-text" type="text" name="armor_location_new"></td>
+    <td class="width-35"><input class="input-text" type="text" name="armor_qualities_new"></td>
   </tr>
   </table>
 </div>

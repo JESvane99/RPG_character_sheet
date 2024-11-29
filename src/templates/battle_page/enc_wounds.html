@@ -1,49 +1,53 @@
 <div class="flex-section">
   <div class="three-block">
-    <h4>ENCUMBRANCE</h4>
-    <table class="mechanics-table">
+    <h4 class="height-12">ENCUMBRANCE</h4>
+    <table class="height-84">
       <tr>
-        <th>Weapons</th>
+        <th class="width-60">Weapons</th>
         <td>{{ character.get_encumbrance("weapons") }}</td>
       </tr>
-        <th>Armor</th>
+        <th class="width-60">Armor</th>
         <td>{{ character.get_encumbrance("armor") }}</td>
       </tr>
       <tr>
-        <th>Trappings</th>
+        <th class="width-60">Trappings</th>
         <td>{{ character.get_encumbrance("trappings") }}</td>
       </tr>
       <tr>
-        <th>Max Enc</th>
+        <th class="width-60">Strong Back</th>
+        <td><input class="input-number" type="number"></td>
+      </tr>
+      <tr>
+        <th class="width-60">Max Enc</th>
         <td>{{ character.get_attribute_bonus("s") + character.get_attribute_bonus("t") }}</td>
       </tr>
       <tr>
-        <th>Total</th>
+        <th class="width-60">Total</th>
         <td>{{ (character.get_attribute_bonus("s") + character.get_attribute_bonus("t")) - (character.get_encumbrance("weapons") + character.get_encumbrance("armor") + character.get_encumbrance("trappings")) }}</td>
       </tr>
     </table>
   </div>
   <div class="three-block">
-    <h4>WOUNDS</h4>
-    <table class="mechanics-table">
+    <h4 class="height-12">WOUNDS</h4>
+    <table class="height-84">
       <tr>
-        <th>SB</th>
+        <th class="width-60">SB</th>
         <td>{{ character.get_attribute_bonus("s") }}</td>
       </tr>
       <tr>
-        <th>TB</th>
+        <th class="width-60">TB</th>
         <td>{{ character.get_attribute_bonus("t") * 2 }}</td>
       </tr>
       <tr>
-        <th>WPB</th>
+        <th class="width-60">WPB</th>
         <td>{{ character.get_attribute_bonus("wp") }}</td>
       </tr>
       <tr>
-        <th>Hardy</th>
+        <th class="width-60">Hardy</th>
         <td><input class="input-number" type="number"></td>
       </tr>
       <tr>
-        <th>Total</th>
+        <th class="width-60">Total</th>
         <td>
           {{ character.get_attribute_bonus("s") + character.get_attribute_bonus("t") * 2 + character.get_attribute_bonus("wp") }}
         </td>
@@ -51,26 +55,26 @@
     </table>
   </div>
   <div class="three-block">
-    <h4>CORRUPTION</h4>
-    <table class="mechanics-table">
+    <h4 class="height-12">CORRUPTION</h4>
+    <table class="height-84">
       <tr>
-        <th>Threshold</th>
+        <th class="width-60">Threshold</th>
         <td><input class="input-number" type="number"></td>
       </tr>
       <tr>
-        <th>Current</th>
+        <th class="width-60">Current</th>
         <td><input class="input-number" type="number"></td>
       </tr>
       <tr>
-        <th>Mutations</th>
+        <th class="width-60">Mutations</th>
         <td><input class="input-number" type="number"></td>
       </tr>
       <tr>
-        <th>Mental</th>
+        <th class="width-60">Mental</th>
         <td><input class="input-number" type="number"></td>
       </tr>
       <tr>
-        <th>Physical</th>
+        <th class="width-60">Physical</th>
         <td><input class="input-number" type="number"></td>
       </tr>
     </table>
