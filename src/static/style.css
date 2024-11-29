@@ -144,7 +144,7 @@ table th:last-child {
     min-height: 50%;
 }
 
-
+/* !! description & trappings page */
 /* description and logo */
 .description-container {
     width: 80%;
@@ -205,6 +205,7 @@ table th:last-child {
 .fluff-container.column div:last-child{
     border-bottom: none;
 }
+
 /* trappings and campaign notes design */
 .trappings-container {
     padding: 5px;
@@ -212,6 +213,15 @@ table th:last-child {
     min-height: 100mm;
     text-align: left;
     border-right: 3px solid #000;
+}
+.trappings-container td:first-child {
+    width: 30%;
+}
+.trappings-container td:last-child {
+    width: 50%;
+}
+.trappings-container td:nth-child(2) {
+    width: 10%;
 }
 .notes-container {
     padding: 5px;
@@ -228,6 +238,7 @@ table th:last-child {
     padding: 5px;
 }
 
+/* !! Skills & talents page */
 /* Characteristics table design */
 .skills-and-talents-table .name-column,
 .talents-table .name-column,
