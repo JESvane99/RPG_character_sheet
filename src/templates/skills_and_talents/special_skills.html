@@ -1,25 +1,25 @@
-<div class="two-block container">
-  <h4 class="skills-and-talents-header">SPECIAL SKILLS</h4>
-  <table class="skills-and-talents-table">
+<div class="two-block">
+  <h4>SPECIAL SKILLS</h4>
+  <table class="skill-table">
     <tr>
-      <th class="name-column">Name</th>
-      <th class="trait-column">Trait</th>
-      <th class="adv-column">Adv</th>
-      <th class="skill-column">Skill</th>
+      <th class="width-55">Name</th>
+      <th class="width-15">Trait</th>
+      <th class="width-15">Adv</th>
+      <th class="width-15">Skill</th>
     </tr>
     {% for item in character.skills|sort(attribute="name") %}
     <tr>
-      <td><input type="text" name="skills_name_{{ item.id }}" value="{{ item.name }}"></td>
-      <td><input type="text" name="skills_attribute_{{ item.id }}" value="{{ item.attribute }}"></td>
-      <td><input type="number" name="skills_advances_{{ item.id }}" value="{{ item.advances }}"></td>
-      <td>{{ item.total }}</td>
+      <td class="width-55"><input class="input-text" type="text" name="skills_name_{{ item.id }}" value="{{ item.name }}"></td>
+      <td class="width-15"><input class="input-text" type="text" name="skills_attribute_{{ item.id }}" value="{{ item.attribute }}"></td>
+      <td class="width-15"><input class="input-number" type="number" name="skills_advances_{{ item.id }}" value="{{ item.advances }}"></td>
+      <td class="width-15">{{ item.total }}</td>
     </tr>
     {% endfor %}
     <tr>
-      <td><input type="text" name="skills_name_new"></td>
-      <td><input type="text" name="skills_attribute_new"></td>
-      <td><input type="number" name="skills_advances_new"></td>
-      <td>save for value</td>
+      <td class="width-55"><input class="input-text" type="text" name="skills_name_new"></td>
+      <td class="width-15"><input class="input-text" type="text" name="skills_attribute_new"></td>
+      <td class="width-15"><input class="input-number" type="number" name="skills_advances_new"></td>
+      <td class="width-15">save for value</td>
     </tr>
   </table>
 </div>

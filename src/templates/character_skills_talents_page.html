@@ -14,14 +14,14 @@
 {% block content %}
 <div class="page-container">
 <form action="/{{ character.id }}/sheet-p2" method="post" class="page-form" id="page">
-  <div>
+  <div class="part-container">
     {% include 'skills_and_talents/characteristics.html' %}
   </div>  
-  <div class="flex-section">
+  <div class="flex-section part-container">
     {% include 'skills_and_talents/basic_skills.html' %}
     {% include 'skills_and_talents/special_skills.html' %}
   </div>
-  <div>
+  <div class="part-container">
     {% include 'skills_and_talents/talents.html' %}
   </div>
   </form>

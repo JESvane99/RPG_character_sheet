@@ -17,7 +17,7 @@
     </ul>
   </div>
   <div class="fluff-container">
-    <h4><label for="party_name">PARTY:</label><input type="text" name="party_name" id="party_name" value="{{ character.party.name }}" class="input-text"></h4>
+    <h4><label for="party_name">PARTY:</label><input class="input-text" type="text" name="party_name" id="party_name" value="{{ character.party.name }}" class="input-text"></h4>
     <ul>
       <li>
         <label for="party_members">Members: </label>
@@ -31,8 +31,8 @@
   </div>
   <div class="fluff-container column">
     <h4>WEALTH</h4>
-    <div>Gold: <input type="number" name="gold" id="gold" value="{{ character.gold }}" class="input-number"></div>
-    <div>Silver: <input type="number" name="silver" id="silver" value="{{ character.silver }}" class="input-number"> </div>
-    <div>Brass: <input type="number" name="brass" id="brass" value="{{ character.brass }}" class="input-number"></div>
+    <div>Gold: <input class="input-number" type="number" name="gold" id="gold" value="{{ character.gold }}"></div>
+    <div>Silver: <input class="input-number" type="number" name="silver" id="silver" value="{{ character.silver }}"> </div>
+    <div>Brass: <input class="input-number" type="number" name="brass" id="brass" value="{{ character.brass }}"></div>
   </div>
 </div>

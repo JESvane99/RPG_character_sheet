@@ -10,16 +10,16 @@
       <tbody>
         {% for item in character.trappings %}
         <tr>
-          <td><input type="text" name="trappings_name_{{ item.id }}" value="{{ item.name }}" class="input-text"></td>
-          <td><input type="number" name="trappings_enc_{{ item.id }}" value="{{ item.encumbrance }}" class="input-number"></td>
-          <td><input type="number" name="trappings_quantity_{{ item.id }}" value="{{ item.quantity }}" class="input-number"></td>
+          <td><input class="input-text" type="text" name="trappings_name_{{ item.id }}" value="{{ item.name }}"></td>
+          <td><input class="input-number" type="number" name="trappings_enc_{{ item.id }}" value="{{ item.encumbrance }}"></td>
+          <td><input class="input-number" type="number" name="trappings_quantity_{{ item.id }}" value="{{ item.quantity }}"></td>
           <td><textarea name="trappings_description_{{ item.id }}" class="textarea">{{ item.description }}</textarea></td>
         </tr>
         {% endfor %}
         <tr>
-          <td><input type="text" name="trappings_name_new" class="input-text"></td>
-          <td><input type="number" name="trappings_enc_new" class="input-number"></td>
-          <td><input type="number" name="trappings_quantity_new" class="input-number"></td>
+          <td><input class="input-text" type="text" name="trappings_name_new"></td>
+          <td><input class="input-number" type="number" name="trappings_enc_new"></td>
+          <td><input class="input-number" type="number" name="trappings_quantity_new"></td>
           <td><textarea name="trappings_description_new" class="textarea"></textarea></td>
         </tr>
       </tbody>

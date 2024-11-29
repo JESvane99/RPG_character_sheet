@@ -1,28 +1,28 @@
-<div class="container">
-  <h4 class="talents-header">TALENTS</h4>
-  <table class="talents-table">
+<div>
+  <h4>TALENTS</h4>
+  <table>
     <tr>
-      <th class="name-column">Name</th>
-      <th class="trait-column">Description</th>
-      <th class="adv-column">Attribute</th>
-      <th class="skill-column">Bonus</th>
-      <th class="times-taken-column">Taken</th>
+      <th class="width-30">Name</th>
+      <th class="width-40">Description</th>
+      <th class="width-10">Attribute</th>
+      <th class="width-10">Bonus</th>
+      <th class="width-10">Times Taken</th>
     </tr>
     {% for item in character.talents|sort(attribute="name") %}
     <tr>
-      <td><input type="text" name="talents_name_{{ item.id }}" value="{{ item.name }}"></td>
-      <td><input type="text" name="talents_description_{{ item.id }}" value="{{ item.description }}"></td>
-      <td><input type="text" name="talents_attribute_{{ item.id }}" value="{{ item.bonus_attribute }}"></td>
-      <td><input type="number" name="talents_bonus_value_{{ item.id}}" value="{{ item.given_bonus }}"></td>
-      <td><input type="number" name="talents_times_taken_{{ item.id }}" value="{{ item.times_taken }}"></td>
+      <td class="width-30"><input class="input-text" type="text" name="talents_name_{{ item.id }}" value="{{ item.name }}"></td>
+      <td class="width-40"><input class="input-text" type="text" name="talents_description_{{ item.id }}" value="{{ item.description }}"></td>
+      <td class="width-10"><input class="input-text" type="text" name="talents_attribute_{{ item.id }}" value="{{ item.bonus_attribute }}"></td>
+      <td class="width-10"><input class="input-number" type="number" name="talents_bonus_value_{{ item.id}}" value="{{ item.given_bonus }}"></td>
+      <td class="width-10"><input class="input-number" type="number" name="talents_times_taken_{{ item.id }}" value="{{ item.times_taken }}"></td>
     </tr>
     {% endfor %}
     <tr>
-      <td><input type="text" name="talents_name_new"></td>
-      <td><input type="text" name="talents_description_new"></td>
-      <td><input type="text" name="talents_attribute_new"></td>
-      <td><input type="number" name="talents_bonus_value_new"></td>
-      <td><input type="number" name="talents_times_taken_new"></td>
+      <td class="width-30"><input class="input-text" type="text" name="talents_name_new"></td>
+      <td class="width-40"><input class="input-text" type="text" name="talents_description_new"></td>
+      <td class="width-10"><input class="input-text" type="text" name="talents_attribute_new"></td>
+      <td class="width-10"><input class="input-number" type="number" name="talents_bonus_value_new"></td>
+      <td class="width-10"><input class="input-number" type="number" name="talents_times_taken_new"></td>
     </tr>
   </table>
 </div>

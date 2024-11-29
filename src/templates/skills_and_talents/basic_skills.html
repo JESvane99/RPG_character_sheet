@@ -1,23 +1,23 @@
 <div class="two-block">
-<h4 class="skills-and-talents-header">BASIC SKILLS</h4>
-<table class="skills-and-talents-table">
-  <tr>
-    <th class="name-column">Name</th>
-    <th class="trait-column">Trait</th>
-    <th class="adv-column">Adv</th>
-    <th class="skill-column">Skill</th>
-  </tr>
-  {% for item in character.basic_skills|sort(attribute="name") %}
+  <h4>BASIC SKILLS</h4>
+  <table class="skill-table">
     <tr>
-      <td class="name-column">{{ item.name }}</td>
-      {% if item.attribute in ("ag","dex","int","fel") %}
-      <td class="trait-column">{{ item.attribute|title }}</td>
-      {% else %}
-      <td class="trait-column">{{ item.attribute|upper }}</td>
-      {% endif %}
-      <td class="adv-column"><input type="number" name="{{ item.name|lower }}-adv" value="{{ item.advances }}"></td>
-      <td class="skill-column">{{ item.total }}</td>
+      <th class="width-55">Name</th>
+      <th class="width-15">Trait</th>
+      <th class="width-15">Adv</th>
+      <th class="width-15">Skill</th>
     </tr>
-  {% endfor %}
-</table>
+    {% for item in character.basic_skills|sort(attribute="name") %}
+    <tr>
+      <td class="width-55">{{ item.name }}</td>
+      {% if item.attribute in ("ag","dex","int","fel") %}
+      <td class="width-15">{{ item.attribute|title }}</td>
+      {% else %}
+      <td class="width-15">{{ item.attribute|upper }}</td>
+      {% endif %}
+      <td class="width-15"><input class="input-number" type="number" name="{{ item.name|lower }}-adv" value="{{ item.advances }}"></td>
+      <td class="width-15">{{ item.total }}</td>
+    </tr>
+    {% endfor %}
+  </table>
 </div>

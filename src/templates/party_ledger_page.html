@@ -40,19 +40,19 @@
         <tbody>
           {% for entry in character.ledger %}
           <tr>
-            <td><input type="text" name="who_{{ entry.id }}" value="{{ entry.who }}" class="ledger-input"></td>
-            <td><input type="text" name="what_{{ entry.id }}" value="{{ entry.what }}" class="ledger-input"></td>
-            <td><input type="number" name="gold_{{ entry.id }}" value="{{ entry.gold }}" class="ledger-input"></td>
-            <td><input type="number" name="silver_{{ entry.id }}" value="{{ entry.silver }}" class="ledger-input"></td>
-            <td><input type="number" name="brass_{{ entry.id }}" value="{{ entry.brass }}" class="ledger-input"></td>
+            <td><input class="input-text" type="text" name="who_{{ entry.id }}" value="{{ entry.who }}"></td>
+            <td><input class="input-text" type="text" name="what_{{ entry.id }}" value="{{ entry.what }}"></td>
+            <td><input class="input-number" type="number" name="gold_{{ entry.id }}" value="{{ entry.gold }}"></td>
+            <td><input class="input-number" type="number" name="silver_{{ entry.id }}" value="{{ entry.silver }}"></td>
+            <td><input class="input-number" type="number" name="brass_{{ entry.id }}" value="{{ entry.brass }}"></td>
           </tr>
           {% endfor %}
           <tr>
-            <td><input type="text" name="who_new" class="ledger-input"></td>
-            <td><input type="text" name="what_new" class="ledger-input"></td>
-            <td><input type="number" name="gold_new" class="ledger-input"></td>
-            <td><input type="number" name="silver_new" class="ledger-input"></td>
-            <td><input type="number" name="brass_new" class="ledger-input"></td>
+            <td><input class="input-text" type="text" name="who_new"></td>
+            <td><input class="input-text" type="text" name="what_new"></td>
+            <td><input class="input-number" type="number" name="gold_new"></td>
+            <td><input class="input-number" type="number" name="silver_new"></td>
+            <td><input class="input-number" type="number" name="brass_new"></td>
           </tr>
         </tbody>
       </table>

@@ -8,15 +8,15 @@
     </tr>
     {% for item in character.ammunition|sort(attribute="name") %}
     <tr>
-      <td><input type="text" name="ammo_name_{{ item.id }}" value="{{ item.name }}"></td>
-      <td><input type="number" name="ammo_quantity_{{ item.id }}" value="{{ item.quantity }}"></td>
-      <td><input type="text" name="ammo_qualities_{{ item.id }}" value="{{ item.qualities }}"></td>
+      <td><input class="input-text" type="text" name="ammo_name_{{ item.id }}" value="{{ item.name }}"></td>
+      <td><input class="input-number" type="number" name="ammo_quantity_{{ item.id }}" value="{{ item.quantity }}"></td>
+      <td><input class="input-text" type="text" name="ammo_qualities_{{ item.id }}" value="{{ item.qualities }}"></td>
     </tr>
     {% endfor %}
     <tr>
-      <td><input type="text" name="ammo_name_new"></td>
-      <td><input type="number" name="ammo_quantity_new"></td>
-      <td><input type="text" name="ammo_qualities_new"></td>
+      <td><input class="input-text" type="text" name="ammo_name_new"></td>
+      <td><input class="input-number" type="number" name="ammo_quantity_new"></td>
+      <td><input class="input-text" type="text" name="ammo_qualities_new"></td>
     </tr>
   </table>
 </div>
