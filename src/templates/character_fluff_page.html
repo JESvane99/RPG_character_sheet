@@ -17,7 +17,12 @@
     {% include 'fluff_page/description_table.html' %}
     {% include 'fluff_page/fluff.html' %}
     {% include 'fluff_page/trappings_and_notes.html' %}
-    {% include 'fluff_page/doom.html' %}
+    <div class="part-container">
+      <div class="padding flex-section">
+        <h3><label for="doom">DOOM: </label></h3>
+        <textarea name="doom" class="textarea">{{ character.text_fields.doom }}</textarea>
+      </div>
+    </div>
   </form>
 </div>
 {% endblock content %}

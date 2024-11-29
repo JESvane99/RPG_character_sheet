@@ -120,8 +120,8 @@ table th:last-child {
 .column > div:last-child {
     border-bottom: none;
 }
-/* legacy flex class, may be redundant */
-.flex {
+/* base website layout class should be used in future if remember */
+.base {
     display: flex;
 }
 
@@ -151,7 +151,7 @@ table th:last-child {
 }
 .textarea {
     resize: vertical;
-    min-height: 50%;
+    height: 2em;
 }
 
 /* !! description & trappings page */
@@ -239,14 +239,8 @@ table th:last-child {
     text-align: center;
 }
 
-/* doom design */
-#doom {
-    flex: 1;
-    text-align: left;
-}
-.doom-design {
-    padding: 5px;
-}
+
+
 
 /* !! width control */
 

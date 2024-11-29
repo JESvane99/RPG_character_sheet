@@ -1,31 +1,30 @@
 <div class="flex-section part-container">
-  <div class="trappings-container">
+  <div class="two-block">
     <h4>TRAPPINGS</h4>
     <table>
-      <thead>
         <tr>
-          <th>Name</th><th>Enc</th><th>Quantity</th><th>Description</th>
+          <th class="width-30">Name</th>
+          <th class="width-10">Enc</th>
+          <th class="width-10">No.</th>
+          <th class="width-50">Description</th>
         </tr>
-      </thead>
-      <tbody>
         {% for item in character.trappings %}
         <tr>
-          <td><input class="input-text" type="text" name="trappings_name_{{ item.id }}" value="{{ item.name }}"></td>
-          <td><input class="input-number" type="number" name="trappings_enc_{{ item.id }}" value="{{ item.encumbrance }}"></td>
-          <td><input class="input-number" type="number" name="trappings_quantity_{{ item.id }}" value="{{ item.quantity }}"></td>
-          <td><textarea name="trappings_description_{{ item.id }}" class="textarea">{{ item.description }}</textarea></td>
+          <td class="width-30"><input class="input-text" type="text" name="trappings_name_{{ item.id }}" value="{{ item.name }}"></td>
+          <td class="width-10"><input class="input-number" type="number" name="trappings_enc_{{ item.id }}" value="{{ item.encumbrance }}"></td>
+          <td class="width-10"><input class="input-number" type="number" name="trappings_quantity_{{ item.id }}" value="{{ item.quantity }}"></td>
+          <td class="width-50"><textarea name="trappings_description_{{ item.id }}" class="textarea">{{ item.description }}</textarea></td>
         </tr>
         {% endfor %}
         <tr>
-          <td><input class="input-text" type="text" name="trappings_name_new"></td>
-          <td><input class="input-number" type="number" name="trappings_enc_new"></td>
-          <td><input class="input-number" type="number" name="trappings_quantity_new"></td>
-          <td><textarea name="trappings_description_new" class="textarea"></textarea></td>
+          <td class="width-30"><input class="input-text" type="text" name="trappings_name_new"></td>
+          <td class="width-10"><input class="input-number" type="number" name="trappings_enc_new"></td>
+          <td class="width-10"><input class="input-number" type="number" name="trappings_quantity_new"></td>
+          <td class="width-50"><textarea name="trappings_description_new" class="textarea"></textarea></td>
         </tr>
-      </tbody>
     </table>
   </div>
-  <div class="notes-container">
+  <div class="two-block">
     <h4>NOTES</h4>
     <textarea name="notes" id="notes" class="textarea">{{ character.text_fields.campaign_notes }}</textarea>
   </div>
