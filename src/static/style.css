@@ -216,31 +216,6 @@ table th:last-child {
     border-bottom: none;
 }
 
-/* trappings and campaign notes design */
-.trappings-container {
-    padding: 5px;
-    width: 50%;
-    min-height: 100mm;
-    text-align: left;
-    border-right: 3px solid #000;
-}
-.trappings-container td:first-child {
-    width: 30%;
-}
-.trappings-container td:last-child {
-    width: 50%;
-}
-.trappings-container td:nth-child(2) {
-    width: 10%;
-}
-.notes-container {
-    padding: 5px;
-    width: 50%;
-    text-align: center;
-}
-
-
-
 
 /* !! width control */
 
@@ -301,60 +276,6 @@ table th:last-child {
     width: 40%;
 }
 
-
-
-/* ledger details */
-.ledger-details table {
-    border-collapse: collapse;
-}
-.ledger-details table th {
-    border-bottom: 1px solid #000;
-}
-.ledger-details table th,
-.ledger-details table td {
-    border-left: 1px solid #000;
-    border-right: 1px solid #000;
-}
-.ledger-details table th:first-child,
-.ledger-details table td:first-child {
-    border-left: none;
-}
-.ledger-details table th:last-child,
-.ledger-details table td:last-child {
-    border-right: none;
-}
-.ledger-details table th:nth-child(1),
-.ledger-details table td:nth-child(1) {
-    width: 20%;
-}
-.ledger-details table th:nth-child(2),
-.ledger-details table td:nth-child(2) {
-    width: 30%;
-}
-.ledger-details table th:nth-child(3),
-.ledger-details table td:nth-child(3),
-.ledger-details table th:nth-child(4),
-.ledger-details table td:nth-child(4),
-.ledger-details table th:nth-child(5),
-.ledger-details table td:nth-child(5) {
-    width: 10%;
-}
-.ledger-input {
-    background: none;
-    border: none;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: center;
-}
-.ledger-header > div:first-child {
-    width: 80%;
-    text-align: center;
-    border-right: 3px solid #0a1033;
-}
-.ledger-header > div:last-child {
-    width: 20%;
-    text-align: center;
-}
 
 
 
