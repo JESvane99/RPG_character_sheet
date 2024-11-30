@@ -21,7 +21,6 @@ app.config["SECRET_KEY"] = "your_secret_key"  # Needed for flashing messages
 db.init_app(app)
 
 with app.app_context():
-    db.drop_all()  # Uncomment this line to drop all tables
     db.create_all()
 
 
