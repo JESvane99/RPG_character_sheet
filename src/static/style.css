@@ -15,7 +15,7 @@
 
 /* base design setup */
 body {
-    font-family: Copperplate, Papyrus, fantasy;
+    font-family: "Oldenburg";
     margin: 0;
     padding: 0;
     background-color: #b8bcf7;
@@ -24,7 +24,7 @@ body {
     color: #700909;
     padding: 10px;
     width: 20%;
-    position: sticky;
+    font-size: larger;
 }
 .sheet-container {
     width: 80%;
@@ -37,6 +37,7 @@ body {
     width: 210mm;
     height: 297mm;
     font-size: x-small;
+    font-weight: bold;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -53,12 +54,15 @@ h1 {
     text-align: center;
     padding: 0px;
     margin: 2px;
+    font-family: Metamorphous;
 }
 h4 {
     text-align: center;
     border-bottom: 2px solid #000000;
     padding: 0px;
     margin: 2px;
+    font-family: Metamorphous;
+    font-size: small;
 }
 label {
     font-weight: bold;
@@ -141,17 +145,17 @@ table th:last-child {
     background: none;
     border: none;
     width: 100%;
-    font-family: copperplate, papyrus, fantasy;
-    font-weight: bold;
-}
-.input-text,
-.input-number {
-    font-size: smaller;
     text-align: center;
+}
+.input-number, .number {
+    font-family: "Oldenburg";
+    font-size: small;
+}
+.input-text, textarea {
+    font-family: "Shantell Sans";
 }
 .textarea {
     resize: vertical;
-    height: 2em;
 }
 
 /* !! description & trappings page */
@@ -243,8 +247,8 @@ table th:last-child {
 .width-60 {
     width: 60%;
 }
-.width-80 {
-    width: 80%;
+.width-70 {
+    width: 70%;
 }
 
 /* ! height control */

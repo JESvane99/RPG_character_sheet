@@ -16,7 +16,7 @@
       <td class="width-15">{{ item.attribute|upper }}</td>
       {% endif %}
       <td class="width-15"><input class="input-number" type="number" name="{{ item.name|lower }}-adv" value="{{ item.advances }}"></td>
-      <td class="width-15">{{ item.total }}</td>
+      <td class="width-15 number">{{ item.total }}</td>
     </tr>
     {% endfor %}
   </table>
