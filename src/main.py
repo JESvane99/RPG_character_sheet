@@ -59,12 +59,10 @@ def character_page(id):
     if request.method == "POST":
         app.logger.info("POST request received")
         app.logger.info(request.form)
-        save_static_data(request.form, character, app)
-        save_trappings(request.form, character, db)
         try:
-            db.session.commit()
+            save_static_data(request.form, character, db)
+            save_trappings(request.form, character, db) # no catch of errors in this method may result in site reloading with complete loss of data
         except Exception as e:
-            db.session.rollback()
             app.logger.error(e)
         return redirect(f"/{id}/sheet-p1")
     else:
@@ -91,14 +89,12 @@ def skills_and_talents(id):
     if request.method == "POST":
         app.logger.info("POST request received")
         app.logger.info(request.form)
-        save_basic_skills(request.form, character)
-        save_attributes(request.form, character)
-        save_skills(request.form, character, db)
-        save_talents(request.form, character, db)
         try:
-            db.session.commit()
+            save_basic_skills(request.form, character, db)
+            save_attributes(request.form, character, db)
+            save_skills(request.form, character, db)
+            save_talents(request.form, character, db)
         except Exception as e:
-            db.session.rollback()
             app.logger.error(e)
         return redirect(f"/{id}/sheet-p2")
     else:
@@ -126,13 +122,11 @@ def action_and_equipment(id):
     if request.method == "POST":
         app.logger.info("POST request received")
         app.logger.info(request.form)
-        save_armor(request.form, character, db)
-        save_weapons(request.form, character, db)
-        save_spells_and_prayers(request.form, character, db)
         try:
-            db.session.commit()
+            save_armor(request.form, character, db)
+            save_weapons(request.form, character, db)
+            save_spells_and_prayers(request.form, character, db)
         except Exception as e:
-            db.session.rollback()
             app.logger.error(e)
         return redirect(f"/{id}/sheet-p3")
     else:
@@ -154,12 +148,9 @@ def party_ledger(id):
     if request.method == "POST":
         app.logger.info("POST request received")
         app.logger.info(request.form)
-        save_party_ledger(request.form, character, db)
-
         try:
-            db.session.commit()
+            save_party_ledger(request.form, character, db)
         except Exception as e:
-            db.session.rollback()
             app.logger.error(e)
         return redirect(f"/{id}/party-ledger")
     else:

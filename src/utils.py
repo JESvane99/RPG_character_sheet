@@ -192,8 +192,7 @@ def check_character_connections(character_id):
     return True
 
 
-def save_static_data(form, character, app):
-    app.logger.info(f"saving static data for {character.name}")
+def save_static_data(form, character, db):
     character.name = form["name"]
     character.species = form["species"]
     character.career = form["career"]
@@ -214,17 +213,27 @@ def save_static_data(form, character, app):
     character.party.name = form["party_name"]
     character.party.members = form["party_members"]
     character.party.ambitions = form["party_ambitions"]
+    
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
 
 
-def save_basic_skills(form, character):
+def save_basic_skills(form, character, db):
     for skill in character.basic_skills:
         skill_advances = form.get(f"{skill.name.lower()}-adv")
         if skill_advances is not None:
             skill.advances = int(skill_advances)
-    db.session.commit()
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
 
 
-def save_attributes(form, character):
+def save_attributes(form, character, db):
     attributes = character.attributes
     attributes.ws_base = int(form.get("ws-init", attributes.ws_base))
     attributes.ws_modifier = int(form.get("ws-adv", attributes.ws_modifier))
@@ -266,7 +275,11 @@ def save_attributes(form, character):
     attributes.fel_modifier = int(form.get("fel-adv", attributes.fel_modifier))
     attributes.fel_bonus = int(form.get("fel-bonus", attributes.fel_bonus))
 
-    db.session.commit()
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
 
 
 def save_trappings(form, character, db):
@@ -291,9 +304,11 @@ def save_trappings(form, character, db):
             description=new_description,
         )
         db.session.add(new_trapping)
-
-    db.session.commit()
-
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
 
 def save_skills(form, character, db):
     for skill in character.skills:
@@ -319,7 +334,11 @@ def save_skills(form, character, db):
         )
         db.session.add(new_skill)
 
-    db.session.commit()
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
     
 def save_talents(form, character, db):
     for talent in character.talents:
@@ -351,7 +370,11 @@ def save_talents(form, character, db):
         )
         db.session.add(new_talent)
 
-    db.session.commit()
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
 
 def save_armor(form, character, db):
     for armor in character.armor:
@@ -379,7 +402,11 @@ def save_armor(form, character, db):
         )
         db.session.add(new_armor)
 
-    db.session.commit()
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
 
 def save_weapons(form, character, db):
     for weapon in character.weapons:
@@ -407,7 +434,11 @@ def save_weapons(form, character, db):
         )
         db.session.add(new_weapon)
 
-    db.session.commit()
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
 
 def save_spells_and_prayers(form, character, db):
     for spell in character.spells_and_prayers:
@@ -438,7 +469,11 @@ def save_spells_and_prayers(form, character, db):
         )
         db.session.add(new_spell)
 
-    db.session.commit()
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
 
 def save_ammunition(form, character, db):
     for ammo in character.ammunition:
@@ -460,7 +495,11 @@ def save_ammunition(form, character, db):
         )
         db.session.add(new_ammo)
 
-    db.session.commit()
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
     
     
 def save_party_ledger(form, character, db):
@@ -491,4 +530,9 @@ def save_party_ledger(form, character, db):
         character.party.silver += int(new_silver)
         character.party.brass += int(new_brass)
         db.session.add(new_entry)
-    db.session.commit()
+
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
