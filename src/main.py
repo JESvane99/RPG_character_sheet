@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect
-from models import db, Character, TextFields, Party, Armor, Ledger  # Changed from Armour to Armor
-from utils import (
+from .models import db, Character
+from .utils import (
     check_character_connections,
     create_character_with_connections,
     save_attributes,

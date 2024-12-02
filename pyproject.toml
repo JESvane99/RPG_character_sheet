@@ -8,8 +8,14 @@ dependencies = [
     "flask-sqlalchemy>=3.1.1",
     "flask>=3.0.3",
     "sqlalchemy>=2.0.36",
+    "waitress>=3.0.2",
 ]
 
 [tool.uv]
-dev-dependencies = []
+dev-dependencies = [
+    "character-creator",
+]
+
+[tool.uv.sources]
+character-creator = { workspace = true }
 
