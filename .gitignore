@@ -6,3 +6,4 @@ instance/
 *.pdf
 *.pptx
 *.egg-info/
+output.log

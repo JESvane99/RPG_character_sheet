@@ -24,17 +24,6 @@ def log_this_find(app, find):
         app.logger.info(f"Could not find {find.name}")
 
 
-def upsert(session, app, table, data):
-    pass
-    # try:
-    #     table.get
-    #     session.execute(stmt)
-    #     session.commit()
-    # except Exception as e:
-    #     session.rollback()
-    #     app.logger.error(e)
-
-
 def create_character_with_connections(session, name):
     new_character = Character(name=name)
     new_character.species = ""
@@ -285,7 +274,7 @@ def save_attributes(form, character, db):
 def save_trappings(form, character, db):
     for trap in character.trappings:
         trap.name = form.get(f"trappings_name_{trap.id}")
-        trap.encumbrance = form.get(f"trappings_enc_{trap.id}")
+        trap.encumbrance = int(form.get(f"trappings_enc_{trap.id}", 0)) 
         trap.quantity = form.get(f"trappings_quantity_{trap.id}")
         trap.description = form.get(f"trappings_description_{trap.id}")
         if not trap.name:
@@ -293,7 +282,7 @@ def save_trappings(form, character, db):
 
     new_name = form.get("trappings_name_new")
     if new_name:
-        new_encumbrance = form.get("trappings_enc_new")
+        new_encumbrance = int(form.get("trappings_enc_new", 0))
         new_quantity = form.get("trappings_quantity_new")
         new_description = form.get("trappings_description_new")
         new_trapping = Trapping(
@@ -379,7 +368,7 @@ def save_talents(form, character, db):
 def save_armor(form, character, db):
     for armor in character.armor:
         armor.name = form.get(f"armor_name_{armor.id}")
-        armor.encumbrance = form.get(f"armor_encumbrance_{armor.id}")
+        armor.encumbrance = int(form.get(f"armor_encumbrance_{armor.id}", 0))
         armor.armor_points = form.get(f"armor_points_{armor.id}")
         armor.location = form.get(f"armor_location_{armor.id}")
         armor.qualities = form.get(f"armor_qualities_{armor.id}")
@@ -388,7 +377,7 @@ def save_armor(form, character, db):
 
     new_name = form.get("armor_name_new")
     if new_name:
-        new_encumbrance = form.get("armor_encumbrance_new")
+        new_encumbrance = int(form.get("armor_encumbrance_new", 0))
         new_armor_points = form.get("armor_points_new")
         new_location = form.get("armor_location_new")
         new_qualities = form.get("armor_qualities_new")
@@ -411,7 +400,7 @@ def save_armor(form, character, db):
 def save_weapons(form, character, db):
     for weapon in character.weapons:
         weapon.name = form.get(f"weapon_name_{weapon.id}")
-        weapon.encumbrance = form.get(f"weapon_encumbrance_{weapon.id}")
+        weapon.encumbrance = int(form.get(f"weapon_encumbrance_{weapon.id}", 0))
         weapon.range = form.get(f"weapon_range_{weapon.id}")
         weapon.damage = form.get(f"weapon_damage_{weapon.id}")
         weapon.qualities = form.get(f"weapon_qualities_{weapon.id}")
@@ -420,7 +409,7 @@ def save_weapons(form, character, db):
 
     new_name = form.get("weapon_name_new")
     if new_name:
-        new_encumbrance = form.get("weapon_encumbrance_new")
+        new_encumbrance = int(form.get("weapon_encumbrance_new", 0))
         new_range = form.get("weapon_range_new")
         new_damage = form.get("weapon_damage_new")
         new_qualities = form.get("weapon_qualities_new")
