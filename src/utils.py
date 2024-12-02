@@ -490,6 +490,15 @@ def save_ammunition(form, character, db):
         db.session.rollback()
         raise e
     
+
+def save_health_notes(form, character, db):
+    character.text_fields.health_notes = form.get("combat_health_notes")
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    
     
 def save_party_ledger(form, character, db):
     for entry in character.ledger:

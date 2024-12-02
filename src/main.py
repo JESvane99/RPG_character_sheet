@@ -3,8 +3,10 @@ from .models import db, Character
 from .utils import (
     check_character_connections,
     create_character_with_connections,
+    save_ammunition,
     save_attributes,
     save_basic_skills,
+    save_health_notes,
     save_party_ledger,
     save_skills,
     save_static_data,
@@ -130,6 +132,8 @@ def action_and_equipment(id):
             save_armor(request.form, character, db)
             save_weapons(request.form, character, db)
             save_spells_and_prayers(request.form, character, db)
+            save_ammunition(request.form, character, db)
+            save_health_notes(request.form, character, db)
         except Exception as e:
             app.logger.error(e)
         return redirect(f"/{id}/sheet-p3")
