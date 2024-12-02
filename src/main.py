@@ -28,6 +28,10 @@ with app.app_context():
 def index():
     if request.method == "POST":
         name = request.form["new-name"]
+        if not name:
+            return redirect("/")
+        elif not name.replace(" ", "").isalnum():
+            return redirect("/")
         try:
             create_character_with_connections(db.session, name)
         except Exception as e:
