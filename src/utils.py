@@ -498,23 +498,42 @@ def save_health_notes(form, character, db):
     except Exception as e:
         db.session.rollback()
         raise e
+
+
+def calculate_party_holdings(character, db):
+    total_gold = 0
+    total_silver = 0
+    total_brass = 0
+    for entry in character.ledger:
+        total_gold += entry.gold
+        total_silver += entry.silver
+        total_brass += entry.brass
+        
+    character.party.gold = total_gold
+    character.party.silver = total_silver
+    character.party.brass = total_brass
     
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
     
 def save_party_ledger(form, character, db):
     for entry in character.ledger:
         entry.who = form.get(f"who_{entry.id}")
         entry.what = form.get(f"what_{entry.id}")
-        entry.gold = form.get(f"gold_{entry.id}")
-        entry.silver = form.get(f"silver_{entry.id}")
-        entry.brass = form.get(f"brass_{entry.id}")
+        entry.gold = int(form.get(f"gold_{entry.id}") or 0)
+        entry.silver = int(form.get(f"silver_{entry.id}") or 0)
+        entry.brass = int(form.get(f"brass_{entry.id}") or 0)
         if not entry.who or not entry.what:
             db.session.delete(entry)
 
     new_who = form.get("who_new")
     new_what = form.get("what_new")
-    new_gold = form.get("gold_new") or 0
-    new_silver = form.get("silver_new") or 0
-    new_brass = form.get("brass_new") or 0
+    new_gold = int(form.get("gold_new") or 0)
+    new_silver = int(form.get("silver_new") or 0)
+    new_brass = int(form.get("brass_new") or 0)
     if new_who and new_what:
         new_entry = Ledger(
             character_id=character.id,
@@ -524,16 +543,14 @@ def save_party_ledger(form, character, db):
             silver=new_silver,
             brass=new_brass,
         )
-        character.party.gold += int(new_gold)
-        character.party.silver += int(new_silver)
-        character.party.brass += int(new_brass)
         db.session.add(new_entry)
-
     try:
         db.session.commit()
     except Exception as e:
         db.session.rollback()
         raise e
+    
+    calculate_party_holdings(character, db)
     
     
 def reset_description(character, db):
