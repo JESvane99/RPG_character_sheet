@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, abort, render_template, request, redirect
 from .models import db, Character
 from .utils import (
     check_character_connections,
@@ -15,6 +15,9 @@ from .utils import (
     save_armor,
     save_weapons,
     save_spells_and_prayers,
+    reset_description,
+    reset_skills_and_talents,
+    reset_action,
 )
 
 app = Flask(__name__)
@@ -163,6 +166,103 @@ def party_ledger(id):
         return redirect(f"/{id}/party-ledger")
     else:
         return render_template("party_ledger_page.html", character=character)
+
+
+@app.route("/<int:id>/reset-p1")
+def reset_description(id):
+    abort(404)
+    character = db.session.scalars(
+        db.select(Character).where(Character.id == id)
+    ).one_or_none()
+
+    if character is None:
+        app.logger.error("Character not found")
+        return redirect("/")
+
+    app.logger.info("Character found: " + character.name)
+
+    reset_description(character, db)
+    return redirect(f"/{id}/sheet-p1")
+
+
+@app.route("/<int:id>/reset-p2")
+def reset_skills_and_talents(id):
+    abort(404)
+    character = db.session.scalars(
+        db.select(Character).where(Character.id == id)
+    ).one_or_none()
+
+    if character is None:
+        app.logger.error("Character not found")
+        return redirect("/")
+
+    app.logger.info("Character found: " + character.name)
+
+    reset_skills_and_talents(character, db)
+    return redirect(f"/{id}/sheet-p2")
+
+
+@app.route("/<int:id>/reset-p3")
+def reset_action(id):
+    abort(404)
+    character = db.session.scalars(
+        db.select(Character).where(Character.id == id)
+    ).one_or_none()
+
+    if character is None:
+        app.logger.error("Character not found")
+        return redirect("/")
+
+    app.logger.info("Character found: " + character.name)
+
+    reset_action(character, db)
+    return redirect(f"/{id}/sheet-p3")
+
+
+@app.route("/<int:id>/reset-ledger")
+def reset_ledger(id):
+    abort(404)
+    
+    character = db.session.scalars(
+        db.select(Character).where(Character.id == id)
+    ).one_or_none()
+
+    if character is None:
+        app.logger.error("Character not found")
+        return redirect("/")
+
+    app.logger.info("Character found: " + character.name)
+
+    for entry in character.party_ledger:
+        db.session.delete(entry)
+    
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    return redirect(f"/{id}/party-ledger")
+
+
+@app.route("/<int:id>/delete")
+def delete(id):
+    character = db.session.scalars(
+        db.select(Character).where(Character.id == id)
+    ).one_or_none()
+
+    if character is None:
+        app.logger.error("Character not found")
+        return redirect("/")
+
+    app.logger.info("Character found: " + character.name)
+
+    try:
+        db.session.delete(character)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        app.logger.error(e)
+    return redirect("/")
 
 
 if __name__ == "__main__":

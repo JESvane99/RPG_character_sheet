@@ -534,3 +534,90 @@ def save_party_ledger(form, character, db):
     except Exception as e:
         db.session.rollback()
         raise e
+    
+    
+def reset_description(character, db):
+
+    for key in ["psychology", "short_term_ambition", "long_term_ambition", "doom", "campaign_notes"]:
+        setattr(character.text_fields, key, "")
+    
+    descriptions = [
+        "name",
+        "species",
+        "career",
+        "status",
+        "careerpath",
+        "age",
+        "height",
+        "hair",
+        "eyes",
+        "gold",
+        "silver",
+        "brass",
+    ]
+    for key in descriptions:
+        setattr(character, key, "")
+    
+    for item in character.trappings:
+        db.session.delete(item)
+    
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    return True
+
+
+def reset_skills_and_talents(character, db):
+    for skill in character.skills:
+        db.session.delete(skill)
+    for talent in character.talents:
+        db.session.delete(talent)
+    for basic_skill in character.basic_skills:
+        basic_skill.advances = 0
+    
+    attrs = [
+        "ws",
+        "bs",
+        "s",
+        "t",
+        "i",
+        "ag",
+        "dex",
+        "int",
+        "wp",
+        "fel",
+    ]
+    
+    for attr in attrs:
+        setattr(character.attributes, f"{attr}_base", 0)
+        setattr(character.attributes, f"{attr}_modifier", 0)
+        setattr(character.attributes, f"{attr}_bonus", 0)
+    
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    return True
+
+
+def reset_action(character, db):
+    for item in character.armor:
+        db.session.delete(item)
+    for item in character.weapons:
+        db.session.delete(item)
+    for item in character.spells_and_prayers:
+        db.session.delete(item)
+    for item in character.ammunition:
+        db.session.delete(item)
+    
+    character.text_fields.health_notes = ""
+    
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    return True
