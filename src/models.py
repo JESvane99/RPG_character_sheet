@@ -29,27 +29,26 @@ class Character(db.Model):
     silver: Mapped[int]
     brass: Mapped[int]
 
-    base_mechanics: Mapped["BaseMechanics"] = db.relationship(
+    base_mechanics: Mapped["BaseMechanics"] = db.relationship(cascade="all, delete-orphan", 
         back_populates="character", uselist=False
     )
-    text_fields: Mapped["TextFields"] = db.relationship(
+    text_fields: Mapped["TextFields"] = db.relationship(cascade="all, delete-orphan", 
         back_populates="character", uselist=False
     )
-    party: Mapped["Party"] = db.relationship(back_populates="character", uselist=False)
-    attributes: Mapped["Attributes"] = db.relationship(
+    party: Mapped["Party"] = db.relationship(cascade="all, delete-orphan", back_populates="character", uselist=False)
+    attributes: Mapped["Attributes"] = db.relationship(cascade="all, delete-orphan", 
         back_populates="character", uselist=False
     )
-    basic_skills: Mapped[list["BasicSkill"]] = db.relationship(
-        back_populates="character"
+    basic_skills: Mapped[list["BasicSkill"]] = db.relationship(cascade="all, delete-orphan", back_populates="character"
     )
-    skills: Mapped[list["Skill"]] = db.relationship(back_populates="character")
-    talents: Mapped[list["Talent"]] = db.relationship(back_populates="character")
-    armor: Mapped[list["Armor"]] = db.relationship(back_populates="character")  # Changed from Armour to Armor
-    weapons: Mapped[list["Weapon"]] = db.relationship(back_populates="character")
-    spells_and_prayers: Mapped[list["Magic"]] = db.relationship(back_populates="character")
-    trappings: Mapped[list["Trapping"]] = db.relationship(back_populates="character")
-    ammunition: Mapped[list["Ammunition"]] = db.relationship(back_populates="character")
-    ledger: Mapped[list["Ledger"]] = db.relationship(back_populates="character")
+    skills: Mapped[list["Skill"]] = db.relationship(cascade="all, delete-orphan", back_populates="character")
+    talents: Mapped[list["Talent"]] = db.relationship(cascade="all, delete-orphan", back_populates="character")
+    armor: Mapped[list["Armor"]] = db.relationship(cascade="all, delete-orphan", back_populates="character")  # Changed from Armour to Armor
+    weapons: Mapped[list["Weapon"]] = db.relationship(cascade="all, delete-orphan", back_populates="character")
+    spells_and_prayers: Mapped[list["Magic"]] = db.relationship(cascade="all, delete-orphan", back_populates="character")
+    trappings: Mapped[list["Trapping"]] = db.relationship(cascade="all, delete-orphan", back_populates="character")
+    ammunition: Mapped[list["Ammunition"]] = db.relationship(cascade="all, delete-orphan", back_populates="character")
+    ledger: Mapped[list["Ledger"]] = db.relationship(cascade="all, delete-orphan", back_populates="character")
 
     def get_attribute_total(self, attribute_name):
         attribute = int(getattr(self.attributes, f"{attribute_name.lower()}_base", 0))
@@ -61,7 +60,7 @@ class Character(db.Model):
         if belonging not in ["armor", "weapons", "trappings"]:
             raise ValueError(f"Invalid belonging: {belonging}")
         total = 0
-        for item in getattr(self, belonging):
+        for item in getattr(self, belonging, []):
             total += item.encumbrance
         return total
     

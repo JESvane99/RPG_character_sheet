@@ -1,4 +1,4 @@
-from models import (
+from .models import (
     Ammunition,
     db,
     Character,
@@ -22,17 +22,6 @@ def log_this_find(app, find):
         app.logger.info(f"Found {find.name}")
     else:
         app.logger.info(f"Could not find {find.name}")
-
-
-def upsert(session, app, table, data):
-    pass
-    # try:
-    #     table.get
-    #     session.execute(stmt)
-    #     session.commit()
-    # except Exception as e:
-    #     session.rollback()
-    #     app.logger.error(e)
 
 
 def create_character_with_connections(session, name):
@@ -285,7 +274,7 @@ def save_attributes(form, character, db):
 def save_trappings(form, character, db):
     for trap in character.trappings:
         trap.name = form.get(f"trappings_name_{trap.id}")
-        trap.encumbrance = form.get(f"trappings_enc_{trap.id}")
+        trap.encumbrance = int(form.get(f"trappings_enc_{trap.id}", 0)) 
         trap.quantity = form.get(f"trappings_quantity_{trap.id}")
         trap.description = form.get(f"trappings_description_{trap.id}")
         if not trap.name:
@@ -293,7 +282,7 @@ def save_trappings(form, character, db):
 
     new_name = form.get("trappings_name_new")
     if new_name:
-        new_encumbrance = form.get("trappings_enc_new")
+        new_encumbrance = int(form.get("trappings_enc_new", 0))
         new_quantity = form.get("trappings_quantity_new")
         new_description = form.get("trappings_description_new")
         new_trapping = Trapping(
@@ -379,7 +368,7 @@ def save_talents(form, character, db):
 def save_armor(form, character, db):
     for armor in character.armor:
         armor.name = form.get(f"armor_name_{armor.id}")
-        armor.encumbrance = form.get(f"armor_encumbrance_{armor.id}")
+        armor.encumbrance = int(form.get(f"armor_encumbrance_{armor.id}", 0))
         armor.armor_points = form.get(f"armor_points_{armor.id}")
         armor.location = form.get(f"armor_location_{armor.id}")
         armor.qualities = form.get(f"armor_qualities_{armor.id}")
@@ -388,7 +377,7 @@ def save_armor(form, character, db):
 
     new_name = form.get("armor_name_new")
     if new_name:
-        new_encumbrance = form.get("armor_encumbrance_new")
+        new_encumbrance = int(form.get("armor_encumbrance_new", 0))
         new_armor_points = form.get("armor_points_new")
         new_location = form.get("armor_location_new")
         new_qualities = form.get("armor_qualities_new")
@@ -411,7 +400,7 @@ def save_armor(form, character, db):
 def save_weapons(form, character, db):
     for weapon in character.weapons:
         weapon.name = form.get(f"weapon_name_{weapon.id}")
-        weapon.encumbrance = form.get(f"weapon_encumbrance_{weapon.id}")
+        weapon.encumbrance = int(form.get(f"weapon_encumbrance_{weapon.id}", 0))
         weapon.range = form.get(f"weapon_range_{weapon.id}")
         weapon.damage = form.get(f"weapon_damage_{weapon.id}")
         weapon.qualities = form.get(f"weapon_qualities_{weapon.id}")
@@ -420,7 +409,7 @@ def save_weapons(form, character, db):
 
     new_name = form.get("weapon_name_new")
     if new_name:
-        new_encumbrance = form.get("weapon_encumbrance_new")
+        new_encumbrance = int(form.get("weapon_encumbrance_new", 0))
         new_range = form.get("weapon_range_new")
         new_damage = form.get("weapon_damage_new")
         new_qualities = form.get("weapon_qualities_new")
@@ -501,22 +490,50 @@ def save_ammunition(form, character, db):
         db.session.rollback()
         raise e
     
+
+def save_health_notes(form, character, db):
+    character.text_fields.health_notes = form.get("combat_health_notes")
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+
+
+def calculate_party_holdings(character, db):
+    total_gold = 0
+    total_silver = 0
+    total_brass = 0
+    for entry in character.ledger:
+        total_gold += entry.gold
+        total_silver += entry.silver
+        total_brass += entry.brass
+        
+    character.party.gold = total_gold
+    character.party.silver = total_silver
+    character.party.brass = total_brass
+    
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
     
 def save_party_ledger(form, character, db):
     for entry in character.ledger:
         entry.who = form.get(f"who_{entry.id}")
         entry.what = form.get(f"what_{entry.id}")
-        entry.gold = form.get(f"gold_{entry.id}")
-        entry.silver = form.get(f"silver_{entry.id}")
-        entry.brass = form.get(f"brass_{entry.id}")
+        entry.gold = int(form.get(f"gold_{entry.id}") or 0)
+        entry.silver = int(form.get(f"silver_{entry.id}") or 0)
+        entry.brass = int(form.get(f"brass_{entry.id}") or 0)
         if not entry.who or not entry.what:
             db.session.delete(entry)
 
     new_who = form.get("who_new")
     new_what = form.get("what_new")
-    new_gold = form.get("gold_new") or 0
-    new_silver = form.get("silver_new") or 0
-    new_brass = form.get("brass_new") or 0
+    new_gold = int(form.get("gold_new") or 0)
+    new_silver = int(form.get("silver_new") or 0)
+    new_brass = int(form.get("brass_new") or 0)
     if new_who and new_what:
         new_entry = Ledger(
             character_id=character.id,
@@ -526,13 +543,98 @@ def save_party_ledger(form, character, db):
             silver=new_silver,
             brass=new_brass,
         )
-        character.party.gold += int(new_gold)
-        character.party.silver += int(new_silver)
-        character.party.brass += int(new_brass)
         db.session.add(new_entry)
-
     try:
         db.session.commit()
     except Exception as e:
         db.session.rollback()
         raise e
+    
+    calculate_party_holdings(character, db)
+    
+    
+def reset_description(character, db):
+
+    for key in ["psychology", "short_term_ambition", "long_term_ambition", "doom", "campaign_notes"]:
+        setattr(character.text_fields, key, "")
+    
+    descriptions = [
+        "name",
+        "species",
+        "career",
+        "status",
+        "careerpath",
+        "age",
+        "height",
+        "hair",
+        "eyes",
+        "gold",
+        "silver",
+        "brass",
+    ]
+    for key in descriptions:
+        setattr(character, key, "")
+    
+    for item in character.trappings:
+        db.session.delete(item)
+    
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    return True
+
+
+def reset_skills_and_talents(character, db):
+    for skill in character.skills:
+        db.session.delete(skill)
+    for talent in character.talents:
+        db.session.delete(talent)
+    for basic_skill in character.basic_skills:
+        basic_skill.advances = 0
+    
+    attrs = [
+        "ws",
+        "bs",
+        "s",
+        "t",
+        "i",
+        "ag",
+        "dex",
+        "int",
+        "wp",
+        "fel",
+    ]
+    
+    for attr in attrs:
+        setattr(character.attributes, f"{attr}_base", 0)
+        setattr(character.attributes, f"{attr}_modifier", 0)
+        setattr(character.attributes, f"{attr}_bonus", 0)
+    
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    return True
+
+
+def reset_action(character, db):
+    for item in character.armor:
+        db.session.delete(item)
+    for item in character.weapons:
+        db.session.delete(item)
+    for item in character.spells_and_prayers:
+        db.session.delete(item)
+    for item in character.ammunition:
+        db.session.delete(item)
+    
+    character.text_fields.health_notes = ""
+    
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    return True
