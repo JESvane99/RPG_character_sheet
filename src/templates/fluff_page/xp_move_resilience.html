@@ -1,0 +1,50 @@
+<div class="flex-section part-container">
+  <div class="width-15">
+    <table>
+      <tr>
+        <th class="width-55">Walk</th><td><input type="number" class="input-number" value="{{ character.base_mechanics }}"></td>
+      </tr>
+      <tr>
+        <th class="width-55">Run</th><td>{{ character.base_mechanics.movement * 2}}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="width-15">
+    <table>
+      <tr>
+        <th class="width-55">Fate</th><td><input type="number" class="input-number" value="{{ character.base_mechanics.fate_points }}"></td>
+      </tr>
+      <tr>
+        <th class="width-55">Fortune</th><td><input type="number" class="input-number" value="{{ character.base_mechanics.fortune_points }}"></td>
+      </tr>
+    </table>
+  </div>
+  <div class="width-30">
+    <table>
+      <tr>
+        <th>Resilience</th>
+        <th>Resolve</th>
+        <th>Motivation</th>
+      </tr>
+      <tr>
+        <td><input type="number" class="input-number" value="{{ character.base_mechanics.resilience }}"></td>
+        <td><input type="number" class="input-number" value="{{ character.base_mechanics.resolve }}"></td>
+        <td><input type="number" class="input-number" value="{{ character.base_mechanics.motivation }}"></td>
+      </tr>
+    </table>
+  </div>
+  <div class="width-40">
+    <table>
+      <tr>
+        <th>Exp Total</th>
+        <th>Exp Spent</th>
+        <th class="width-40">Exp Current</th>
+      </tr>
+      <tr>
+        <td><input type="number" class="input-number" value="{{ character.base_mechanics.experience }}"></td>
+        <td><input type="number" class="input-number" value="{{ character.base_mechanics.experience_spent }}"></td>
+        <td>{{ character.base_mechanics.experience - character.base_mechanics.experience_spent }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
