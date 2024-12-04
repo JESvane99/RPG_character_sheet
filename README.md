@@ -10,22 +10,28 @@ This web application allows users to create and manage character sheets for any 
 
 ## Serving The Application Locally
 
-**Windows**:
+**Windows** (development):
 
-First install the project with the following command:
+Using _**UV**_:
 
-```{code}
-uv add path/to/clone/character-creator
+```{cmd}
+cd 'path/to/character_creator_project/'
 ```
 
-or
-
-```{code}
-pip install path/to/clone/character-creator
+```{cmd}
+$j1 = uv run flask --app src/main run --debug 2>&1 > output.log &
 ```
 
-Then serve the app with waitress which should be installed with the project
+to run it normally remove the last `&`
 
-```{code}
-waitress-serve --host 127.0.0.1 src:app
+**Windows** :
+
+Using _**UV**_ :
+
+```{cmd}
+cd 'path/to/character_creator_project/'
+```
+
+```{cmd}
+$j1 = uv run waitress-serve --host 127.0.0.1 --port 5000 src:app 2>&1 > output.log &
 ```

@@ -368,7 +368,7 @@ def save_talents(form, character, db):
 def save_armor(form, character, db):
     for armor in character.armor:
         armor.name = form.get(f"armor_name_{armor.id}")
-        armor.encumbrance = int(form.get(f"armor_encumbrance_{armor.id}", 0))
+        armor.encumbrance = int(form.get(f"armor_encumbrance_{armor.id}") or 0)
         armor.armor_points = form.get(f"armor_points_{armor.id}")
         armor.location = form.get(f"armor_location_{armor.id}")
         armor.qualities = form.get(f"armor_qualities_{armor.id}")
@@ -377,7 +377,7 @@ def save_armor(form, character, db):
 
     new_name = form.get("armor_name_new")
     if new_name:
-        new_encumbrance = int(form.get("armor_encumbrance_new", 0))
+        new_encumbrance = int(form.get("armor_encumbrance_new") or 0)
         new_armor_points = form.get("armor_points_new")
         new_location = form.get("armor_location_new")
         new_qualities = form.get("armor_qualities_new")
@@ -400,7 +400,7 @@ def save_armor(form, character, db):
 def save_weapons(form, character, db):
     for weapon in character.weapons:
         weapon.name = form.get(f"weapon_name_{weapon.id}")
-        weapon.encumbrance = int(form.get(f"weapon_encumbrance_{weapon.id}", 0))
+        weapon.encumbrance = int(form.get(f"weapon_encumbrance_{weapon.id}") or 0)
         weapon.range = form.get(f"weapon_range_{weapon.id}")
         weapon.damage = form.get(f"weapon_damage_{weapon.id}")
         weapon.qualities = form.get(f"weapon_qualities_{weapon.id}")
@@ -409,7 +409,7 @@ def save_weapons(form, character, db):
 
     new_name = form.get("weapon_name_new")
     if new_name:
-        new_encumbrance = int(form.get("weapon_encumbrance_new", 0))
+        new_encumbrance = int(form.get("weapon_encumbrance_new") or 0)
         new_range = form.get("weapon_range_new")
         new_damage = form.get("weapon_damage_new")
         new_qualities = form.get("weapon_qualities_new")

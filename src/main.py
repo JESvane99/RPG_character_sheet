@@ -1,4 +1,5 @@
 from flask import Flask, abort, render_template, request, redirect
+
 from .models import db, Character
 from .utils import (
     check_character_connections,
@@ -265,9 +266,4 @@ def delete(id):
     return redirect("/")
 
 
-if __name__ == "__main__":
-    print("----- run app -----")
-    app.run(debug=True)
-
-    print("----- stop app -----")
 

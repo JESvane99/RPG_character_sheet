@@ -12,7 +12,7 @@ wheels = [
 
 [[package]]
 name = "character-creator"
-version = "0.1.1"
+version = "0.2.0"
 source = { virtual = "." }
 dependencies = [
     { name = "flask" },
@@ -28,9 +28,6 @@ requires-dist = [
     { name = "sqlalchemy", specifier = ">=2.0.36" },
     { name = "waitress", specifier = ">=3.0.2" },
 ]
-
-[package.metadata.requires-dev]
-dev = [{ name = "character-creator", virtual = "." }]
 
 [[package]]
 name = "click"
