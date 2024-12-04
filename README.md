@@ -18,11 +18,19 @@ Using _**UV**_:
 cd 'path/to/character_creator_project/'
 ```
 
+Serving for the hosting machine only:
+
 ```{cmd}
 $j1 = uv run flask --app src/main run --debug 2>&1 > output.log &
 ```
 
-to run it normally remove the last `&`
+Serving for hosting machine and check on mobile or tablet:
+
+```{cmd}
+$j1 = uv run flask --app src/main run -h 0.0.0.0 --debug 2>&1 > output.log &
+```
+
+to keep it running in the terminal remove the last `&`
 
 **Windows** :
 
