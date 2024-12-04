@@ -1,13 +1,24 @@
 {% extends "base.html" %}
 
 {% block navbar %}
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/{{ character.id }}/sheet-p1">Description & Trappings</a></li>
-    <li><a href="/{{ character.id }}/sheet-p2">Skills & Talents</a></li>
-    <li><a href="/{{ character.id }}/sheet-p3">Action</a></li>
-    <li><a href="/{{ character.id }}/party-ledger">Party Ledger</a></li>
-    <li><button form="page">Save Page</button></li>
+  <ul class="nav nav-tabs">
+    <li class="nav-item me-2"><button class="btn btn-secondary" form="page">Save Page</button></li>
+    <li class="nav-item"><a class="nav-link" aria-current="page" href="/">Home</a></li>
+    <li class="nav-item"><a class="nav-link" aria-current="page" href="/{{ character.id }}/sheet-p1">Description & Trappings</a></li>
+    <li class="nav-item"><a class="nav-link" aria-current="page" href="/{{ character.id }}/sheet-p2">Skills & Talents</a></li>
+    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/{{ character.id }}/sheet-p3">Action</a></li>
+    <li class="nav-item"><a class="nav-link" aria-current="page" href="/{{ character.id }}/party-ledger">Party Ledger</a></li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Reset</a>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item disabled" href="/{{ character.id }}/reset-p1">Reset Description & Trappings</a></li>
+        <li><a class="dropdown-item disabled" href="/{{ character.id }}/reset-p2">Reset Skills & Talents</a></li>
+        <li><a class="dropdown-item disabled" href="/{{ character.id }}/reset-p3">Reset Action</a></li>
+        <li><a class="dropdown-item disabled" href="/{{ character.id }}/reset-ledger">Reset Party Ledger</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="/{{ character.id }}/delete">Delete Character</a></li>
+      </ul>
+    </li>
   </ul>
 {% endblock navbar %}
 

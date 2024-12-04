@@ -2,26 +2,28 @@
 
 {% block title %}Characters{% endblock title %}
 {% block navbar %}
-  <ul>
-    <li><a href="/">Home</a></li>
+  <ul class="nav nav-tabs">
+    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
     {% for char in characters %}
-      <li><a href="/{{ char.id }}/sheet-p1">{{ char.name }}</a></li>
+      <li class="nav-item"><a class="nav-link" aria-current="page" href="/{{ char.id }}/sheet-p1">{{ char.name }}</a></li>
     {% endfor %}
-    <form action="/" method="post">
-      <li><input type="text" name="new-name"></li>
-      <li><button type="submit">New Character</button></li>
-    </form>
   </ul>
-{% endblock navbar %}
-
-{% block content %}
+  {% endblock navbar %}
+  
+  {% block content %}
   <h1>Character sheet</h1>
   <p>Use this web application to create and manage your characters for the game. Follow these steps:</p>
   <ol>
-    <li>Use the form on the left to create a new character by entering a name and clicking "New Character".</li>
+    <li>Use the form below to create a new character by entering a name and clicking "New Character".</li>
     <li>Click on a character's name in the navigation bar to view and edit their details.</li>
     <li>Navigate through the different sections (Description & Trappings, Skills & Talents, Action) to fill out all the necessary information for your character.</li>
-    <li>Remember to save your changes by clicking the "Save Page" button on each section.</li>
+    <li>Remember to save your changes by clicking the "Save Page" button on each page or hitting "Enter" from one of the number input fields.</li>
   </ol>
+  <div class="w-50 mx-auto p-2">
+    <form class="d-flex" action="/" method="post">
+      <input class="form-control me-2" type="text" placeholder="New Character" name="new-name">
+      <button class="btn btn-success" type="submit" id="create-new-character">Create New</button>
+    </form>
+  </div>
   <p>Have fun!</p>
 {% endblock content %}

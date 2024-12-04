@@ -42,7 +42,8 @@ def index():
             create_character_with_connections(db.session, name)
         except Exception as e:
             db.session.rollback()
-            app.logger.error(e)
+            e.add_note("Error creating character")
+            raise e
         return redirect("/")
     else:
         characters = db.session.scalars(db.select(Character)).all()
@@ -67,16 +68,14 @@ def character_page(id):
         return redirect("/")
 
     if request.method == "POST":
-        app.logger.info("POST request received")
+        app.logger.info("POST request received. saving data:")
         app.logger.info(request.form)
-        try:
-            save_static_data(request.form, character, db)
-            save_trappings(request.form, character, db) # no catch of errors in this method may result in site reloading with complete loss of data
-        except Exception as e:
-            app.logger.error(e)
+        app.logger.info("saving static data:")
+        save_static_data(request.form, character, db)
+        app.logger.info("saving trappings:")
+        save_trappings(request.form, character, db) # no catch of errors in this method may result in site reloading with complete loss of data
         return redirect(f"/{id}/sheet-p1")
     else:
-        app.logger.info(f"{character.trappings}")
         return render_template("character_fluff_page.html", character=character)
 
 
@@ -99,13 +98,14 @@ def skills_and_talents(id):
     if request.method == "POST":
         app.logger.info("POST request received")
         app.logger.info(request.form)
-        try:
-            save_basic_skills(request.form, character, db)
-            save_attributes(request.form, character, db)
-            save_skills(request.form, character, db)
-            save_talents(request.form, character, db)
-        except Exception as e:
-            app.logger.error(e)
+        app.logger.info("saving basic skills:")
+        save_basic_skills(request.form, character, db)
+        app.logger.info("saving attributes:")
+        save_attributes(request.form, character, db)
+        app.logger.info("saving skills:")
+        save_skills(request.form, character, db)
+        app.logger.info("saving talents:")
+        save_talents(request.form, character, db)
         return redirect(f"/{id}/sheet-p2")
     else:
         return render_template(
