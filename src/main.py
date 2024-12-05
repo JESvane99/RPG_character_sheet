@@ -32,7 +32,7 @@ from .utils import (
 )
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///CharSheet_test.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///CharSheet.db"
 app.config["SECRET_KEY"] = "your_secret_key"  # Needed for flashing messages
 db.init_app(app)
 

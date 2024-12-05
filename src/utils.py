@@ -50,6 +50,7 @@ def create_character_with_connections(session, name):
         resilience=0,
         resolve=0,
         motivation=0,
+        corruption=0,
     )
     new_text_fields = TextFields(
         character_id=new_character.id,
