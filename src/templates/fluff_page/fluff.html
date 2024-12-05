@@ -1,18 +1,24 @@
 <div class="flex-section part-container">
   <div class="fluff-container">  
     <h4>PSYCHOLOGY</h4>
-    <textarea name="psychology" id="psychology" class="textarea">{{ character.text_fields.psychology }}</textarea>
+    <div class="grow-wrap">
+      <textarea name="psychology" id="psychology" class="textarea" onInput="this.parentNode.dataset.replicatedValue = this.value">{{ character.text_fields.psychology }}</textarea>
+    </div>
   </div>
   <div class="fluff-container">
     <h4>AMBITIONS</h4>
     <ul>
       <li>
         <label for="short_term_ambition">Short term: </label>
-        <textarea id="short_term_ambition" name="short_term_ambition" class="textarea">{{ character.text_fields.short_term_ambition }}</textarea>
+        <div class="grow-wrap">
+          <textarea id="short_term_ambition" name="short_term_ambition" class="textarea" onInput="this.parentNode.dataset.replicatedValue = this.value">{{ character.text_fields.short_term_ambition }}</textarea>
+        </div>
       </li>
       <li>
         <label for="long_term_ambition">Long term: </label>
-        <textarea id="long_term_ambition" name="long_term_ambition" class="textarea">{{ character.text_fields.long_term_ambition }}</textarea>
+        <div class="grow-wrap">
+          <textarea id="long_term_ambition" name="long_term_ambition" class="textarea" onInput="this.parentNode.dataset.replicatedValue = this.value">{{ character.text_fields.long_term_ambition }}</textarea>
+        </div>
       </li>
     </ul>
   </div>
@@ -21,11 +27,15 @@
     <ul>
       <li>
         <label for="party_members">Members: </label>
-        <textarea name="party_members" id="party_members" class="textarea">{{ character.party.members }}</textarea>
+        <div class="grow-wrap">
+          <textarea name="party_members" id="party_members" class="textarea" onInput="this.parentNode.dataset.replicatedValue = this.value">{{ character.party.members }}</textarea>
+        </div>
       </li>
       <li>
         <label for="party_ambitions">Ambitions: </label>
-        <textarea name="party_ambitions" id="party_ambitions" class="textarea">{{ character.party.ambitions }}</textarea>
+        <div class="grow-wrap">
+          <textarea name="party_ambitions" id="party_ambitions" class="textarea" onInput="this.parentNode.dataset.replicatedValue = this.value">{{ character.party.ambitions }}</textarea>
+        </div>
       </li>
     </ul>
   </div>

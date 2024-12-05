@@ -31,8 +31,10 @@
     {% include 'fluff_page/trappings_and_notes.html' %}
     <div class="part-container">
       <div class="padding flex-section">
-        <h3><label for="doom">DOOM: </label></h3>
-        <textarea name="doom" class="textarea">{{ character.text_fields.doom }}</textarea>
+        <h6 class="padding"><label for="doom">DOOM: </label></h6>
+        <div class="grow-wrap width-90">
+          <textarea name="doom" class="textarea" onInput="this.parentNode.dataset.replicatedValue = this.value">{{ character.text_fields.doom }}</textarea>
+        </div>
       </div>
     </div>
   </form>

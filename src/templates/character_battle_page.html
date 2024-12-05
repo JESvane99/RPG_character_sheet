@@ -37,7 +37,9 @@
         {% include 'battle_page/ammunition.html' %}
         <div>
           <h4>COMBAT & HEALTH NOTES</h4>
-          <textarea class="textarea" name="combat_health_notes" id="combat_health_notes">{{ character.text_fields.health_notes }}</textarea>
+          <div class="grow-wrap">
+            <textarea class="textarea" name="combat_health_notes" id="combat_health_notes" onInput="this.parentNode.dataset.replicatedValue = this.value">{{ character.text_fields.health_notes }}</textarea>
+          </div>
         </div>
       </div>
     </div>

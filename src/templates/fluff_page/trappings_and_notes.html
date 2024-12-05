@@ -13,19 +13,21 @@
           <td class="width-30"><input class="input-text" type="text" name="trappings_name_{{ item.id }}" value="{{ item.name }}"></td>
           <td class="width-10"><input class="input-number" type="number" name="trappings_enc_{{ item.id }}" value="{{ item.encumbrance }}"></td>
           <td class="width-10"><input class="input-number" type="number" name="trappings_quantity_{{ item.id }}" value="{{ item.quantity }}"></td>
-          <td class="width-50"><textarea name="trappings_description_{{ item.id }}" class="textarea">{{ item.description }}</textarea></td>
+          <td class="width-50"><div class="grow-wrap"><textarea name="trappings_description_{{ item.id }}" class="textarea" onInput="this.parentNode.dataset.replicatedValue = this.value">{{ item.description }}</textarea></div></td>
         </tr>
         {% endfor %}
         <tr>
           <td class="width-30"><input class="input-text" type="text" name="trappings_name_new"></td>
           <td class="width-10"><input class="input-number" type="number" name="trappings_enc_new"></td>
           <td class="width-10"><input class="input-number" type="number" name="trappings_quantity_new"></td>
-          <td class="width-50"><textarea name="trappings_description_new" class="textarea"></textarea></td>
+          <td class="width-50"><div class="grow-wrap"><textarea name="trappings_description_new" class="textarea" onInput="this.parentNode.dataset.replicatedValue = this.value"></textarea></div></td>
         </tr>
     </table>
   </div>
   <div class="two-block">
     <h4>NOTES</h4>
-    <textarea name="notes" id="notes" class="textarea">{{ character.text_fields.campaign_notes }}</textarea>
+    <div class="grow-wrap">
+      <textarea name="notes" id="notes" class="textarea" onInput="this.parentNode.dataset.replicatedValue = this.value">{{ character.text_fields.campaign_notes }}</textarea>
+    </div>
   </div>
 </div>
