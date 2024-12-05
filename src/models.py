@@ -83,6 +83,7 @@ class BaseMechanics(db.Model):
     resilience: Mapped[int]
     resolve: Mapped[int]
     motivation: Mapped[int]
+    corruption: Mapped[int]
 
 
 class TextFields(db.Model):
