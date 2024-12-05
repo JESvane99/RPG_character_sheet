@@ -502,6 +502,7 @@ def save_ammunition(form, character, db):
 
 def save_health_notes(form, character, db):
     character.text_fields.health_notes = form.get("combat_health_notes")
+    character.base_mechanics.corruption = form.get("corruption")
     try:
         db.session.commit()
     except Exception as e:
