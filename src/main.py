@@ -4,6 +4,19 @@ from .models import db, Character
 from .utils import (
     check_character_connections,
     create_character_with_connections,
+    reset_ammunition,
+    reset_armor,
+    reset_health_notes,
+    reset_party_holdings,
+    reset_party_ledger,
+    reset_spells_and_prayers,
+    reset_static,
+    reset_trappings,
+    reset_basic_skills,
+    reset_attributes,
+    reset_special_skills,
+    reset_talents,
+    reset_weapons,
     save_ammunition,
     save_attributes,
     save_basic_skills,
@@ -16,9 +29,6 @@ from .utils import (
     save_armor,
     save_weapons,
     save_spells_and_prayers,
-    reset_description,
-    reset_skills_and_talents,
-    reset_action,
 )
 
 app = Flask(__name__)
@@ -171,7 +181,6 @@ def party_ledger(id):
 
 @app.route("/<int:id>/reset-p1")
 def reset_description(id):
-    abort(404)
     character = db.session.scalars(
         db.select(Character).where(Character.id == id)
     ).one_or_none()
@@ -182,13 +191,17 @@ def reset_description(id):
 
     app.logger.info("Character found: " + character.name)
 
-    reset_description(character, db)
+    app.logger.info("Resetting description...")
+    if not reset_static(character, db):
+        app.logger.error("Error resetting static data!!!")
+    app.logger.info("Resetting trappings...")
+    if not reset_trappings(character, db):
+        app.logger.error("Error resetting trappings!!!")
     return redirect(f"/{id}/sheet-p1")
 
 
 @app.route("/<int:id>/reset-p2")
 def reset_skills_and_talents(id):
-    abort(404)
     character = db.session.scalars(
         db.select(Character).where(Character.id == id)
     ).one_or_none()
@@ -198,14 +211,24 @@ def reset_skills_and_talents(id):
         return redirect("/")
 
     app.logger.info("Character found: " + character.name)
-
-    reset_skills_and_talents(character, db)
+    
+    app.logger.info("Resetting basic skills...")
+    if not reset_basic_skills(character, db):
+        app.logger.error("Error resetting basic skills!!!")
+    app.logger.info("Resetting attributes...")
+    if not reset_attributes(character, db):
+        app.logger.error("Error resetting attributes!!!")
+    app.logger.info("Resetting special skills...")
+    if not reset_special_skills(character, db):
+        app.logger.error("Error resetting special skills!!!")
+    app.logger.info("Resetting talents...")
+    if not reset_talents(character, db):
+        app.logger.error("Error resetting talents!!!")
     return redirect(f"/{id}/sheet-p2")
 
 
 @app.route("/<int:id>/reset-p3")
 def reset_action(id):
-    abort(404)
     character = db.session.scalars(
         db.select(Character).where(Character.id == id)
     ).one_or_none()
@@ -216,14 +239,26 @@ def reset_action(id):
 
     app.logger.info("Character found: " + character.name)
 
-    reset_action(character, db)
+    app.logger.info("Resetting ammunition...")
+    if not reset_ammunition(character, db):
+        app.logger.error("Error resetting ammunition!!!")
+    app.logger.info("Resetting armor...")
+    if not reset_armor(character, db):
+        app.logger.error("Error resetting armor!!!")
+    app.logger.info("Resetting weapons...")
+    if not reset_weapons(character, db):
+        app.logger.error("Error resetting weapons!!!")
+    app.logger.info("Resetting spells and prayers...")
+    if not reset_spells_and_prayers(character, db):
+        app.logger.error("Error resetting spells and prayers!!!")
+    app.logger.info("Resetting health notes...")
+    if not reset_health_notes(character, db):
+        app.logger.error("Error resetting health notes!!!")
     return redirect(f"/{id}/sheet-p3")
 
 
 @app.route("/<int:id>/reset-ledger")
 def reset_ledger(id):
-    abort(404)
-    
     character = db.session.scalars(
         db.select(Character).where(Character.id == id)
     ).one_or_none()
@@ -234,14 +269,12 @@ def reset_ledger(id):
 
     app.logger.info("Character found: " + character.name)
 
-    for entry in character.party_ledger:
-        db.session.delete(entry)
-    
-    try:
-        db.session.commit()
-    except Exception as e:
-        db.session.rollback()
-        raise e
+    app.logger.info("Resetting party ledger...")
+    if not reset_party_ledger(character, db):
+        app.logger.error("Error resetting party ledger!!!")
+    app.logger.info("Resetting party holding...")
+    if not reset_party_holdings(character, db):
+        app.logger.error("Error resetting party holding!!!")
     return redirect(f"/{id}/party-ledger")
 
 

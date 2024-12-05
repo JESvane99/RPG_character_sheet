@@ -282,7 +282,7 @@ def save_attributes(form, character, db):
 def save_trappings(form, character, db):
     for trap in character.trappings:
         trap.name = form.get(f"trappings_name_{trap.id}")
-        trap.encumbrance = int(form.get(f"trappings_enc_{trap.id}", 0)) 
+        trap.encumbrance = int(form.get(f"trappings_enc_{trap.id}") or 0) 
         trap.quantity = form.get(f"trappings_quantity_{trap.id}")
         trap.description = form.get(f"trappings_description_{trap.id}")
         if not trap.name:
@@ -290,7 +290,7 @@ def save_trappings(form, character, db):
 
     new_name = form.get("trappings_name_new")
     if new_name:
-        new_encumbrance = int(form.get("trappings_enc_new", 0))
+        new_encumbrance = int(form.get("trappings_enc_new") or 0)
         new_quantity = form.get("trappings_quantity_new")
         new_description = form.get("trappings_description_new")
         new_trapping = Trapping(
@@ -561,30 +561,34 @@ def save_party_ledger(form, character, db):
     calculate_party_holdings(character, db)
     
     
-def reset_description(character, db):
-
-    for key in ["psychology", "short_term_ambition", "long_term_ambition", "doom", "campaign_notes"]:
-        setattr(character.text_fields, key, "")
-    
-    descriptions = [
-        "name",
-        "species",
-        "career",
-        "status",
-        "careerpath",
-        "age",
-        "height",
-        "hair",
-        "eyes",
-        "gold",
-        "silver",
-        "brass",
-    ]
-    for key in descriptions:
-        setattr(character, key, "")
-    
-    for item in character.trappings:
-        db.session.delete(item)
+def reset_static(character, db):
+    character.species = ""
+    character.career = ""
+    character.status = 0
+    character.careerpath = ""
+    character.age = 0
+    character.height = 0
+    character.hair = ""
+    character.eyes = ""
+    character.gold = 0
+    character.silver = 0
+    character.brass = 0
+    character.base_mechanics.experience = 0
+    character.base_mechanics.experience_spent = 0
+    character.base_mechanics.movement = 0
+    character.base_mechanics.fate_points = 0
+    character.base_mechanics.fortune_points = 0
+    character.base_mechanics.resilience = 0
+    character.base_mechanics.resolve = 0
+    character.base_mechanics.motivation = 0
+    character.text_fields.psychology = ""
+    character.text_fields.short_term_ambition = ""
+    character.text_fields.long_term_ambition = ""
+    character.text_fields.doom = ""
+    character.text_fields.campaign_notes = ""
+    character.party.name = ""
+    character.party.members = ""
+    character.party.ambitions = ""
     
     try:
         db.session.commit()
@@ -593,15 +597,28 @@ def reset_description(character, db):
         raise e
     return True
 
+def reset_trappings(character, db):
+    for trap in character.trappings:
+        db.session.delete(trap)
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    return True
 
-def reset_skills_and_talents(character, db):
-    for skill in character.skills:
-        db.session.delete(skill)
-    for talent in character.talents:
-        db.session.delete(talent)
-    for basic_skill in character.basic_skills:
-        basic_skill.advances = 0
-    
+
+def reset_basic_skills(character, db):
+    for skill in character.basic_skills:
+        skill.advances = 0
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    return True
+
+def reset_attributes(character, db):
     attrs = [
         "ws",
         "bs",
@@ -627,19 +644,96 @@ def reset_skills_and_talents(character, db):
         raise e
     return True
 
+def reset_special_skills(character, db):
+    for skill in character.skills:
+        db.session.delete(skill)
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    return True
 
-def reset_action(character, db):
-    for item in character.armor:
-        db.session.delete(item)
-    for item in character.weapons:
-        db.session.delete(item)
-    for item in character.spells_and_prayers:
-        db.session.delete(item)
-    for item in character.ammunition:
-        db.session.delete(item)
+def reset_talents(character, db):
+    for talent in character.talents:
+        db.session.delete(talent)
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    return True
     
+
+def reset_ammunition(character, db):
+    for ammo in character.ammunition:
+        db.session.delete(ammo)
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    return True
+
+
+def reset_armor(character, db):
+    for armor in character.armor:
+        db.session.delete(armor)
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    return True
+
+
+def reset_weapons(character, db):
+    for weapon in character.weapons:
+        db.session.delete(weapon)
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    return True
+
+
+def reset_spells_and_prayers(character, db):
+    for spell in character.spells_and_prayers:
+        db.session.delete(spell)
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    return True
+
+
+def reset_health_notes(character, db):
     character.text_fields.health_notes = ""
-    
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    return True
+
+
+def reset_party_ledger(character, db):
+    for entry in character.ledger:
+        db.session.delete(entry)
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    return True
+
+
+def reset_party_holdings(character, db):
+    character.party.gold = 0
+    character.party.silver = 0
+    character.party.brass = 0
     try:
         db.session.commit()
     except Exception as e:

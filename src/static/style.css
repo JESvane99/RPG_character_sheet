@@ -243,8 +243,14 @@ table th:last-child {
 .width-60 {
     width: 60%;
 }
+.width-65 {
+    width: 65%;
+}
 .width-70 {
     width: 70%;
+}
+.width-a {
+    width: auto;
 }
 
 /* ! height control */
@@ -279,6 +285,8 @@ table th:last-child {
     width: 40%;
 }
 
-
+.align-center {
+    text-align: center;
+}
 
 

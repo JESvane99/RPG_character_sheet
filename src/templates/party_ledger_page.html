@@ -11,10 +11,10 @@
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Reset</a>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item disabled" href="/{{ character.id }}/reset-p1">Reset Description & Trappings</a></li>
-        <li><a class="dropdown-item disabled" href="/{{ character.id }}/reset-p2">Reset Skills & Talents</a></li>
-        <li><a class="dropdown-item disabled" href="/{{ character.id }}/reset-p3">Reset Action</a></li>
-        <li><a class="dropdown-item disabled" href="/{{ character.id }}/reset-ledger">Reset Party Ledger</a></li>
+        <li><a class="dropdown-item" href="/{{ character.id }}/reset-p1">Reset Description & Trappings</a></li>
+        <li><a class="dropdown-item" href="/{{ character.id }}/reset-p2">Reset Skills & Talents</a></li>
+        <li><a class="dropdown-item" href="/{{ character.id }}/reset-p3">Reset Action</a></li>
+        <li><a class="dropdown-item" href="/{{ character.id }}/reset-ledger">Reset Party Ledger</a></li>
         <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item" href="/{{ character.id }}/delete">Delete Character</a></li>
       </ul>
@@ -26,15 +26,15 @@
 <div class="page-container">
   <form action="/{{ character.id }}/party-ledger" method="post" class="page-form" id="page">
     <div class="flex-section part-container">
-      <div class="width-70">
+      <div class="width-60 align-center">
         <h1>Ledger:</h1>
         {% if character.party.name %}
         <h1>{{ character.party.name }}</h1>
         {% endif %} 
       </div>
-      <div>
+      <div class="width-a align-center">
         <h4>Total</h4>
-        <h3>{{ character.party.gold }} Gold {{ character.party.silver }} Silver {{ character.party.brass }} Brass</h3>
+        <h6>{{ character.party.gold }} Gold {{ character.party.silver }} Silver {{ character.party.brass }} Brass</h6>
       </div>
     </div>
     <div class="padding">
