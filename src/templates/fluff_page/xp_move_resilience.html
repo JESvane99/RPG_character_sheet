@@ -2,7 +2,7 @@
   <div class="width-15">
     <table class="height-100">
       <tr>
-        <th class="width-55">Walk</th><td><input type="number" class="input-number" name="movement" value="{{ character.base_mechanics.movement }}"></td>
+        <th class="width-55">Walk</th><td><input type="number" class="input-number" name="movement" id="movement" value="{{ character.base_mechanics.movement }}"></td>
       </tr>
       <tr>
         <th class="width-55">Run</th><td><input type="number" class="input-number" value="{{ character.base_mechanics.movement * 2 }}"></td>
@@ -12,10 +12,10 @@
   <div class="width-20">
     <table class="height-100">
       <tr>
-        <th class="width-55">Fate</th><td><input type="number" class="input-number" name="fate_points" value="{{ character.base_mechanics.fate_points }}"></td>
+        <th class="width-55">Fate</th><td><input type="number" class="input-number" name="fate_points" id="fate_points" value="{{ character.base_mechanics.fate_points }}"></td>
       </tr>
       <tr>
-        <th class="width-55">Fortune</th><td><input type="number" class="input-number" name="fortune_points" value="{{ character.base_mechanics.fortune_points }}"></td>
+        <th class="width-55">Fortune</th><td><input type="number" class="input-number" name="fortune_points" id="fortune_points" value="{{ character.base_mechanics.fortune_points }}"></td>
       </tr>
     </table>
   </div>
@@ -27,9 +27,9 @@
         <th>Motivation</th>
       </tr>
       <tr>
-        <td><input type="number" class="input-number" name="resilience" value="{{ character.base_mechanics.resilience }}"></td>
-        <td><input type="number" class="input-number" name="resolve" value="{{ character.base_mechanics.resolve }}"></td>
-        <td><input type="number" class="input-number" name="motivation" value="{{ character.base_mechanics.motivation }}"></td>
+        <td><input type="number" class="input-number" name="resilience" id="resilience" value="{{ character.base_mechanics.resilience }}"></td>
+        <td><input type="number" class="input-number" name="resolve" id="resolve" value="{{ character.base_mechanics.resolve }}"></td>
+        <td><input type="number" class="input-number" name="motivation" id="motivation" value="{{ character.base_mechanics.motivation }}"></td>
       </tr>
     </table>
   </div>
@@ -41,8 +41,8 @@
         <th class="width-40">Exp Current</th>
       </tr>
       <tr>
-        <td><input type="number" class="input-number" name="experience" value="{{ character.base_mechanics.experience }}"></td>
-        <td><input type="number" class="input-number" name="experience_spent" value="{{ character.base_mechanics.experience_spent }}"></td>
+        <td><input type="number" class="input-number" name="experience" id="experience" value="{{ character.base_mechanics.experience }}"></td>
+        <td><input type="number" class="input-number" name="experience_spent" id="experience_spent" value="{{ character.base_mechanics.experience_spent }}"></td>
         <td><input type="number" class="input-number" value="{{ character.base_mechanics.experience - character.base_mechanics.experience_spent }}"></td>
       </tr>
     </table>
