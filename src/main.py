@@ -40,6 +40,7 @@ with app.app_context():
     db.create_all()
 
 
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":

@@ -83,6 +83,7 @@ class BaseMechanics(db.Model):
     resilience: Mapped[int]
     resolve: Mapped[int]
     motivation: Mapped[int]
+    corruption: Mapped[int]
 
 
 class TextFields(db.Model):
@@ -268,3 +269,9 @@ class Ledger(db.Model):
     gold: Mapped[int]
     silver: Mapped[int]
     brass: Mapped[int]
+
+
+if __name__ == "__main__":
+    for t in Base.metadata.tables:
+        print(t)
+    
