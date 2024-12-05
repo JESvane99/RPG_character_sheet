@@ -23,14 +23,13 @@ body {
 
 .sheet-container {
     padding: 10px;
-    overflow: auto;
     background-color: rgb(136, 114, 100);
     border-radius: 10px;
 }
 .page-container {
     width: 210mm;
     height: 297mm;
-    font-size: x-small;
+    font-size: 0.7rem;
     font-weight: bold;
     margin: 0 auto;
     display: flex;
@@ -139,7 +138,7 @@ table th:last-child {
 }
 .input-number, .number {
     font-family: "Oldenburg";
-    font-size: small;
+    font-size: 0.7rem;
 }
 .input-text, textarea {
     font-family: "Shantell Sans";
@@ -272,7 +271,7 @@ table th:last-child {
 .two-block {
     width: 50%;
     text-align: center;
-    height: 100%;
+    height: auto;
 }
 .three-block {
     width: 36%;
