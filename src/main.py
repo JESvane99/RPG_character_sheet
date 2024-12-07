@@ -1,4 +1,4 @@
-from flask import Flask, abort, render_template, request, redirect
+from flask import Flask, render_template, request, redirect
 
 from .models import db, Character
 from .utils import (
