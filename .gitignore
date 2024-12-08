@@ -7,3 +7,5 @@ instance/
 *.pptx
 *.egg-info/
 output.log
+run_server.py
+build/

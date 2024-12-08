@@ -29,33 +29,54 @@ class Character(db.Model):
     silver: Mapped[int]
     brass: Mapped[int]
 
-    base_mechanics: Mapped["BaseMechanics"] = db.relationship(cascade="all, delete-orphan", 
-        back_populates="character", uselist=False
+    base_mechanics: Mapped["BaseMechanics"] = db.relationship(
+        cascade="all, delete-orphan", back_populates="character", uselist=False
     )
-    text_fields: Mapped["TextFields"] = db.relationship(cascade="all, delete-orphan", 
-        back_populates="character", uselist=False
+    text_fields: Mapped["TextFields"] = db.relationship(
+        cascade="all, delete-orphan", back_populates="character", uselist=False
     )
-    party: Mapped["Party"] = db.relationship(cascade="all, delete-orphan", back_populates="character", uselist=False)
-    attributes: Mapped["Attributes"] = db.relationship(cascade="all, delete-orphan", 
-        back_populates="character", uselist=False
+    party: Mapped["Party"] = db.relationship(
+        cascade="all, delete-orphan", back_populates="character", uselist=False
     )
-    basic_skills: Mapped[list["BasicSkill"]] = db.relationship(cascade="all, delete-orphan", back_populates="character"
+    attributes: Mapped["Attributes"] = db.relationship(
+        cascade="all, delete-orphan", back_populates="character", uselist=False
     )
-    skills: Mapped[list["Skill"]] = db.relationship(cascade="all, delete-orphan", back_populates="character")
-    talents: Mapped[list["Talent"]] = db.relationship(cascade="all, delete-orphan", back_populates="character")
-    armor: Mapped[list["Armor"]] = db.relationship(cascade="all, delete-orphan", back_populates="character")  # Changed from Armour to Armor
-    weapons: Mapped[list["Weapon"]] = db.relationship(cascade="all, delete-orphan", back_populates="character")
-    spells_and_prayers: Mapped[list["Magic"]] = db.relationship(cascade="all, delete-orphan", back_populates="character")
-    trappings: Mapped[list["Trapping"]] = db.relationship(cascade="all, delete-orphan", back_populates="character")
-    ammunition: Mapped[list["Ammunition"]] = db.relationship(cascade="all, delete-orphan", back_populates="character")
-    ledger: Mapped[list["Ledger"]] = db.relationship(cascade="all, delete-orphan", back_populates="character")
+    basic_skills: Mapped[list["BasicSkill"]] = db.relationship(
+        cascade="all, delete-orphan", back_populates="character"
+    )
+    skills: Mapped[list["Skill"]] = db.relationship(
+        cascade="all, delete-orphan", back_populates="character"
+    )
+    talents: Mapped[list["Talent"]] = db.relationship(
+        cascade="all, delete-orphan", back_populates="character"
+    )
+    armor: Mapped[list["Armor"]] = db.relationship(
+        cascade="all, delete-orphan", back_populates="character"
+    )  # Changed from Armour to Armor
+    weapons: Mapped[list["Weapon"]] = db.relationship(
+        cascade="all, delete-orphan", back_populates="character"
+    )
+    spells_and_prayers: Mapped[list["Magic"]] = db.relationship(
+        cascade="all, delete-orphan", back_populates="character"
+    )
+    trappings: Mapped[list["Trapping"]] = db.relationship(
+        cascade="all, delete-orphan", back_populates="character"
+    )
+    ammunition: Mapped[list["Ammunition"]] = db.relationship(
+        cascade="all, delete-orphan", back_populates="character"
+    )
+    ledger: Mapped[list["Ledger"]] = db.relationship(
+        cascade="all, delete-orphan", back_populates="character"
+    )
 
     def get_attribute_total(self, attribute_name):
         attribute = int(getattr(self.attributes, f"{attribute_name.lower()}_base", 0))
-        modifier = int(getattr(self.attributes, f"{attribute_name.lower()}_modifier", 0))
+        modifier = int(
+            getattr(self.attributes, f"{attribute_name.lower()}_modifier", 0)
+        )
         bonus = int(getattr(self.attributes, f"{attribute_name.lower()}_bonus", 0))
         return attribute + modifier + bonus
-    
+
     def get_encumbrance(self, belonging: str):
         if belonging not in ["armor", "weapons", "trappings"]:
             raise ValueError(f"Invalid belonging: {belonging}")
@@ -63,7 +84,7 @@ class Character(db.Model):
         for item in getattr(self, belonging, []):
             total += item.encumbrance
         return total
-    
+
     def get_attribute_bonus(self, attribute_name):
         total = self.get_attribute_total(attribute_name)
         return total // 10
@@ -173,7 +194,7 @@ class BasicSkill(db.Model):
     @property
     def base_value(self):
         return int(self.character.get_attribute_total(self.attribute))
-    
+
     @property
     def total(self):
         return self.base_value + self.advances
@@ -190,7 +211,7 @@ class Skill(db.Model):
     @property
     def base_value(self):
         return self.character.get_attribute_total(self.attribute)
-    
+
     @property
     def total(self):
         return self.base_value + self.advances
@@ -210,7 +231,9 @@ class Talent(db.Model):
 class Armor(db.Model):  # Changed from Armour to Armor
     id: Mapped[int] = mapped_column(primary_key=True)
     character_id: Mapped[int] = mapped_column(db.ForeignKey("character.id"))
-    character: Mapped["Character"] = db.relationship(back_populates="armor")  # Changed from armours to armor
+    character: Mapped["Character"] = db.relationship(
+        back_populates="armor"
+    )  # Changed from armours to armor
     name: Mapped[str]
     encumbrance: Mapped[int]
     armor_points: Mapped[int]  # Changed from armour_points to armor_points
@@ -232,7 +255,9 @@ class Weapon(db.Model):
 class Magic(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     character_id: Mapped[int] = mapped_column(db.ForeignKey("character.id"))
-    character: Mapped["Character"] = db.relationship(back_populates="spells_and_prayers")
+    character: Mapped["Character"] = db.relationship(
+        back_populates="spells_and_prayers"
+    )
     name: Mapped[str]
     casting_number: Mapped[int]
     range: Mapped[str]
@@ -262,7 +287,9 @@ class Ammunition(db.Model):
 
 class Ledger(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    character_id: Mapped[int] = mapped_column(db.ForeignKey("character.id"), nullable=False)
+    character_id: Mapped[int] = mapped_column(
+        db.ForeignKey("character.id"), nullable=False
+    )
     character: Mapped["Character"] = db.relationship(back_populates="ledger")
     who: Mapped[str]
     what: Mapped[str]

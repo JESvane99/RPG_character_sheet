@@ -141,7 +141,7 @@ def create_character_with_connections(session, name):
     for skill_data in basic_skills_data:
         skill = BasicSkill(character_id=new_character.id, **skill_data)
         session.add(skill)
-        
+
     spells_and_prayers = Magic(character_id=new_character.id)
     session.add(spells_and_prayers)
     try:
@@ -151,10 +151,12 @@ def create_character_with_connections(session, name):
         raise e
     return new_character
 
+
 def attribute_case_adjustment(attribute):
     if attribute.lower() in ("ws", "bs", "wp"):
         return attribute.upper()
     return attribute.capitalize()
+
 
 def check_character_connections(character_id):
     character = db.session.scalars(
@@ -212,7 +214,7 @@ def save_static_data(form, character, db):
     character.party.name = form["party_name"]
     character.party.members = form["party_members"]
     character.party.ambitions = form["party_ambitions"]
-    
+
     try:
         db.session.commit()
     except Exception as e:
@@ -222,9 +224,8 @@ def save_static_data(form, character, db):
 
 def save_basic_skills(form, character, db):
     for skill in character.basic_skills:
-        skill_advances = form.get(f"{skill.name.lower()}-adv")
-        if skill_advances is not None:
-            skill.advances = int(skill_advances)
+        skill.advances = int(form.get(f"{skill.name.lower()}-adv") or 0)
+
     try:
         db.session.commit()
     except Exception as e:
@@ -234,45 +235,45 @@ def save_basic_skills(form, character, db):
 
 def save_attributes(form, character, db):
     attributes = character.attributes
-    attributes.ws_base = int(form.get("ws-init", attributes.ws_base))
-    attributes.ws_modifier = int(form.get("ws-adv", attributes.ws_modifier))
-    attributes.ws_bonus = int(form.get("ws-bonus", attributes.ws_bonus))
+    attributes.ws_base = int(form.get("ws-init") or 0)
+    attributes.ws_modifier = int(form.get("ws-adv") or 0)
+    attributes.ws_bonus = int(form.get("ws-bonus") or 0)
 
-    attributes.bs_base = int(form.get("bs-init", attributes.bs_base))
-    attributes.bs_modifier = int(form.get("bs-adv", attributes.bs_modifier))
-    attributes.bs_bonus = int(form.get("bs-bonus", attributes.bs_bonus))
+    attributes.bs_base = int(form.get("bs-init") or 0)
+    attributes.bs_modifier = int(form.get("bs-adv") or 0)
+    attributes.bs_bonus = int(form.get("bs-bonus") or 0)
 
-    attributes.s_base = int(form.get("s-init", attributes.s_base))
-    attributes.s_modifier = int(form.get("s-adv", attributes.s_modifier))
-    attributes.s_bonus = int(form.get("s-bonus", attributes.s_bonus))
+    attributes.s_base = int(form.get("s-init") or 0)
+    attributes.s_modifier = int(form.get("s-adv") or 0)
+    attributes.s_bonus = int(form.get("s-bonus") or 0)
 
-    attributes.t_base = int(form.get("t-init", attributes.t_base))
-    attributes.t_modifier = int(form.get("t-adv", attributes.t_modifier))
-    attributes.t_bonus = int(form.get("t-bonus", attributes.t_bonus))
+    attributes.t_base = int(form.get("t-init") or 0)
+    attributes.t_modifier = int(form.get("t-adv") or 0)
+    attributes.t_bonus = int(form.get("t-bonus") or 0)
 
-    attributes.i_base = int(form.get("i-init", attributes.i_base))
-    attributes.i_modifier = int(form.get("i-adv", attributes.i_modifier))
-    attributes.i_bonus = int(form.get("i-bonus", attributes.i_bonus))
+    attributes.i_base = int(form.get("i-init") or 0)
+    attributes.i_modifier = int(form.get("i-adv") or 0)
+    attributes.i_bonus = int(form.get("i-bonus") or 0)
 
-    attributes.ag_base = int(form.get("ag-init", attributes.ag_base))
-    attributes.ag_modifier = int(form.get("ag-adv", attributes.ag_modifier))
-    attributes.ag_bonus = int(form.get("ag-bonus", attributes.ag_bonus))
+    attributes.ag_base = int(form.get("ag-init") or 0)
+    attributes.ag_modifier = int(form.get("ag-adv") or 0)
+    attributes.ag_bonus = int(form.get("ag-bonus") or 0)
 
-    attributes.dex_base = int(form.get("dex-init", attributes.dex_base))
-    attributes.dex_modifier = int(form.get("dex-adv", attributes.dex_modifier))
-    attributes.dex_bonus = int(form.get("dex-bonus", attributes.dex_bonus))
+    attributes.dex_base = int(form.get("dex-init") or 0)
+    attributes.dex_modifier = int(form.get("dex-adv") or 0)
+    attributes.dex_bonus = int(form.get("dex-bonus") or 0)
 
-    attributes.int_base = int(form.get("int-init", attributes.int_base))
-    attributes.int_modifier = int(form.get("int-adv", attributes.int_modifier))
-    attributes.int_bonus = int(form.get("int-bonus", attributes.int_bonus))
+    attributes.int_base = int(form.get("int-init") or 0)
+    attributes.int_modifier = int(form.get("int-adv") or 0)
+    attributes.int_bonus = int(form.get("int-bonus") or 0)
 
-    attributes.wp_base = int(form.get("wp-init", attributes.wp_base))
-    attributes.wp_modifier = int(form.get("wp-adv", attributes.wp_modifier))
-    attributes.wp_bonus = int(form.get("wp-bonus", attributes.wp_bonus))
+    attributes.wp_base = int(form.get("wp-init") or 0)
+    attributes.wp_modifier = int(form.get("wp-adv") or 0)
+    attributes.wp_bonus = int(form.get("wp-bonus") or 0)
 
-    attributes.fel_base = int(form.get("fel-init", attributes.fel_base))
-    attributes.fel_modifier = int(form.get("fel-adv", attributes.fel_modifier))
-    attributes.fel_bonus = int(form.get("fel-bonus", attributes.fel_bonus))
+    attributes.fel_base = int(form.get("fel-init") or 0)
+    attributes.fel_modifier = int(form.get("fel-adv") or 0)
+    attributes.fel_bonus = int(form.get("fel-bonus") or 0)
 
     try:
         db.session.commit()
@@ -284,7 +285,7 @@ def save_attributes(form, character, db):
 def save_trappings(form, character, db):
     for trap in character.trappings:
         trap.name = form.get(f"trappings_name_{trap.id}")
-        trap.encumbrance = int(form.get(f"trappings_enc_{trap.id}") or 0) 
+        trap.encumbrance = int(form.get(f"trappings_enc_{trap.id}") or 0)
         trap.quantity = form.get(f"trappings_quantity_{trap.id}")
         trap.description = form.get(f"trappings_description_{trap.id}")
         if not trap.name:
@@ -309,13 +310,14 @@ def save_trappings(form, character, db):
         db.session.rollback()
         raise e
 
+
 def save_skills(form, character, db):
     for skill in character.skills:
         skill.name = form.get(f"skills_name_{skill.id}")
         skill.attribute = attribute_case_adjustment(
             form.get(f"skills_attribute_{skill.id}")
         )
-        skill.advances = form.get(f"skills_advances_{skill.id}")
+        skill.advances = int(form.get(f"skills_advances_{skill.id}") or 0)
         if not skill.name:
             db.session.delete(skill)
 
@@ -324,7 +326,7 @@ def save_skills(form, character, db):
         new_attribute = attribute_case_adjustment(
             form.get("skills_attribute_new").lower()
         )
-        new_advances = form.get("skills_advances_new") or 0
+        new_advances = int(form.get("skills_advances_new") or 0)
         new_skill = Skill(
             character_id=character.id,
             name=new_name,
@@ -338,7 +340,8 @@ def save_skills(form, character, db):
     except Exception as e:
         db.session.rollback()
         raise e
-    
+
+
 def save_talents(form, character, db):
     for talent in character.talents:
         talent.name = form.get(f"talents_name_{talent.id}")
@@ -346,8 +349,8 @@ def save_talents(form, character, db):
         talent.bonus_attribute = attribute_case_adjustment(
             form.get(f"talents_attribute_{talent.id}")
         )
-        talent.given_bonus = form.get(f"talents_bonus_value_{talent.id}")
-        talent.times_taken = form.get(f"talents_times_taken_{talent.id}")
+        talent.given_bonus = int(form.get(f"talents_bonus_value_{talent.id}") or 0)
+        talent.times_taken = int(form.get(f"talents_times_taken_{talent.id}") or 0)
         if not talent.name:
             db.session.delete(talent)
 
@@ -357,8 +360,8 @@ def save_talents(form, character, db):
         new_bonus_attribute = attribute_case_adjustment(
             form.get("talents_attribute_new")
         )
-        new_bonus = form.get("talents_bonus_value_new")
-        new_times_taken = form.get("talents_times_taken_new")
+        new_bonus = int(form.get("talents_bonus_value_new") or 0)
+        new_times_taken = int(form.get("talents_times_taken_new") or 0)
         new_talent = Talent(
             character_id=character.id,
             name=new_name,
@@ -374,6 +377,7 @@ def save_talents(form, character, db):
     except Exception as e:
         db.session.rollback()
         raise e
+
 
 def save_armor(form, character, db):
     for armor in character.armor:
@@ -407,6 +411,7 @@ def save_armor(form, character, db):
         db.session.rollback()
         raise e
 
+
 def save_weapons(form, character, db):
     for weapon in character.weapons:
         weapon.name = form.get(f"weapon_name_{weapon.id}")
@@ -438,6 +443,7 @@ def save_weapons(form, character, db):
     except Exception as e:
         db.session.rollback()
         raise e
+
 
 def save_spells_and_prayers(form, character, db):
     for spell in character.spells_and_prayers:
@@ -474,6 +480,7 @@ def save_spells_and_prayers(form, character, db):
         db.session.rollback()
         raise e
 
+
 def save_ammunition(form, character, db):
     for ammo in character.ammunition:
         ammo.name = form.get(f"ammo_name_{ammo.id}")
@@ -499,7 +506,7 @@ def save_ammunition(form, character, db):
     except Exception as e:
         db.session.rollback()
         raise e
-    
+
 
 def save_health_notes(form, character, db):
     character.text_fields.health_notes = form.get("combat_health_notes")
@@ -519,17 +526,18 @@ def calculate_party_holdings(character, db):
         total_gold += entry.gold
         total_silver += entry.silver
         total_brass += entry.brass
-        
+
     character.party.gold = total_gold
     character.party.silver = total_silver
     character.party.brass = total_brass
-    
+
     try:
         db.session.commit()
     except Exception as e:
         db.session.rollback()
         raise e
-    
+
+
 def save_party_ledger(form, character, db):
     for entry in character.ledger:
         entry.who = form.get(f"who_{entry.id}")
@@ -560,10 +568,10 @@ def save_party_ledger(form, character, db):
     except Exception as e:
         db.session.rollback()
         raise e
-    
+
     calculate_party_holdings(character, db)
-    
-    
+
+
 def reset_static(character, db):
     character.species = ""
     character.career = ""
@@ -592,13 +600,14 @@ def reset_static(character, db):
     character.party.name = ""
     character.party.members = ""
     character.party.ambitions = ""
-    
+
     try:
         db.session.commit()
     except Exception as e:
         db.session.rollback()
         raise e
     return True
+
 
 def reset_trappings(character, db):
     for trap in character.trappings:
@@ -621,6 +630,7 @@ def reset_basic_skills(character, db):
         raise e
     return True
 
+
 def reset_attributes(character, db):
     attrs = [
         "ws",
@@ -634,18 +644,19 @@ def reset_attributes(character, db):
         "wp",
         "fel",
     ]
-    
+
     for attr in attrs:
         setattr(character.attributes, f"{attr}_base", 0)
         setattr(character.attributes, f"{attr}_modifier", 0)
         setattr(character.attributes, f"{attr}_bonus", 0)
-    
+
     try:
         db.session.commit()
     except Exception as e:
         db.session.rollback()
         raise e
     return True
+
 
 def reset_special_skills(character, db):
     for skill in character.skills:
@@ -657,6 +668,7 @@ def reset_special_skills(character, db):
         raise e
     return True
 
+
 def reset_talents(character, db):
     for talent in character.talents:
         db.session.delete(talent)
@@ -666,7 +678,7 @@ def reset_talents(character, db):
         db.session.rollback()
         raise e
     return True
-    
+
 
 def reset_ammunition(character, db):
     for ammo in character.ammunition:

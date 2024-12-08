@@ -13,5 +13,11 @@ dependencies = [
 ]
 
 [tool.uv]
-dev-dependencies = []
+dev-dependencies = [
+    "character-creator",
+    "ruff>=0.8.2",
+]
+
+[tool.uv.sources]
+character-creator = { workspace = true }
 

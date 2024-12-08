@@ -83,7 +83,9 @@ def character_page(id):
         app.logger.info("saving static data:")
         save_static_data(request.form, character, db)
         app.logger.info("saving trappings:")
-        save_trappings(request.form, character, db) # no catch of errors in this method may result in site reloading with complete loss of data
+        save_trappings(
+            request.form, character, db
+        )  # no catch of errors in this method may result in site reloading with complete loss of data
         return redirect(f"/{id}/sheet-p1")
     else:
         return render_template("character_fluff_page.html", character=character)
@@ -211,7 +213,7 @@ def reset_skills_and_talents(id):
         return redirect("/")
 
     app.logger.info("Character found: " + character.name)
-    
+
     app.logger.info("Resetting basic skills...")
     if not reset_basic_skills(character, db):
         app.logger.error("Error resetting basic skills!!!")
@@ -297,6 +299,3 @@ def delete(id):
         db.session.rollback()
         app.logger.error(e)
     return redirect("/")
-
-
-
