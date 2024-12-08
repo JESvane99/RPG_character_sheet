@@ -59,7 +59,6 @@ please check that the database path corresponds to each other in `alembic.ini`, 
 sqlalchemy.url = sqlite:///instance/CharSheet.db
 ```
 
-
 ### src/main.py
 
 ```{code}
