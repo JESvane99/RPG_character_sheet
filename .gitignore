@@ -9,3 +9,4 @@ instance/
 output.log
 run_server.py
 build/
+db_backup/
