@@ -89,6 +89,24 @@ class Character(db.Model):
         total = self.get_attribute_total(attribute_name)
         return total // 10
 
+    @property
+    def hardy_wounds_bonus(self):
+        for talent in self.talents:
+            if talent.name.capitalize() == "Hardy":
+                return self.get_attribute_bonus("t")
+        return 0
+
+    @property
+    def strong_back_enc_bonus(self):
+        for talent in self.talents:
+            if talent.name.title() == "Strong Back":
+                return talent.times_taken
+        return 0
+
+    @property
+    def corruption_threshold(self):
+        return self.get_attribute_bonus("t") + self.get_attribute_bonus("wp")
+
 
 class BaseMechanics(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -105,6 +123,9 @@ class BaseMechanics(db.Model):
     resolve: Mapped[int]
     motivation: Mapped[int]
     corruption: Mapped[int]
+    mutations: Mapped[int]
+    mental_mutations: Mapped[int]
+    physical_mutations: Mapped[int]
 
 
 class TextFields(db.Model):
