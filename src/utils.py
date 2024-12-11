@@ -142,8 +142,6 @@ def create_character_with_connections(session, name):
         skill = BasicSkill(character_id=new_character.id, **skill_data)
         session.add(skill)
 
-    spells_and_prayers = Magic(character_id=new_character.id)
-    session.add(spells_and_prayers)
     try:
         session.commit()
     except Exception as e:
