@@ -15,7 +15,7 @@
       </tr>
       <tr>
         <th class="width-60">Strong Back</th>
-        <td>{{ character.strong_back_enc_bonus }}</td>
+        <td>{{ character.strong_back_enc_bonus or 0}}</td>
       </tr>
       <tr>
         <th class="width-60">Max Enc</th>
@@ -44,7 +44,7 @@
       </tr>
       <tr>
         <th class="width-60">Hardy</th>
-        <td>{{ character.hardy_wounds_bonus }}</td>
+        <td>{{ character.hardy_wounds_bonus or 0 }}</td>
       </tr>
       <tr>
         <th class="width-60">Total</th>
@@ -63,19 +63,19 @@
       </tr>
       <tr>
         <th class="width-60">Current</th>
-        <td><input class="input-number" type="number" name="corruption" id="corruption" value="{{ character.base_mechanics.corruption }}"></td>
+        <td><input class="input-number" type="number" name="corruption" id="corruption" value="{{ character.base_mechanics.corruption or 0 }}"></td>
       </tr>
       <tr>
         <th class="width-60">Mutations</th>
-        <td><input class="input-number" type="number"></td>
+        <td><input class="input-number" type="number" name="mutations" id="mutations" value="{{ character.base_mechanics.mutations or 0}}"></td>
       </tr>
       <tr>
         <th class="width-60">Mental</th>
-        <td><input class="input-number" type="number"></td>
+        <td><input class="input-number" type="number" name="mental_mutations" id="mental_mutations" value="{{ character.base_mechanics.mental_mutations or 0 }}"></td>
       </tr>
       <tr>
         <th class="width-60">Physical</th>
-        <td><input class="input-number" type="number"></td>
+        <td><input class="input-number" type="number" name="physical_mutations" id="physical_mutations" value="{{ character.base_mechanics.physical_mutations or 0 }}"></td>
       </tr>
     </table>
   </div>

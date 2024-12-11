@@ -98,10 +98,11 @@ class Character(db.Model):
 
     @property
     def strong_back_enc_bonus(self):
+        res = 0
         for talent in self.talents:
             if talent.name.title() == "Strong Back":
-                return talent.times_taken
-        return 0
+                res = talent.times_taken
+        return res
 
     @property
     def corruption_threshold(self):
