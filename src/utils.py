@@ -51,6 +51,9 @@ def create_character_with_connections(session, name):
         resolve=0,
         motivation=0,
         corruption=0,
+        mutations=0,
+        mental_mutations=0,
+        physical_mutations=0,
     )
     new_text_fields = TextFields(
         character_id=new_character.id,
@@ -509,6 +512,9 @@ def save_ammunition(form, character, db):
 def save_health_notes(form, character, db):
     character.text_fields.health_notes = form.get("combat_health_notes")
     character.base_mechanics.corruption = form.get("corruption")
+    character.base_mechanics.mutations = form.get("mutations")
+    character.base_mechanics.mental_mutations = form.get("mental_mutations")
+    character.base_mechanics.physical_mutations = form.get("physical_mutations")
     try:
         db.session.commit()
     except Exception as e:
