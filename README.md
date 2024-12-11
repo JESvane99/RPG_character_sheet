@@ -8,6 +8,10 @@ This web application allows users to create and manage character sheets for any 
 - Edit character details, attributes, skills, talents, armor, weapons, spells, and trappings.
 - View character sheets in a structured format.
 
+## ToDo
+
+- Make table cells change to input on click and back again when saving to make everything more homogenous
+
 ## Serving The Application Locally
 
 **Windows** (development):
