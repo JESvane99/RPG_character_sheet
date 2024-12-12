@@ -19,11 +19,11 @@
       </tr>
       <tr>
         <th class="width-60">Max Enc</th>
-        <td>{{ character.get_attribute_bonus("s") + character.get_attribute_bonus("t") }}</td>
+        <td>{{ character.get_attribute_bonus("s") + character.get_attribute_bonus("t") + (character.strong_back_enc_bonus or 0) }}</td>
       </tr>
       <tr>
         <th class="width-60">Total</th>
-        <td>{{ (character.get_attribute_bonus("s") + character.get_attribute_bonus("t")) - (character.get_encumbrance("weapons") + character.get_encumbrance("armor") + character.get_encumbrance("trappings")) }}</td>
+        <td>{{ (character.get_attribute_bonus("s") + character.get_attribute_bonus("t") + (character.strong_back_enc_bonus or 0)) - (character.get_encumbrance("weapons") + character.get_encumbrance("armor") + character.get_encumbrance("trappings")) }}</td>
       </tr>
     </table>
   </div>
@@ -49,7 +49,7 @@
       <tr>
         <th class="width-60">Total</th>
         <td>
-          {{ character.get_attribute_bonus("s") + character.get_attribute_bonus("t") * 2 + character.get_attribute_bonus("wp") }}
+          {{ character.get_attribute_bonus("s") + character.get_attribute_bonus("t") * 2 + character.get_attribute_bonus("wp") + (character.hardy_wounds_bonus or 0) }}
         </td>
       </tr>
     </table>

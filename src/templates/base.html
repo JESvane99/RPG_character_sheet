@@ -10,27 +10,33 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
   <link rel="icon" href="{{ url_for('static', filename='figs/favicon.png') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='scripts.js') }}"></script>
 </head>
 <body>
   <div class="base">
-    <div class="container">
-      <nav class="navbar navbar-expand-lg justify-content-center">
+    <div class="container w-100">
+      <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
+          {% if character %}
+          <a class="navbar-brand">{{ character.name }}</a>
+          {% endif %}
           <div class="collapse navbar-collapse" id="navbarToggler">
-          {% block navbar %}
-          {% endblock navbar %}
-          <span class="navbar-text ms-5">Author: Jonas Eliasen Svane</span>
+            {% block navbar %}
+            {% endblock navbar %}
           </div>
+          {% if character %}
+          <div class="nav-item me-2"><button class="btn btn-secondary" form="page">Save Page</button></div>
+          {% endif %}
         </div>
       </nav>
     </div>
+  </div>
     <div class="sheet-container">
       {% block content %}
       {% endblock content %}
     </div>
-  </div>
 </body>
 </html>
