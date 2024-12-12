@@ -10,7 +10,9 @@
         top: 0;
         margin: 0;
         padding: 0;
+        width: 210mm;
     }
+
 }
 
 /* base design setup */
@@ -29,13 +31,14 @@ body {
 }
 .page-container {
     width: 210mm;
-    height: 297mm;
+    /* height: 297mm; */
     font-size: x-small;
     font-weight: bold;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     background-color: rgb(173, 160, 151);
+    box-decoration-break: clone;
 }
 
 
@@ -83,14 +86,15 @@ table th:last-child {
 
 /* general classes */
 .part-container {
-    border-bottom: 5px solid #0a1033;
+    border-top: 5px solid #0a1033;
     width: 100%;
+    box-decoration-break: clone;
 }
 .part-container > div {
     padding: 5px;
 }
-.part-container:last-child {
-    border-bottom: none;
+.part-container:first-child {
+    border-top: none;
 }
 /* flex-section is used when a part has more than one element spanning the width*/
 .flex-section {

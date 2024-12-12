@@ -9,3 +9,20 @@ document.addEventListener("DOMContentLoaded", function() {
       });
   });
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+  let height = 0;
+  document.querySelectorAll(".part-container").forEach(function(part) {
+    height += Math.max(part.scrollHeight, part.offsetHeight) / 3.779528;
+    if (height > 290) {
+      part.style.breakBefore = "page";
+      part.childNodes.forEach(function(child) {
+        child.style.breakBefore = "avoid";
+        child.style.breakInside = "avoid";
+        child.style.breakAfter = "avoid";
+      });
+      return
+    }
+  });
+
+});
