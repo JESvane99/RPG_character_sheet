@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, redirect
 
-from .models import db, Character
+from .models import db, Character, BaseMechanics, TextFields, Party, Attributes, BasicSkill, Skill, Talent, Armor, Weapon, Magic, Trapping, Ammunition, Ledger, Cv
 from .utils import (
     check_character_connections,
     create_character_with_connections,
     reset_ammunition,
     reset_armor,
+    reset_cv,
     reset_health_notes,
     reset_party_holdings,
     reset_party_ledger,
@@ -20,6 +21,7 @@ from .utils import (
     save_ammunition,
     save_attributes,
     save_basic_skills,
+    save_cv,
     save_health_notes,
     save_party_ledger,
     save_skills,
@@ -36,8 +38,9 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///CharSheet_test.db"
 app.config["SECRET_KEY"] = "your_secret_key"  # Needed for flashing messages
 db.init_app(app)
 
-with app.app_context():
-    db.create_all()
+if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -66,8 +69,8 @@ def character_page(id):
     character = db.session.scalars(
         db.select(Character).where(Character.id == id)
     ).one_or_none()
-
-    if character is None:
+    
+    if check_character_connections(character.id) is False:
         app.logger.error("Character not found")
         return redirect("/")
 
@@ -83,9 +86,11 @@ def character_page(id):
         app.logger.info("saving static data:")
         save_static_data(request.form, character, db)
         app.logger.info("saving trappings:")
-        save_trappings(
-            request.form, character, db
-        )  # no catch of errors in this method may result in site reloading with complete loss of data
+        save_trappings(request.form, character, db)
+        app.logger.info("saving cv:")
+        app.logger.info(f"{character.cv}")
+        app.logger.info(f"{request.form['new_cv_career']}")
+        save_cv(request.form, character, db)# no catch of errors in this method may result in site reloading with complete loss of data
         return redirect(f"/{id}/sheet-p1")
     else:
         return render_template("character_fluff_page.html", character=character)
@@ -199,6 +204,9 @@ def reset_description(id):
     app.logger.info("Resetting trappings...")
     if not reset_trappings(character, db):
         app.logger.error("Error resetting trappings!!!")
+    if not reset_cv(character, db):
+        app.logger.error("Error resetting cv!!!")    
+    
     return redirect(f"/{id}/sheet-p1")
 
 

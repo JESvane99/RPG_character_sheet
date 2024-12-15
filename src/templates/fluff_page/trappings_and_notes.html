@@ -1,34 +1,5 @@
 <div class="flex-section part-container">
   <div class="two-block">
-    <div>
-    <h4>NOTES</h4>
-      <textarea name="notes" id="notes" class="textarea" onInput="this.parentNode.dataset.replicatedValue = this.value">{{ character.text_fields.campaign_notes }}</textarea>
-    </div>
-    <div>
-      <h4>Curriculum Vitae</h4>
-      <table>
-        <tr>
-          <th>Class</th>
-          <th>Career</th>
-          <th>Level</th>
-          <th>Status</th>
-        </tr>
-        <tr>
-          <td><input class="input-text" type="text" name="class" value="Coming soon..."></td>
-          <td><input class="input-text" type="text" name="career" value="{{ character.career }}"></td>
-          <td><input class="input-text" type="text" name="path" value="{{ character.careerpath }}"></td>
-          <td><input class="input-text" type="text" name="status" value="{{ character.status }}"></td>
-        </tr>
-        <tr>
-          <td><input class="input-text" type="text" name="new_class" id="new_class"></td>
-          <td><input class="input-text" type="text" name="new_career" id="new_career"></td>
-          <td><input class="input-number" type="number" name="new_level" id="new_level"></td>
-          <td><input class="input-text" type="text" name="new_status" id="new_status"></td>
-        </tr>
-      </table>
-    </div>
-  </div>
-  <div class="two-block">
     <h4>TRAPPINGS</h4>
     <table>
         <tr>
@@ -52,5 +23,36 @@
           <td class="width-50"><div class="grow-wrap"><textarea name="trappings_description_new" class="textarea" onInput="this.parentNode.dataset.replicatedValue = this.value"></textarea></div></td>
         </tr>
     </table>
+  </div>
+  <div class="two-block column h-100">
+    <div>
+    <h4>NOTES</h4>
+      <textarea name="notes" id="notes" class="textarea" onInput="this.parentNode.dataset.replicatedValue = this.value">{{ character.text_fields.campaign_notes }}</textarea>
+    </div>
+    <div>
+      <h4>Curriculum Vitae</h4>
+      <table class="description-table">
+        <tr>
+          <th class="width-25">Class</th>
+          <th class="width-30">Career</th>
+          <th class="width-30">Path</th>
+          <th class="width-15">Status</th>
+        </tr>
+        {% for entry in character.cv %}
+        <tr>
+          <td><input class="input-text" type="text" name="cv_group_{{ entry.id }}" value="{{ entry.group }}"></td>
+          <td><input class="input-text" type="text" name="cv_career_{{ entry.id }}" value="{{ entry.career }}"></td>
+          <td><input class="input-text" type="text" name="cv_path_{{ entry.id }}" value="{{ entry.careerpath }}"></td>
+          <td><input class="input-text" type="text" name="cv_status_{{ entry.id }}" value="{{ entry.status }}"></td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td><input class="input-text" type="text" name="new_cv_group" id="new_cv_group"></td>
+          <td><input class="input-text" type="text" name="new_cv_career" id="new_cv_career"></td>
+          <td><input class="input-text" type="text" name="new_cv_path" id="new_cv_path"></td>
+          <td><input class="input-text" type="text" name="new_cv_status" id="new_cv_status"></td>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>

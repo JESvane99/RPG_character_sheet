@@ -17,6 +17,7 @@ class Character(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(nullable=False)
     species: Mapped[str]
+    group: Mapped[str] # will be called for character class, but class is a reserved word
     career: Mapped[str]
     status: Mapped[int]
     careerpath: Mapped[str]
@@ -68,7 +69,9 @@ class Character(db.Model):
     ledger: Mapped[list["Ledger"]] = db.relationship(
         cascade="all, delete-orphan", back_populates="character"
     )
-
+    cv: Mapped[list["Cv"]] = db.relationship(
+        cascade="all, delete-orphan", back_populates="character"
+    )
     def get_attribute_total(self, attribute_name):
         attribute = int(getattr(self.attributes, f"{attribute_name.lower()}_base", 0))
         modifier = int(
@@ -318,3 +321,13 @@ class Ledger(db.Model):
     gold: Mapped[int]
     silver: Mapped[int]
     brass: Mapped[int]
+
+
+class Cv(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    character_id: Mapped[int] = mapped_column(db.ForeignKey("character.id"))
+    character: Mapped["Character"] = db.relationship(back_populates="cv")
+    group: Mapped[str]
+    career: Mapped[str]
+    status: Mapped[int]
+    careerpath: Mapped[str]

@@ -1,6 +1,7 @@
 from .models import (
-    Ammunition,
     db,
+    Ammunition,
+    Cv,
     Character,
     BaseMechanics,
     TextFields,
@@ -27,6 +28,7 @@ def log_this_find(app, find):
 def create_character_with_connections(session, name):
     new_character = Character(name=name)
     new_character.species = ""
+    new_character.group = ""
     new_character.career = ""
     new_character.status = 0
     new_character.careerpath = ""
@@ -178,6 +180,9 @@ def check_character_connections(character_id):
         character.weapons,
         character.spells_and_prayers,
         character.trappings,
+        character.ammunition,
+        character.ledger,
+        character.cv
     ]
 
     for connection in connections:
@@ -189,6 +194,7 @@ def check_character_connections(character_id):
 def save_static_data(form, character, db):
     character.name = form["name"]
     character.species = form["species"]
+    character.group = form["group"]
     character.career = form["career"]
     character.status = form["status"]
     character.careerpath = form["careerpath"]
@@ -223,6 +229,37 @@ def save_static_data(form, character, db):
         raise e
 
 
+def save_cv(form, character, db):
+    for item in character.cv:
+        item.group = form.get(f"cv_group_{item.id}")
+        item.career = form.get(f"cv_career_{item.id}")
+        item.path = form.get(f"cv_path_{item.id}")
+        item.status = form.get(f"cv_status_{item.id}")
+        if not item.career:
+            db.session.delete(item)
+
+    new_career = form.get("new_cv_career")
+    
+    if new_career:
+        new_group = form.get("new_cv_group")
+        new_path = form.get("new_cv_path")
+        new_status = form.get("new_cv_status")
+        new_item = Cv(
+            character_id=character.id,
+            group=new_group,
+            career=new_career,
+            careerpath=new_path,
+            status=new_status,
+        )
+        db.session.add(new_item)
+
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    
+    
 def save_basic_skills(form, character, db):
     for skill in character.basic_skills:
         skill.advances = int(form.get(f"{skill.name.lower()}-adv") or 0)
@@ -612,6 +649,16 @@ def reset_static(character, db):
         raise e
     return True
 
+
+def reset_cv(character, db):
+    for item in character.cv:
+        db.session.delete(item)
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+    return True
 
 def reset_trappings(character, db):
     for trap in character.trappings:
