@@ -24,5 +24,14 @@ document.addEventListener("DOMContentLoaded", function() {
       return
     }
   });
+});
 
+document.addEventListener("DOMContentLoaded", function() {
+  let leftHeight = document.getElementById("trappings").offsetHeight;
+  let rightHeight = document.getElementById("notes").offsetHeight;
+  if (leftHeight > rightHeight) {
+    document.getElementById("notes").style.height = leftHeight + "px";
+  } else {
+    document.getElementById("trappings").style.height = rightHeight + "px";
+  }
 });
