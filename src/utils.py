@@ -182,7 +182,7 @@ def check_character_connections(character_id):
         character.trappings,
         character.ammunition,
         character.ledger,
-        character.cv
+        character.cv,
     ]
 
     for connection in connections:
@@ -239,7 +239,7 @@ def save_cv(form, character, db):
             db.session.delete(item)
 
     new_career = form.get("new_cv_career")
-    
+
     if new_career:
         new_group = form.get("new_cv_group")
         new_path = form.get("new_cv_path")
@@ -258,8 +258,8 @@ def save_cv(form, character, db):
     except Exception as e:
         db.session.rollback()
         raise e
-    
-    
+
+
 def save_basic_skills(form, character, db):
     for skill in character.basic_skills:
         skill.advances = int(form.get(f"{skill.name.lower()}-adv") or 0)
@@ -659,6 +659,7 @@ def reset_cv(character, db):
         db.session.rollback()
         raise e
     return True
+
 
 def reset_trappings(character, db):
     for trap in character.trappings:

@@ -1,6 +1,23 @@
 from flask import Flask, render_template, request, redirect
 
-from .models import db, Character, BaseMechanics, TextFields, Party, Attributes, BasicSkill, Skill, Talent, Armor, Weapon, Magic, Trapping, Ammunition, Ledger, Cv
+from .models import (
+    db,
+    Character,
+    BaseMechanics,
+    TextFields,
+    Party,
+    Attributes,
+    BasicSkill,
+    Skill,
+    Talent,
+    Armor,
+    Weapon,
+    Magic,
+    Trapping,
+    Ammunition,
+    Ledger,
+    Cv,
+)
 from .utils import (
     check_character_connections,
     create_character_with_connections,
@@ -69,7 +86,7 @@ def character_page(id):
     character = db.session.scalars(
         db.select(Character).where(Character.id == id)
     ).one_or_none()
-    
+
     if check_character_connections(character.id) is False:
         app.logger.error("Character not found")
         return redirect("/")
@@ -90,7 +107,9 @@ def character_page(id):
         app.logger.info("saving cv:")
         app.logger.info(f"{character.cv}")
         app.logger.info(f"{request.form['new_cv_career']}")
-        save_cv(request.form, character, db)# no catch of errors in this method may result in site reloading with complete loss of data
+        save_cv(
+            request.form, character, db
+        )  # no catch of errors in this method may result in site reloading with complete loss of data
         return redirect(f"/{id}/sheet-p1")
     else:
         return render_template("character_fluff_page.html", character=character)
@@ -205,8 +224,8 @@ def reset_description(id):
     if not reset_trappings(character, db):
         app.logger.error("Error resetting trappings!!!")
     if not reset_cv(character, db):
-        app.logger.error("Error resetting cv!!!")    
-    
+        app.logger.error("Error resetting cv!!!")
+
     return redirect(f"/{id}/sheet-p1")
 
 
