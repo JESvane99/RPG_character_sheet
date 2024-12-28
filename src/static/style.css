@@ -306,3 +306,48 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+input[type="checkbox"] {
+/* Add if not using autoprefixer */
+-webkit-appearance: none;
+/* Remove most all native input styles */
+appearance: none;
+/* For iOS < 15 */
+background-color: var(--form-background);
+/* Not removed via appearance */
+margin: 0;
+
+font: inherit;
+color: currentColor;
+width: 1.5em;
+height: 1.5em;
+border: 0.15em solid currentColor;
+border-radius: 0.15em;
+transform: translateY(0em);
+display: grid;
+place-content: center;
+place-self: center;
+}
+
+input[type="checkbox"]::before {
+content: "";
+width: 0.965em;
+height: 0.965em;
+clip-path: polygon(15.9% 4%, 21.58% 20.32%, 27.68% 31.01%, 39.34% 34.93%, 38% 7%, 48% 4%, 56% 7%, 54.42% 36.06%, 65.8% 36.68%, 74.37% 29.17%, 78.34% 17.9%, 81.84% 1.62%, 88.28% 11.82%, 85.25% 31.01%, 79.72% 41.48%, 70% 48.25%, 62.6% 52.85%, 54.29% 55.43%, 50.53% 96.78%, 43.79% 91.23%, 39.6% 52.85%, 27.68% 48.88%, 19.16% 39.65%, 11.62% 25.61%, 10.29% 12.39%);
+background-color: #000000;
+transform: scale(0);
+transform-origin: bottom left;
+transition: 120ms transform ease-in-out;
+box-shadow: inset 1em 1em var(--form-control-color);
+/* Windows High Contrast Mode */
+background-color: CanvasText;
+}
+
+input[type="checkbox"]:checked::before {
+transform: scale(1);
+}
+
+input[type="checkbox"]:focus {
+outline: max(2px, 0.15em) solid currentColor;
+outline-offset: max(2px, 0.15em);
+}

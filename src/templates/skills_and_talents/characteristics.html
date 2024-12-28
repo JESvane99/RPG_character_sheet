@@ -14,7 +14,94 @@
       <th>WP</th>
       <th>Fel</th>
     </tr>
-  <tr>
+    <tr>
+      <th>
+        Principal
+      </th>
+      <th>
+        {% if character.attributes.ws_class_trait %}
+          <input type="checkbox" id="ws-class-trait" name="ws-class-trait" checked="checked">
+        {% else %}
+          <input type="checkbox" id="ws-class-trait" name="ws-class-trait">
+        {% endif %}
+      </th>
+      <th>
+        {% if character.attributes.bs_class_trait %}
+          <input type="checkbox" id="bs-class-trait" name="bs-class-trait" checked="checked">
+        {% else %}
+          <input type="checkbox" id="bs-class-trait" name="bs-class-trait">
+        {% endif %}
+      </th>
+      <th>
+        {% if character.attributes.s_class_trait %}
+          <input type="checkbox" id="s-class-trait" name="s-class-trait" checked="checked">
+        {% else %}
+          <input type="checkbox" id="s-class-trait" name="s-class-trait">
+        {% endif %}
+      </th>
+      <th>
+        {% if character.attributes.t_class_trait %}
+          <input type="checkbox" id="t-class-trait" name="t-class-trait" checked="checked">
+        {% else %}
+          <input type="checkbox" id="t-class-trait" name="t-class-trait">
+        {% endif %}
+      </th>
+      <th>
+        {% if character.attributes.i_class_trait %}
+          <input type="checkbox" id="i-class-trait" name="i-class-trait" checked="checked">
+        {% else %}
+          <input type="checkbox" id="i-class-trait" name="i-class-trait">
+        {% endif %}
+      </th>
+      <th>
+        {% if character.attributes.ag_class_trait %}
+          <input type="checkbox" id="ag-class-trait" name="ag-class-trait" checked="checked">
+        {% else %}
+          <input type="checkbox" id="ag-class-trait" name="ag-class-trait">
+        {% endif %}
+      </th>
+      <th>
+        {% if character.attributes.dex_class_trait %}
+          <input type="checkbox" id="dex-class-trait" name="dex-class-trait" checked="checked">
+        {% else %}
+          <input type="checkbox" id="dex-class-trait" name="dex-class-trait">
+        {% endif %}
+      </th>
+      <th>
+        {% if character.attributes.int_class_trait %}
+          <input type="checkbox" id="int-class-trait" name="int-class-trait" checked="checked">
+        {% else %}
+          <input type="checkbox" id="int-class-trait" name="int-class-trait">
+        {% endif %}
+      </th>
+      <th>
+        {% if character.attributes.wp_class_trait %}
+          <input type="checkbox" id="wp-class-trait" name="wp-class-trait" checked="checked">
+        {% else %}
+          <input type="checkbox" id="wp-class-trait" name="wp-class-trait">
+        {% endif %}
+      </th>
+      <th>
+        {% if character.attributes.fel_class_trait %}
+          <input type="checkbox" id="fel-class-trait" name="fel-class-trait" checked="checked">
+        {% else %}
+          <input type="checkbox" id="fel-class-trait" name="fel-class-trait">
+        {% endif %}
+      </th>
+    </tr>
+    <!--
+    <td>
+      <select name="" id="">
+        <option value="1">ᛟ	5855	16DF	 	RUNIC LETTER OTHALAN ETHEL O</option>
+        <option value="2">ᚨ	5800	16A8	 	RUNIC LETTER ANSUZ A</option>
+        <option value="3">ᚾ	5822	16BE	 	RUNIC LETTER NAUDIZ NYD NAUD N</option>
+      </select>
+    </td>
+    -->
+    <!-- ᛗ	5847	16D7	 	RUNIC LETTER MANNAZ MAN M -->
+    <!-- this should be with skills and not characteristics, but the selections are correct! -->
+    <!-- Checkbox clippath clip-path: polygon(24% 1%, 24% 18%, 33% 24%, 43% 26%, 38% 7%, 48% 4%, 56% 7%, 53% 28%, 64% 28%, 70% 23%, 74% 14%, 74% 0, 83% 10%, 82% 25%, 77% 32%, 69% 39%, 61% 41%, 54% 41%, 51% 72%, 44% 71%, 40% 41%, 35% 42%, 23% 37%, 18% 29%, 14% 10%); -->
+    <tr> 
     <td>Initial</td>
     <td><input id="ws-init" name="ws-init" type="number" class="input-number" value="{{ character.attributes.ws_base }}"></td>
     <td><input id="bs-init" name="bs-init" type="number" class="input-number" value="{{ character.attributes.bs_base }}"></td>

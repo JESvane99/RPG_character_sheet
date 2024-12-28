@@ -173,42 +173,52 @@ class Attributes(db.Model):
     ws_base: Mapped[int] = mapped_column(default=0)
     ws_modifier: Mapped[int] = mapped_column(default=0)
     ws_bonus: Mapped[int] = mapped_column(default=0)
+    ws_class_trait: Mapped[bool] = mapped_column(default=False)
 
     bs_base: Mapped[int] = mapped_column(default=0)
     bs_modifier: Mapped[int] = mapped_column(default=0)
     bs_bonus: Mapped[int] = mapped_column(default=0)
+    bs_class_trait: Mapped[bool] = mapped_column(default=False)
 
     s_base: Mapped[int] = mapped_column(default=0)
     s_modifier: Mapped[int] = mapped_column(default=0)
     s_bonus: Mapped[int] = mapped_column(default=0)
+    s_class_trait: Mapped[bool] = mapped_column(default=False)
 
     t_base: Mapped[int] = mapped_column(default=0)
     t_modifier: Mapped[int] = mapped_column(default=0)
     t_bonus: Mapped[int] = mapped_column(default=0)
+    t_class_trait: Mapped[bool] = mapped_column(default=False)
 
     i_base: Mapped[int] = mapped_column(default=0)
     i_modifier: Mapped[int] = mapped_column(default=0)
     i_bonus: Mapped[int] = mapped_column(default=0)
+    i_class_trait: Mapped[bool] = mapped_column(default=False)
 
     ag_base: Mapped[int] = mapped_column(default=0)
     ag_modifier: Mapped[int] = mapped_column(default=0)
     ag_bonus: Mapped[int] = mapped_column(default=0)
+    ag_class_trait: Mapped[bool] = mapped_column(default=False)
 
     dex_base: Mapped[int] = mapped_column(default=0)
     dex_modifier: Mapped[int] = mapped_column(default=0)
     dex_bonus: Mapped[int] = mapped_column(default=0)
+    dex_class_trait: Mapped[bool] = mapped_column(default=False)
 
     int_base: Mapped[int] = mapped_column(default=0)
     int_modifier: Mapped[int] = mapped_column(default=0)
     int_bonus: Mapped[int] = mapped_column(default=0)
+    int_class_trait: Mapped[bool] = mapped_column(default=False)
 
     wp_base: Mapped[int] = mapped_column(default=0)
     wp_modifier: Mapped[int] = mapped_column(default=0)
     wp_bonus: Mapped[int] = mapped_column(default=0)
+    wp_class_trait: Mapped[bool] = mapped_column(default=False)
 
     fel_base: Mapped[int] = mapped_column(default=0)
     fel_modifier: Mapped[int] = mapped_column(default=0)
     fel_bonus: Mapped[int] = mapped_column(default=0)
+    fel_class_trait: Mapped[bool] = mapped_column(default=False)
 
 
 class BasicSkill(db.Model):

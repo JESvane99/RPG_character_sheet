@@ -80,33 +80,43 @@ def create_character_with_connections(session, name):
         ws_base=0,
         ws_modifier=0,
         ws_bonus=0,
+        ws_class_trait=False,
         bs_base=0,
         bs_modifier=0,
         bs_bonus=0,
+        bs_class_trait=False,
         s_base=0,
         s_modifier=0,
         s_bonus=0,
+        s_class_trait=False,
         t_base=0,
         t_modifier=0,
         t_bonus=0,
+        t_class_trait=False,
         i_base=0,
         i_modifier=0,
         i_bonus=0,
+        i_class_trait=False,
         ag_base=0,
         ag_modifier=0,
         ag_bonus=0,
+        ag_class_trait=False,
         dex_base=0,
         dex_modifier=0,
         dex_bonus=0,
+        dex_class_trait=False,
         int_base=0,
         int_modifier=0,
         int_bonus=0,
+        int_class_trait=False,
         wp_base=0,
         wp_modifier=0,
         wp_bonus=0,
+        wp_class_trait=False,
         fel_base=0,
         fel_modifier=0,
         fel_bonus=0,
+        fel_class_trait=False,
     )
 
     session.add(new_base_mechanics)
@@ -276,42 +286,52 @@ def save_attributes(form, character, db):
     attributes.ws_base = int(form.get("ws-init") or 0)
     attributes.ws_modifier = int(form.get("ws-adv") or 0)
     attributes.ws_bonus = int(form.get("ws-bonus") or 0)
+    attributes.ws_class_trait = form.get("ws-class-trait") == "on"
 
     attributes.bs_base = int(form.get("bs-init") or 0)
     attributes.bs_modifier = int(form.get("bs-adv") or 0)
     attributes.bs_bonus = int(form.get("bs-bonus") or 0)
+    attributes.bs_class_trait = form.get("bs-class-trait") == "on"
 
     attributes.s_base = int(form.get("s-init") or 0)
     attributes.s_modifier = int(form.get("s-adv") or 0)
     attributes.s_bonus = int(form.get("s-bonus") or 0)
+    attributes.s_class_trait = form.get("s-class-trait") == "on"
 
     attributes.t_base = int(form.get("t-init") or 0)
     attributes.t_modifier = int(form.get("t-adv") or 0)
     attributes.t_bonus = int(form.get("t-bonus") or 0)
+    attributes.t_class_trait = form.get("t-class-trait") == "on"
 
     attributes.i_base = int(form.get("i-init") or 0)
     attributes.i_modifier = int(form.get("i-adv") or 0)
     attributes.i_bonus = int(form.get("i-bonus") or 0)
+    attributes.i_class_trait = form.get("i-class-trait") == "on"
 
     attributes.ag_base = int(form.get("ag-init") or 0)
     attributes.ag_modifier = int(form.get("ag-adv") or 0)
     attributes.ag_bonus = int(form.get("ag-bonus") or 0)
+    attributes.ag_class_trait = form.get("ag-class-trait") == "on"
 
     attributes.dex_base = int(form.get("dex-init") or 0)
     attributes.dex_modifier = int(form.get("dex-adv") or 0)
     attributes.dex_bonus = int(form.get("dex-bonus") or 0)
+    attributes.dex_class_trait = form.get("dex-class-trait") == "on"
 
     attributes.int_base = int(form.get("int-init") or 0)
     attributes.int_modifier = int(form.get("int-adv") or 0)
     attributes.int_bonus = int(form.get("int-bonus") or 0)
+    attributes.int_class_trait = form.get("int-class-trait") == "on"
 
     attributes.wp_base = int(form.get("wp-init") or 0)
     attributes.wp_modifier = int(form.get("wp-adv") or 0)
     attributes.wp_bonus = int(form.get("wp-bonus") or 0)
+    attributes.wp_class_trait = form.get("wp-class-trait") == "on"
 
     attributes.fel_base = int(form.get("fel-init") or 0)
     attributes.fel_modifier = int(form.get("fel-adv") or 0)
     attributes.fel_bonus = int(form.get("fel-bonus") or 0)
+    attributes.fel_class_trait = form.get("fel-class-trait") == "on"
 
     try:
         db.session.commit()
