@@ -273,6 +273,7 @@ def save_cv(form, character, db):
 def save_basic_skills(form, character, db):
     for skill in character.basic_skills:
         skill.advances = int(form.get(f"{skill.name.lower()}-adv") or 0)
+        skill.tag = int(form.get(f"{skill.name.lower()}-tag") or 0)
 
     try:
         db.session.commit()
@@ -376,6 +377,7 @@ def save_skills(form, character, db):
             form.get(f"skills_attribute_{skill.id}")
         )
         skill.advances = int(form.get(f"skills_advances_{skill.id}") or 0)
+        skill.tag = int(form.get(f"skills_tag_{skill.id}") or 0)
         if not skill.name:
             db.session.delete(skill)
 
@@ -385,11 +387,13 @@ def save_skills(form, character, db):
             form.get("skills_attribute_new").lower()
         )
         new_advances = int(form.get("skills_advances_new") or 0)
+        new_tag = int(form.get("skills_tag_new") or 0)
         new_skill = Skill(
             character_id=character.id,
             name=new_name,
             attribute=new_attribute,
             advances=new_advances,
+            tag=new_tag,
         )
         db.session.add(new_skill)
 
@@ -695,6 +699,7 @@ def reset_trappings(character, db):
 def reset_basic_skills(character, db):
     for skill in character.basic_skills:
         skill.advances = 0
+        skill.tag = 0
     try:
         db.session.commit()
     except Exception as e:

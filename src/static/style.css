@@ -351,3 +351,14 @@ input[type="checkbox"]:focus {
 outline: max(2px, 0.15em) solid currentColor;
 outline-offset: max(2px, 0.15em);
 }
+
+select {
+    background-color: rgb(173, 160, 151);
+    appearance: none;
+    width: 100%;
+    text-align: center;
+    font-size: small;
+    margin: 0;
+    padding: 0;
+    border: none;
+}

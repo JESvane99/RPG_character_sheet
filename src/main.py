@@ -133,6 +133,9 @@ def skills_and_talents(id):
 
     if request.method == "POST":
         app.logger.info("POST request received")
+        app.logger.info("-"*50)
+        app.logger.info(request.full_path)
+        app.logger.info("-"*50)
         app.logger.info(request.form)
         app.logger.info("saving basic skills:")
         save_basic_skills(request.form, character, db)

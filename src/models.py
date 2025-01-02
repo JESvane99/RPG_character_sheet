@@ -228,6 +228,7 @@ class BasicSkill(db.Model):
     name: Mapped[str]
     attribute: Mapped[str]
     advances: Mapped[int] = mapped_column(default=0)
+    tag: Mapped[int] = mapped_column(default=0)
 
     @property
     def base_value(self):
@@ -245,6 +246,7 @@ class Skill(db.Model):
     name: Mapped[str]
     attribute: Mapped[str]
     advances: Mapped[int] = mapped_column(default=0)
+    tag: Mapped[int] = mapped_column(default=0)
 
     @property
     def base_value(self):

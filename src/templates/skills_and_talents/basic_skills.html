@@ -2,22 +2,33 @@
   <h4>BASIC SKILLS</h4>
   <table>
     <tr>
+      <th class="width-10">Tag</th>
       <th class="width-55">Name</th>
-      <th class="width-15">Trait</th>
-      <th class="width-15">Adv</th>
+      <th class="width-10">Trait</th>
+      <th class="width-10">Adv</th>
       <th class="width-15">Skill</th>
     </tr>
     {% for item in character.basic_skills|sort(attribute="name") %}
     <tr>
+      <td class="width-10">
+        <select name="{{ item.name|lower }}-tag" id="">
+          <option value="0" {{ "selected" if item.tag==0 }}></option>
+          <option value="1" {{ "selected" if item.tag==1 }}>ᛟ</option>
+          <option value="2" {{ "selected" if item.tag==2 }}>ᚨ</option>
+          <option value="3" {{ "selected" if item.tag==3 }}>ᚾ</option>
+        </select>
+      </td>
       <td class="width-55">{{ item.name }}</td>
       {% if item.attribute in ("ag","dex","int","fel") %}
-      <td class="width-15">{{ item.attribute|title }}</td>
+      <td class="width-10">{{ item.attribute|title }}</td>
       {% else %}
-      <td class="width-15">{{ item.attribute|upper }}</td>
+      <td class="width-10">{{ item.attribute|upper }}</td>
       {% endif %}
-      <td class="width-15"><input class="input-number" type="number" name="{{ item.name|lower }}-adv" value="{{ item.advances }}"></td>
+      <td class="width-10"><input class="input-number" type="number" name="{{ item.name|lower }}-adv" value="{{ item.advances }}"></td>
       <td class="width-15 number">{{ item.total }}</td>
     </tr>
     {% endfor %}
   </table>
 </div>
+    
+   

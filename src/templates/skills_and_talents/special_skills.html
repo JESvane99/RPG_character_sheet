@@ -2,23 +2,40 @@
   <h4>SPECIAL SKILLS</h4>
   <table>
     <tr>
+      <th class="width-10">Tag</th>
       <th class="width-55">Name</th>
-      <th class="width-15">Trait</th>
-      <th class="width-15">Adv</th>
+      <th class="width-10">Trait</th>
+      <th class="width-10">Adv</th>
       <th class="width-15">Skill</th>
     </tr>
     {% for item in character.skills|sort(attribute="name") %}
     <tr>
+      <td class="width-10">
+        <select name="skills_tag_{{ item.id }}" id="">
+          <option value="0" {{ "selected" if item.tag==0 }}></option>
+          <option value="1" {{ "selected" if item.tag==1 }}>ᛟ</option>
+          <option value="2" {{ "selected" if item.tag==2 }}>ᚨ</option>
+          <option value="3" {{ "selected" if item.tag==3 }}>ᚾ</option>
+        </select>
+      </td>
       <td class="width-55"><input class="input-text" type="text" name="skills_name_{{ item.id }}" value="{{ item.name }}"></td>
-      <td class="width-15"><input class="input-text" type="text" name="skills_attribute_{{ item.id }}" value="{{ item.attribute }}"></td>
-      <td class="width-15"><input class="input-number" type="number" name="skills_advances_{{ item.id }}" value="{{ item.advances }}"></td>
+      <td class="width-10"><input class="input-text" type="text" name="skills_attribute_{{ item.id }}" value="{{ item.attribute }}"></td>
+      <td class="width-10"><input class="input-number" type="number" name="skills_advances_{{ item.id }}" value="{{ item.advances }}"></td>
       <td class="width-15">{{ item.total }}</td>
     </tr>
     {% endfor %}
     <tr>
+      <td class="width-10">
+        <select name="skills_tag_new" id="">
+          <option value="0"></option>
+          <option value="1">ᛟ</option>
+          <option value="2">ᚨ</option>
+          <option value="3">ᚾ</option>
+        </select>
+      </td>
       <td class="width-55"><input class="input-text" type="text" name="skills_name_new" placeholder="add new skill here"></td>
-      <td class="width-15"><input class="input-text" type="text" name="skills_attribute_new" placeholder="trait"></td>
-      <td class="width-15"><input class="input-number" type="number" name="skills_advances_new" placeholder="adv"></td>
+      <td class="width-10"><input class="input-text" type="text" name="skills_attribute_new" placeholder="trait"></td>
+      <td class="width-10"><input class="input-number" type="number" name="skills_advances_new" placeholder="adv"></td>
       <td class="width-15">save for value</td>
     </tr>
   </table>
