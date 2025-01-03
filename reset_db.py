@@ -23,3 +23,5 @@ if backup_files:
     print(f"Restoring database from {backup_file.name}...")
     db_reset = os.popen(f"copy {backup_file} {db_path}").read()
     print(f"{db_reset}")
+else:
+    print("No backup files found.")

@@ -26,12 +26,23 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-  let leftHeight = document.getElementById("trappings").offsetHeight;
-  let rightHeight = document.getElementById("notes").offsetHeight;
-  if (leftHeight > rightHeight) {
-    document.getElementById("notes").style.height = leftHeight + "px";
+
+
+function adjustHeight(element1Id, element2Id) {
+  let height1 = document.getElementById(element1Id).offsetHeight;
+  let height2 = document.getElementById(element2Id).offsetHeight;
+  if (height1 > height2) {
+    document.getElementById(element2Id).style.height = height1 + "px";
   } else {
-    document.getElementById("trappings").style.height = rightHeight + "px";
+    document.getElementById(element1Id).style.height = height2 + "px";
   }
+}
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  adjustHeight("trappings", "notes");
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  adjustHeight("ap-figure", "combat-column");
 });

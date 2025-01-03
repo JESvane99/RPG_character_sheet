@@ -25,13 +25,13 @@
 <div class="page-container">
 <form action="/{{ character.id }}/sheet-p3" method="post" class="page-form" id="page">
     <div class="flex-section part-container">
-      <div class="two-block">
+      <div class="two-block" id="ap-figure">
         <div class="ap-container">
           <h4>ARMOR POINTS</h4>
           <img src="../static/figs/armorpoints.png" alt="armor points figure">
         </div>
       </div>
-      <div class="two-block column">
+      <div class="two-block column" id="combat-column">
         {% include 'battle_page/enc_wounds.html' %}
         {% include 'battle_page/ammunition.html' %}
         <div>
