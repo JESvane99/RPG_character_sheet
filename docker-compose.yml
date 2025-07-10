@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      # - FLASK_ENV=development  # Uncomment for development mode
+    volumes:
+      # Mount database and logs for persistence
+      - ./instance:/app/instance
+      - ./logs:/app/logs
+      # Uncomment below for development (live code reload)
+      # - .:/app
+    restart: unless-stopped
+    command: serve
+
+  # Optional: PostgreSQL database service
+  # Uncomment if you want to use PostgreSQL instead of SQLite
+  # db:
+  #   image: postgres:15
+  #   environment:
+  #     POSTGRES_DB: charsheet
+  #     POSTGRES_USER: charsheet
+  #     POSTGRES_PASSWORD: charsheet_password
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+
+# volumes:
+#   postgres_data:

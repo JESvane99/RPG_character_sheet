@@ -1,4 +1,7 @@
 from flask import Flask, render_template, request, redirect
+import signal
+import sys
+import atexit
 
 from .models import (
     db,
@@ -340,3 +343,22 @@ def delete(id):
         db.session.rollback()
         app.logger.error(e)
     return redirect("/")
+
+
+def log_shutdown(signal_num=None, frame=None):
+    """Log application shutdown"""
+    if signal_num:
+        app.logger.info(f"Application stopped - Signal {signal_num} received")
+    else:
+        app.logger.info("Application stopped - Normal shutdown")
+    # Ensure logs are flushed
+    import logging
+    logging.shutdown()
+
+
+# Register signal handlers for graceful shutdown logging
+signal.signal(signal.SIGTERM, log_shutdown)
+signal.signal(signal.SIGINT, log_shutdown)
+
+# Register atexit handler for normal shutdown
+atexit.register(log_shutdown)

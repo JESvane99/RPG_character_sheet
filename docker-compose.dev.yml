@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  app:
+    environment:
+      - FLASK_ENV=development
+    volumes:
+      # Mount source code for live reload in development
+      - .:/app
+      - ./instance:/app/instance
+      - ./logs:/app/logs
+    ports:
+      - "5000:5000"
