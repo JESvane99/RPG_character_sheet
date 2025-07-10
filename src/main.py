@@ -49,15 +49,26 @@ from .utils import (
     save_weapons,
     save_spells_and_prayers,
 )
+from .logging_config import setup_logging
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///CharSheet_test.db"
 app.config["SECRET_KEY"] = "your_secret_key"  # Needed for flashing messages
+
+# Setup logging with timestamps
+setup_logging(app)
+
 db.init_app(app)
 
-if __name__ == "__main__":
+
+def init_db():
+    """Initialize the database and create all tables."""
     with app.app_context():
         db.create_all()
+    from alembic.config import Config
+    from alembic import command
+    alembic_cfg = Config("alembic.ini")
+    command.stamp(alembic_cfg, "head")
 
 
 @app.route("/", methods=["GET", "POST"])
