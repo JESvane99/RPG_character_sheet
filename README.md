@@ -1,86 +1,218 @@
-# Character Sheet Web App
+# RPG Character Sheet Web Application
 
-This web application allows users to create and manage character sheets for any RPG.
+A comprehensive web-based character sheet manager for tabletop RPGs, built with Flask and designed for easy deployment with Docker on Linux systems.
+
+## Overview
+
+This application provides a complete digital character sheet solution for tabletop role-playing games. It allows you to create, manage, and track multiple characters with detailed stats, skills, equipment, and more. The application is containerized for easy deployment and includes database migration support.
 
 ## Features
 
-- Create new characters with default attributes and skills.
-- Edit character details, attributes, skills, talents, armor, weapons, spells, and trappings.
-- View character sheets in a structured format.
+### Character Management
+- **Create Characters**: Generate new characters with default attributes and skills
+- **Character Statistics**: Manage core attributes, basic skills, and special abilities
+- **Equipment Tracking**: Track armor, weapons, ammunition, and general trappings
+- **Spell Management**: Organize spells and prayers for magic-using characters
+- **Experience Tracking**: Monitor character progression and experience points
 
-## ToDo
+### Party Management
+- **Party Ledger**: Shared inventory and resource management
+- **Group Coordination**: Track party-wide equipment and finances
 
-- Make table cells change to input on click and back again when saving to make everything more homogenous
+### Data Persistence
+- **SQLite Database**: Reliable local storage with automatic migrations
+- **Backup Support**: Easy database backup through Docker volumes
 
-## Serving The Application Locally
+## Prerequisites (Linux)
 
-**Windows** (development):
+### Required Software
+- **Docker**: Version 20.10 or later
+- **Docker Compose**: Version 2.0 or later
 
-Using _**UV**_:
+Ensure Docker and Docker Compose are installed and properly configured on your Linux system before proceeding.
 
-```{cmd}
-cd 'path/to/character_creator_project/'
+## Quick Start
+
+### 1. Clone and Setup
+```bash
+# Clone the repository
+git clone <repository-url>
+cd RPG_character_sheet
+
+# Make the entrypoint script executable
+chmod +x docker-entrypoint.sh
 ```
 
-Serving for the hosting machine only:
+### 2. Production Deployment
+```bash
+# Start the application in production mode
+docker compose up -d
 
-```{cmd}
-$j1 = uv run flask --app src/main run --debug 2>&1 > output.log &
+# View logs
+docker compose logs -f app
+
+# Access the application at http://localhost:5000
 ```
 
-Serving for hosting machine and check on mobile or tablet:
+### 3. Development Mode
+```bash
+# Start in development mode with live reload
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up
 
-```{cmd}
-$j1 = uv run flask --app src/main run -h 0.0.0.0 --debug 2>&1 > output.log &
+# Access the application at http://localhost:5000
 ```
 
-to keep it running in the terminal remove the last `&`
+## Usage Guide
 
-### Windows
+### Creating Your First Character
 
-Using _**UV**_ :
+1. **Access the Application**: Open your web browser and navigate to `http://localhost:5000`
+2. **Create Character**: Click on "Create New Character" or similar option
+3. **Fill Basic Information**: Enter character name, description, and basic details
+4. **Set Attributes**: Configure core attributes like Strength, Dexterity, Intelligence, etc.
+5. **Assign Skills**: Allocate points to basic and special skills
+6. **Add Equipment**: Configure starting armor, weapons, and trappings
 
-```{cmd}
-cd 'path/to/character_creator_project/'
+### Managing Characters
+
+#### Character Sheets
+- **Battle Page**: Combat-focused view with weapons, armor, and health tracking
+- **Skills & Talents**: Comprehensive skill management and talent selection
+- **Fluff Page**: Character background, description, and roleplaying information
+
+#### Equipment Management
+- **Weapons**: Add/edit weapons with damage, range, and special properties
+- **Armor**: Track armor points, encumbrance, and coverage
+- **Ammunition**: Manage arrows, bullets, and other consumables
+- **Trappings**: General equipment and inventory items
+
+#### Character Progression
+- **Experience Points**: Track and spend XP for character advancement
+- **Skill Improvements**: Increase skill levels and unlock new abilities
+- **Talent Acquisition**: Add new talents and special abilities
+
+### Party Management
+
+The application supports party-wide resource tracking:
+
+1. **Party Ledger**: Shared inventory for group equipment
+2. **Financial Tracking**: Manage party funds and expenses
+3. **Resource Sharing**: Track communal supplies and equipment
+
+## Docker Commands Reference
+
+### Basic Operations
+```bash
+# Start the application
+docker compose up -d
+
+# Stop the application
+docker compose down
+
+# Restart the application
+docker compose restart
+
+# View logs
+docker compose logs -f app
+
+# Access container shell
+docker compose exec app bash
 ```
 
-```{cmd}
-$j1 = uv run waitress-serve --host 127.0.0.1 --port 5000 src:app 2>&1 > output.log &
+### Database Management
+```bash
+# Run database migrations
+docker compose exec app bash -c "./docker-entrypoint.sh migrate"
+
+# Initialize a fresh database
+docker compose exec app bash -c "./docker-entrypoint.sh init-db"
+
+# Run custom alembic commands
+docker compose exec app bash -c "./docker-entrypoint.sh alembic revision --autogenerate -m 'Your message'"
+
+# Backup database
+docker compose exec app bash -c "cp /app/instance/CharSheet_test.db /app/instance/backup_$(date +%Y%m%d_%H%M%S).db"
 ```
 
-## Database migration
+### Development Workflow
+```bash
+# Development mode with live reload
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up
 
-To be sure that the database is up and running as it should be
-please check that the database path corresponds to each other in `alembic.ini`, `src/main.py`, and the name of the database itself.
+# Build new image after changes
+docker compose build
 
-### alembic.ini
-
-```{code}
-# the output encoding used when revision files
-# are written from script.py.mako
-# output_encoding = utf-8
-
-sqlalchemy.url = sqlite:///instance/CharSheet.db
+# Reset and restart development environment
+docker compose down
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
 ```
 
-### src/main.py
+## Configuration
 
-```{code}
-app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///CharSheet.db"  <----- this line right here
-app.config["SECRET_KEY"] = "your_secret_key"  # Needed for flashing messages
-db.init_app(app)
+### Environment Variables
+- `FLASK_ENV`: Set to `development` for debug mode, `production` for deployment
+- Database and logging paths are configured automatically
+
+### Data Persistence
+The application uses Docker volumes for data persistence:
+- `charsheet_db`: Database files
+- `charsheet_logs`: Application logs
+
+### Port Configuration
+Default port is 5000. To change:
+```yaml
+# In docker-compose.yml
+ports:
+  - "8080:5000"  # Changes external port to 8080
 ```
 
-please note the path difference in the example above.
-The alembic needs the instance directory as well, where src/main only needs the name of the database.
+## Troubleshooting
 
-When both paths correspond to the database file name run the following command:
+### Common Issues
 
-```{code}
-uv run alembic upgrade head
+**Application won't start:**
+```bash
+# Check logs
+docker compose logs app
+
+# Verify Docker is running
+sudo systemctl status docker
+
+# Rebuild container
+docker compose build --no-cache
 ```
 
-The database is now up to date.
+**Database migration errors:**
+```bash
+# Reset database (WARNING: loses all data)
+docker compose down
+docker volume rm rpg_character_sheet_charsheet_db
+docker compose up -d
+```
 
-Have fun!
+**Permission issues:**
+```bash
+# Fix file permissions
+sudo chown -R $USER:$USER .
+chmod +x docker-entrypoint.sh
+```
+
+### Performance Optimization
+- The application uses SQLite for simplicity, suitable for personal/small group use
+- For larger deployments, consider switching to PostgreSQL (configuration included)
+- Use production mode (`FLASK_ENV=production`) for better performance
+
+## Development Notes
+
+The application is built with:
+- **Flask**: Web framework
+- **SQLAlchemy**: Database ORM
+- **Alembic**: Database migrations
+- **Waitress**: Production WSGI server
+- **UV**: Python package management
+
+For local development without Docker, ensure Python 3.12+ and UV are installed, then use the development commands in the docker-entrypoint.sh script.
+
+## Support
+
+For issues, questions, or contributions, please refer to the project repository or documentation. The application is designed to be self-contained and should work out of the box with the provided Docker configuration.
