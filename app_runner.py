@@ -3,15 +3,6 @@ import os
 import signal
 import subprocess
 
-def signal_handler(sig, frame):
-    """Handle shutdown signals gracefully"""
-    print(f"\nReceived signal {sig}, shutting down gracefully...")
-    sys.exit(0)
-
-# Register signal handlers
-signal.signal(signal.SIGINT, signal_handler)
-signal.signal(signal.SIGTERM, signal_handler)
-
 
 if __name__ == '__main__':
     
@@ -23,7 +14,11 @@ if __name__ == '__main__':
         serve_cmd = "uv run waitress-serve --host 0.0.0.0 --port 5000 src.main:app"
     if "migrate" in sys.argv:
         print("Migrating database")
-        os.system("uv run alembic upgrade head")
+        try:
+            result = subprocess.run("uv run alembic upgrade head", shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Migration failed with error code: {e.returncode}")
+            sys.exit(e.returncode)
     
     if "db_init" in sys.argv:
         from src.main import init_db
@@ -33,16 +28,44 @@ if __name__ == '__main__':
         exit(0)
     
     if "quiet" in sys.argv:
-        serve_cmd += " &"
-        # Run in background and capture PID for graceful shutdown
-        process = subprocess.Popen(serve_cmd, shell=True)
+        # Run in background with proper process management
+        process = subprocess.Popen(serve_cmd, shell=True, preexec_fn=os.setsid)
         print(f"Server started with PID: {process.pid}")
         try:
             process.wait()
         except KeyboardInterrupt:
-            print("Stopping server...")
-            process.terminate()
-            process.wait()
+            print("\nStopping server...")
+            try:
+                # Send SIGTERM to the process group
+                os.killpg(os.getpgid(process.pid), signal.SIGTERM)
+                process.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                print("Force killing server...")
+                os.killpg(os.getpgid(process.pid), signal.SIGKILL)
+                process.wait()
+            except ProcessLookupError:
+                # Process already terminated
+                pass
     else:
-        os.system(serve_cmd)
+        # Use subprocess.Popen for better signal handling in both dev and prod
+        try:
+            process = subprocess.Popen(serve_cmd, shell=True, preexec_fn=os.setsid)
+            process.wait()
+        except KeyboardInterrupt:
+            print("\nStopping server...")
+            try:
+                # Send SIGTERM to the process group
+                os.killpg(os.getpgid(process.pid), signal.SIGTERM)
+                process.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                print("Force killing server...")
+                os.killpg(os.getpgid(process.pid), signal.SIGKILL)
+                process.wait()
+            except ProcessLookupError:
+                # Process already terminated
+                pass
+        except Exception as e:
+            print(f"Server exited with error: {e}")
+            sys.exit(1)
+
     

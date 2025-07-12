@@ -1,7 +1,4 @@
 from flask import Flask, render_template, request, redirect
-import signal
-import sys
-import atexit
 
 from .models import (
     db,
@@ -64,6 +61,13 @@ setup_logging(app)
 db.init_app(app)
 
 
+@app.teardown_appcontext
+def log_shutdown_message(error):
+    """Log when the application context is torn down"""
+    if error:
+        app.logger.error(f"Application context ended with error: {error}")
+
+
 def init_db():
     """Initialize the database and create all tables."""
     with app.app_context():
@@ -83,12 +87,13 @@ def index():
         elif not name.replace(" ", "").isalnum():
             return redirect("/")
         try:
-            create_character_with_connections(db.session, name)
+            new_character = create_character_with_connections(db.session, name)
         except Exception as e:
             db.session.rollback()
             e.add_note("Error creating character")
             raise e
-        return redirect("/")
+        new_character_id = new_character.id
+        return redirect(f"/{new_character_id}/sheet-p1")
     else:
         characters = db.session.scalars(db.select(Character)).all()
         app.logger.info("Characters found: " + str(characters))
@@ -343,22 +348,3 @@ def delete(id):
         db.session.rollback()
         app.logger.error(e)
     return redirect("/")
-
-
-def log_shutdown(signal_num=None, frame=None):
-    """Log application shutdown"""
-    if signal_num:
-        app.logger.info(f"Application stopped - Signal {signal_num} received")
-    else:
-        app.logger.info("Application stopped - Normal shutdown")
-    # Ensure logs are flushed
-    import logging
-    logging.shutdown()
-
-
-# Register signal handlers for graceful shutdown logging
-signal.signal(signal.SIGTERM, log_shutdown)
-signal.signal(signal.SIGINT, log_shutdown)
-
-# Register atexit handler for normal shutdown
-atexit.register(log_shutdown)
