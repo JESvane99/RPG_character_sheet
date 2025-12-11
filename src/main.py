@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, redirect
 
+# Load environment variables from .env file
+from . import init_env  # noqa: F401
+
 from .models import (
     db,
     Character,
@@ -50,10 +53,12 @@ from .utils import (
     save_spells_and_prayers,
 )
 from .logging_config import setup_logging
+from .config import get_config
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///CharSheet_test.db"
-app.config["SECRET_KEY"] = "your_secret_key"  # Needed for flashing messages
+
+# Load configuration based on environment
+app.config.from_object(get_config())
 
 # Setup logging with timestamps
 setup_logging(app)

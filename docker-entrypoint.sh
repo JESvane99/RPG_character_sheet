@@ -15,6 +15,9 @@ cleanup() {
 # Set up signal handlers
 trap cleanup SIGTERM SIGINT
 
+# Set default Flask environment if not provided
+export FLASK_ENV="${FLASK_ENV:-production}"
+
 # Function to wait for database to be ready (if using external DB)
 wait_for_db() {
     echo "Waiting for database to be ready..."
@@ -37,7 +40,7 @@ init_db() {
 # Main command handling
 case "$1" in
     "serve")
-        echo "Starting application server..."
+        echo "Starting application server in $FLASK_ENV mode..."
         wait_for_db
         run_migrations
         

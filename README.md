@@ -41,9 +41,23 @@ cd RPG_character_sheet
 
 # Make the entrypoint script executable
 chmod +x docker-entrypoint.sh
+
+# Copy environment file template and configure if needed
+cp .env.example .env
+# Edit .env to customize settings (optional - defaults are sensible)
 ```
 
-### 2. Production Deployment
+### 2. Environment Configuration
+
+Configuration is managed through environment variables. See `.env.example` for all available options:
+
+- `FLASK_ENV` - Set to `production` or `development` (default: `development`)
+- `FLASK_SECRET_KEY` - Secret key for session/CSRF protection (auto-generated dev key if not set)
+- `DATABASE_URL` - Database connection string (default: `sqlite:///CharSheet.db`)
+
+For development, the defaults are fine. For production, you **must** set a strong `FLASK_SECRET_KEY`.
+
+### 3. Production Deployment
 ```bash
 # Start the application in production mode
 docker compose up -d
@@ -54,7 +68,7 @@ docker compose logs -f app
 # Access the application at http://localhost:5000
 ```
 
-### 3. Development Mode
+### 4. Development Mode
 ```bash
 # Start in development mode with live reload
 docker compose -f docker-compose.yml -f docker-compose.dev.yml up
