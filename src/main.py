@@ -73,16 +73,6 @@ def log_shutdown_message(error):
         app.logger.error(f"Application context ended with error: {error}")
 
 
-def init_db():
-    """Initialize the database and create all tables."""
-    with app.app_context():
-        db.create_all()
-    from alembic.config import Config
-    from alembic import command
-    alembic_cfg = Config("alembic.ini")
-    command.stamp(alembic_cfg, "head")
-
-
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":

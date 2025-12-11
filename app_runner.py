@@ -20,13 +20,6 @@ if __name__ == '__main__':
             print(f"Migration failed with error code: {e.returncode}")
             sys.exit(e.returncode)
     
-    if "db_init" in sys.argv:
-        from src.main import init_db
-        print("Initializing database")
-        init_db()
-        print("Database initialized. Run command again without 'db_init' arg to start the server.")
-        exit(0)
-    
     if "quiet" in sys.argv:
         # Run in background with proper process management
         process = subprocess.Popen(serve_cmd, shell=True, preexec_fn=os.setsid)

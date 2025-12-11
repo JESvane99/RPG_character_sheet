@@ -31,12 +31,6 @@ run_migrations() {
     uv run alembic upgrade head
 }
 
-# Function to initialize database if needed
-init_db() {
-    echo "Initializing database..."
-    uv run python -c "from src.main import init_db; init_db()"
-}
-
 # Main command handling
 case "$1" in
     "serve")
@@ -62,11 +56,6 @@ case "$1" in
         wait_for_db
         run_migrations
         ;;
-    "init-db")
-        echo "Initializing database only..."
-        wait_for_db
-        init_db
-        ;;
     "alembic")
         echo "Running alembic command..."
         shift
@@ -79,7 +68,6 @@ case "$1" in
         echo "Available commands:"
         echo "  serve     - Start the application (default)"
         echo "  migrate   - Run database migrations only"
-        echo "  init-db   - Initialize database only"
         echo "  alembic   - Run alembic commands"
         echo "  bash      - Open bash shell"
         exec "$@"
