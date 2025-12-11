@@ -20,8 +20,9 @@ This application provides a complete digital character sheet solution for tablet
 - **Group Coordination**: Track party-wide equipment and finances
 
 ### Data Persistence
-- **SQLite Database**: Reliable local storage with automatic migrations
-- **Backup Support**: Easy database backup through Docker volumes
+- **SQLite Database**: Reliable local storage with automatic schema management via Alembic migrations
+- **Backup Support**: Easy database backup through Docker volumes or direct file export
+- **Migration System**: Single base migration with support for incremental schema changes
 
 ## Prerequisites (Linux)
 
@@ -134,19 +135,47 @@ docker compose exec app bash
 ```
 
 ### Database Management
+
+The application uses **Alembic** for database migrations with a single base migration that creates all tables. The database is automatically initialized on first startup.
+
 ```bash
-# Run database migrations
-docker compose exec app bash -c "./docker-entrypoint.sh migrate"
+# View current migration status
+docker compose exec app uv run alembic current
 
-# Initialize a fresh database
-docker compose exec app bash -c "./docker-entrypoint.sh init-db"
+# View migration history
+docker compose exec app uv run alembic history
 
-# Run custom alembic commands
-docker compose exec app bash -c "./docker-entrypoint.sh alembic revision --autogenerate -m 'Your message'"
+# Create a new migration after model changes
+docker compose exec app uv run alembic revision --autogenerate -m "description of changes"
+
+# Apply migrations manually (rarely needed - automatic on startup)
+docker compose exec app uv run alembic upgrade head
 
 # Backup database
-docker compose exec app bash -c "cp /app/instance/CharSheet_test.db /app/instance/backup_$(date +%Y%m%d_%H%M%S).db"
+docker compose exec app cp /app/instance/CharSheet.db /app/instance/backup_$(date +%Y%m%d_%H%M%S).db
+
+# Export backup to host
+docker compose cp app:/app/instance/CharSheet.db ./backup_charsheet.db
 ```
+
+#### Database Schema
+
+The database includes the following tables:
+- `character` - Core character information
+- `base_mechanics` - Combat stats (wounds, corruption, fate, etc.)
+- `text_fields` - Character descriptions and notes
+- `attributes` - Core attributes (WS, BS, S, T, I, Ag, Dex, Int, WP, Fel)
+- `basic_skill` - Basic skill definitions
+- `skill` - Character skill values
+- `talent` - Character talents and special abilities
+- `armor` - Armor pieces and protection
+- `weapon` - Weapons and combat equipment
+- `ammunition` - Arrows, bullets, etc.
+- `magic` - Spells and prayers
+- `trapping` - General equipment and inventory
+- `party` - Party membership
+- `ledger` - Party-wide inventory
+- `cv` - Career/corruption values (if used)
 
 ### Development Workflow
 ```bash
@@ -198,9 +227,28 @@ docker compose build --no-cache
 
 **Database migration errors:**
 ```bash
-# Reset database (WARNING: loses all data)
+# Check migration status
+docker compose exec app uv run alembic current
+docker compose exec app uv run alembic history
+
+# If migrations are out of sync, check logs
+docker compose logs app
+
+# Reset database completely (WARNING: loses all data)
 docker compose down
 docker volume rm rpg_character_sheet_charsheet_db
+docker compose up -d
+```
+
+**Database locked errors:**
+```bash
+# Stop the application cleanly
+docker compose down
+
+# Remove any stale lock files
+docker compose run --rm app rm -f /app/instance/CharSheet.db-shm /app/instance/CharSheet.db-wal
+
+# Restart
 docker compose up -d
 ```
 
