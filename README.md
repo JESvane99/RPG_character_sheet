@@ -275,6 +275,11 @@ The application is built with:
 
 For local development without Docker, ensure Python 3.12+ and UV are installed, then use the development commands in the docker-entrypoint.sh script.
 
+## known bugs
+
+- Motivation should be a string and not a number
+
+
 ## Support
 
 For issues, questions, or contributions, please refer to the project repository or documentation. The application is designed to be self-contained and should work out of the box with the provided Docker configuration.
